@@ -12,7 +12,9 @@
 
 ### 文章列表
 
-* [GitHub Pages的用法](https://github.com/FooFooDamon/FooFooDamon.github.io/blob/master/GitHub_Pages的用法.md)
+* [如何搭建GitHub博客（非原创）](https://github.com/FooFooDamon/FooFooDamon.github.io/blob/master/如何搭建GitHub博客（非原创）.md)
+
+* [GitHub Pages的用法（摘自本主页初始化页面的内容）](https://github.com/FooFooDamon/FooFooDamon.github.io/blob/master/GitHub_Pages的用法.md)
 
 * [Linux下通过NFS挂载远程目录](https://github.com/FooFooDamon/FooFooDamon.github.io/blob/master/Linux下通过NFS挂载远程目录.md)
 
@@ -21,7 +23,7 @@
 
 `GitHub主页`：[https://github.com/FooFooDamon](https://github.com/FooFooDamon)
 
-`邮箱`：[udc577@126.com](udc577@126.com)
+`邮箱`：<udc577@126.com>
 
 
 ### 版权
