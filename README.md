@@ -1,3 +1,5 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
 ## 欢迎
 
 ---------------------------------------------------------------------------
@@ -17,9 +19,9 @@
 
 ### 联系方式
 
-`GitHub主页`：https://github.com/FooFooDamon
+`GitHub主页`：[https://github.com/FooFooDamon](https://github.com/FooFooDamon)
 
-`邮箱`：udc577@126.com
+`邮箱`：[udc577@126.com](udc577@126.com)
 
 
 ### 版权
