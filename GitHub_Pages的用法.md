@@ -1,15 +1,5 @@
 ## Welcome to GitHub Pages
 
----------------------------------------------------------------------------
-
-### 欢迎
-
-欢迎进入FooFooDamon的博客，以下英文说明请忽略。英文代码，中文文档，理性交流，谢绝谩骂。
-
----------------------------------------------------------------------------
-
-[中文测试](https://github.com/FooFooDamon/FooFooDamon.github.io/blob/master/_posts/2018-07-13-中文测试.md)
-
 You can use the [editor on GitHub](https://github.com/FooFooDamon/FooFooDamon.github.io/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
 
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
