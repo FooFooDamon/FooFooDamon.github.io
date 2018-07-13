@@ -1,47 +1,28 @@
-## Welcome to GitHub Pages
+## 欢迎
 
 ---------------------------------------------------------------------------
 
-### 欢迎
-
-欢迎进入FooFooDamon的博客，以下英文说明请忽略。英文代码，中文文档，理性交流，谢绝谩骂。
+欢迎进入FooFooDamon的博客。英文代码，中文文档，理性交流，谢绝谩骂。
 
 ---------------------------------------------------------------------------
 
-[中文测试](https://github.com/FooFooDamon/FooFooDamon.github.io/blob/master/_posts/2018-07-13-中文测试.md)
+页面效果待完善……
 
-You can use the [editor on GitHub](https://github.com/FooFooDamon/FooFooDamon.github.io/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+### 文章列表
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+* [GitHub Pages的用法](https://github.com/FooFooDamon/FooFooDamon.github.io/blob/master/GitHub_Pages的用法.md)
 
-### Markdown
+* [Linux下通过NFS挂载远程目录](https://github.com/FooFooDamon/FooFooDamon.github.io/blob/master/Linux下通过NFS挂载远程目录.md)
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
-```markdown
-Syntax highlighted code block
+### 联系方式
 
-# Header 1
-## Header 2
-### Header 3
+`GitHub主页`：https://github.com/FooFooDamon
 
-- Bulleted
-- List
+`邮箱`：udc577@126.com
 
-1. Numbered
-2. List
 
-**Bold** and _Italic_ and `Code` text
+### 版权
 
-[Link](url) and ![Image](src)
-```
+待补充
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/FooFooDamon/FooFooDamon.github.io/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
