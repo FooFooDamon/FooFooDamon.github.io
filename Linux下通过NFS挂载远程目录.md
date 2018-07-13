@@ -1,3 +1,5 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
 # Linux下通过NFS挂载远程目录
 
 该文章是通过参考 https://www.linuxidc.com/Linux/2016-04/130504.htm 并结合亲身实践而写成。转载请注明本文及其参考材料的出处。

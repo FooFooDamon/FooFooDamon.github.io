@@ -1,3 +1,5 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
 ## 来源于互联网的参考资料
 
 * [Github搭建个人博客（2018最新版）](https://blog.csdn.net/Maple_ROSI/article/details/79484691)

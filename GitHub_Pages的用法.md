@@ -1,3 +1,5 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
 ## Welcome to GitHub Pages
 
 You can use the [editor on GitHub](https://github.com/FooFooDamon/FooFooDamon.github.io/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
