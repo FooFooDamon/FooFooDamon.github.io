@@ -10,13 +10,15 @@
 
 页面效果待完善……
 
-### 文章列表
+### 文章列表（按时间逆排序）
 
-* [如何搭建GitHub博客（非原创）](https://github.com/FooFooDamon/FooFooDamon.github.io/blob/master/如何搭建GitHub博客（非原创）.md)
+* [Ubuntu 16.04 安装 NVIDIA TITAN Xp 显卡驱动](https://github.com/FooFooDamon/FooFooDamon.github.io/blob/master/Ubuntu_16.04安装NVIDIA_TITAN_Xp显卡驱动.md)
+
+* [Linux下通过NFS挂载远程目录](https://github.com/FooFooDamon/FooFooDamon.github.io/blob/master/Linux下通过NFS挂载远程目录.md)
 
 * [GitHub Pages的用法（摘自本主页初始化页面的内容）](https://github.com/FooFooDamon/FooFooDamon.github.io/blob/master/GitHub_Pages的用法.md)
 
-* [Linux下通过NFS挂载远程目录](https://github.com/FooFooDamon/FooFooDamon.github.io/blob/master/Linux下通过NFS挂载远程目录.md)
+* [如何搭建GitHub博客（非原创）](https://github.com/FooFooDamon/FooFooDamon.github.io/blob/master/如何搭建GitHub博客（非原创）.md)
 
 
 ### 联系方式
