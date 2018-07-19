@@ -6,7 +6,7 @@
 
 1. 浏览器进入其***GitHub发布页***：[https://github.com/BVLC/caffe/releases](https://github.com/BVLC/caffe/releases)
 
-2. 找到`1.0`版本，下载其压缩包，并放到合适的目录。本文下载的是`caffe-1.0.zip`，放到`/home/foo/src`目录。
+2. 找到`1.0`版本，下载其压缩包，并放到合适的目录。本文下载的是`caffe-1.0.zip`，放到`~/src`目录。
 
 ## 编译及安装
 
@@ -59,9 +59,12 @@ sudo apt install liblmdb-dev libleveldb-dev libsnappy-dev
 用cmake方式安装，如下：
 
 ```
-# 要求系统先装好2.8.7版本以上的cmake
+cd ~/src
+unzip caffe-1.0.zip
+cd caffe-1.0
 mkdir build
 cd build
+# 要求系统先装好2.8.7版本以上的cmake
 cmake ..
 make all
 make install
