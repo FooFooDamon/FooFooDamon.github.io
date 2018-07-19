@@ -103,6 +103,15 @@ libglu1-mesa-dev: /usr/lib/x86_64-linux-gnu/libGLU.so
 
 若还发现缺失库，可再按以上方法给装上（库对应的包名可用搜索引擎查询），再重装CUDA，直到警告消失，表明安装成功。
 
+5. 必要的设置以便让别的库和应用程序能识别和使用CUDA:
+
+```
+在~/.bashrc（或~/.bash_profile，具体视Linux发行版而定）加入以下两行：
+
+export PATH=$PATH:/usr/local/cuda-8.0/bin
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-8.0/lib64
+```
+
 
 ## 下载及安装cuDNN
 
