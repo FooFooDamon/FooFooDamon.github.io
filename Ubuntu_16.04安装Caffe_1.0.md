@@ -68,10 +68,6 @@ cd build
 cmake -DCMAKE_INSTALL_PREFIX=/usr/local .. # 如果只使用CPU，还可加上 -DCPU_ONLY=ON 选项
 make
 make install
-
-最好再加上：
-sudo cp -a -r include/* /usr/local/include/
-sudo cp -a lib/libcaffe.* /usr/local/lib/
 ```
 
 还可以直接用make的方式进行安装，需要修改`Makefile.config`，详见参考链接。
