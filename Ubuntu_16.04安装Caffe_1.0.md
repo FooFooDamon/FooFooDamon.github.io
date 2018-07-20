@@ -67,7 +67,7 @@ cd build
 # 要求系统先装好2.8.7版本以上的cmake
 cmake -DCMAKE_INSTALL_PREFIX=/usr/local .. # 如果只使用CPU，还可加上 -DCPU_ONLY=ON 选项
 make
-make install
+sudo make install
 ```
 
 还可以直接用make的方式进行安装，需要修改`Makefile.config`，详见参考链接。
