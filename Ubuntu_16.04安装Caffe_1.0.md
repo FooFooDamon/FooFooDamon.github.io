@@ -65,8 +65,8 @@ cd caffe-1.0
 mkdir build
 cd build
 # 要求系统先装好2.8.7版本以上的cmake
-cmake ..
-make all
+cmake -DCMAKE_INSTALL_PREFIX=/usr/local .. # 如果只使用CPU，还可加上 -DCPU_ONLY=ON 选项
+make
 make install
 
 最好再加上：
