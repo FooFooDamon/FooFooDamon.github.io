@@ -117,24 +117,47 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-8.0/lib64
 
 1. 浏览器进入***cuDNN下载页***（网址仅供参考，以后有可能会失效）：[https://developer.nvidia.com/rdp/cudnn-archive](https://developer.nvidia.com/rdp/cudnn-archive)
 
-2. 点击v7.0.x的版本链接（本文使用`v7.0.5 for CUDA 8.0`），选择适用于`Ubuntu 16.04`的库下载即可。***注意可能需要注册或登录***，过程不详述，最终下载到的文件为`libcudnn7_7.0.5.15-1+cuda8.0_amd64.deb`（也可根据自己的需要选择其它格式），并放到用户家目录下。
+2. 点击v7.0.x的版本链接（本文使用`v7.0.5 for CUDA 8.0`），选择适用于`Ubuntu 16.04`的库下载即可。***注意可能需要注册或登录***，过程不详述，最终下载到的文件为`cudnn-8.0-linux-x64-v7.tgz`（也可根据自己的需要选择其它格式），并放到用户家目录下。
 
-3. 安装操作很简单，用`dpkg`命令即可，以下是示例及其输出：
+3. 按以下操作进行安装：
+
+```
+$ cd ~
+
+$ tar -zxvf cudnn-8.0-linux-x64-v7.tgz 
+cuda/include/cudnn.h
+cuda/NVIDIA_SLA_cuDNN_Support.txt
+cuda/lib64/libcudnn.so
+cuda/lib64/libcudnn.so.7
+cuda/lib64/libcudnn.so.7.0.5
+cuda/lib64/libcudnn_static.a
+
+$ sudo cp -a cuda/include/cudnn.h /usr/include/
+或：
+$ sudo cp -a cuda/include/cudnn.h /usr/local/cuda/include/
+
+$ sudo cp -a cuda/lib64/* /usr/lib/x86_64-linux-gnu/
+或：
+$ sudo cp -a cuda/lib64/* /usr/local/cuda/lib64/
+```
+
+注意在拷贝的时候要用上`-a`选项来保留目标文件的属性，不然在拷贝软链接文件时（例如`libcudnn.so.7`和`libcudnn.so`），会还原成正常文件，占用空间。至于拷贝到什么位置，看个人喜好，以上提供了两个位置供参考，一个是之前的`CUDA`安装目录，一个是系统目录。选好位置之后，以后在安装`TensorFlow`和`Caffe`之类的框架时，注意选对路径即可。
+
+另外再啰嗦几句，就是关于用`deb`包来安装的问题。这个版本能下载到`libcudnn7_7.0.5.15-1+cuda8.0_amd64.deb`和`libcudnn7-dev_7.0.5.15-1+cuda8.0_amd64.deb`，前者是运行时库，没有头文件，库是共享库；后者是开发库，带头文件，库是静态库。而且，这两者的文件在命名上也有些许出入，用系统的`归档管理器`（右击deb包可选择打开方式）直接查看，或安装后再查看便知。安装时最好两个都装上，或者至少要装开发库，因为`TensorFlow`和`Caffe`之类的框架在安装时会用到cuDNN的头文件。安装操作如下（需注意这两者的顺序）：
 
 ```
 $ sudo dpkg -i libcudnn7_7.0.5.15-1+cuda8.0_amd64.deb 
-(正在读取数据库 ... 系统当前共安装有 271165 个文件和目录。)
-正准备解包 libcudnn7_7.0.5.15-1+cuda8.0_amd64.deb  ...
-正在将 libcudnn7 (7.0.5.15-1+cuda8.0) 解包到 (7.0.5.15-1+cuda8.0) 上 ...
-正在设置 libcudnn7 (7.0.5.15-1+cuda8.0) ...
-正在处理用于 libc-bin (2.23-0ubuntu10) 的触发器 ...
+
+$ sudo dpkg -i libcudnn7-dev_7.0.5.15-1+cuda8.0_amd64.deb
 ```
 
-这种方式的安装如果报错，一般是某些依赖关系没满足，根据其报错的信息补足依赖关系即可，无法在此详述。
+这种方式的安装如果报错，一般是某些依赖关系没满足，根据其报错的信息补足依赖关系即可，无法在此详述。另外，如果这种安装方法出现头文件不能被正确识别或读取，可手动修改头文件名称或权限，详见参考链接。
 
 ## 参考
 
 [https://blog.csdn.net/10km/article/details/61915535](https://blog.csdn.net/10km/article/details/61915535)
 
 [https://blog.csdn.net/lucifer_zzq/article/details/76675239](https://blog.csdn.net/lucifer_zzq/article/details/76675239)
+
+[https://www.aliyun.com/jiaocheng/119645.html](https://www.aliyun.com/jiaocheng/119645.html)
 
