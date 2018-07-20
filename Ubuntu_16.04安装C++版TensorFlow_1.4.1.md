@@ -40,6 +40,14 @@ sudo dpkg -i bazel_0.5.4-linux-x86_64.deb
 
 然而，不保证这种方法对所有人所有环境都行得通。如果行不通，请自行尝试`Shell脚本`和`源码`的安装方式，后面的参考链接里有详细的说明，这里不再展开。
 
+如果想固定`bazel`的版本，防止`apt`自动更新，可以删除它的源：
+
+```
+sudo rm /etc/apt/sources.list.d/bazel.list
+
+sudo apt-get update
+```
+
 3. 安装`Python依赖项`
 
 ```
