@@ -12,6 +12,8 @@
 
 ### 文章列表（按时间逆排序）
 
+* 2018/07/20 | [Ubuntu 16.04 安装 C++ 版 TensorFlow 1.4.1](https://github.com/FooFooDamon/FooFooDamon.github.io/blob/master/Ubuntu_16.04安装C++版TensorFlow_1.4.1.md)
+
 * 2018/07/19 | [Ubuntu 16.04 安装 Caffe 1.0](https://github.com/FooFooDamon/FooFooDamon.github.io/blob/master/Ubuntu_16.04安装Caffe_1.0.md)
 
 * 2018/07/18 | [Ubuntu 16.04 安装 CUDA 8.0 和 cuDNN 7](https://github.com/FooFooDamon/FooFooDamon.github.io/blob/master/Ubuntu_16.04安装CUDA_8.0和cuDNN_7.md)
