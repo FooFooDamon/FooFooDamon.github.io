@@ -12,6 +12,8 @@
 
 ### 文章列表（按时间逆排序）
 
+* 置顶、持续更新 | [技术债（持续更新）](https://github.com/FooFooDamon/FooFooDamon.github.io/blob/master/技术债（持续更新）.md)
+
 * 2018/07/20 | [Ubuntu 16.04 安装 C++ 版 TensorFlow 1.4.1](https://github.com/FooFooDamon/FooFooDamon.github.io/blob/master/Ubuntu_16.04安装C++版TensorFlow_1.4.1.md)
 
 * 2018/07/19 | [Ubuntu 16.04 安装 Caffe 1.0](https://github.com/FooFooDamon/FooFooDamon.github.io/blob/master/Ubuntu_16.04安装Caffe_1.0.md)
