@@ -37,7 +37,7 @@ sudo apt install --no-install-recommends libboost-all-dev
 ```
 sudo apt install libprotobuf-dev protobuf-compiler libgoogle-glog-dev libgflags-dev libhdf5-serial-dev
 
-备注：apt安装的protobuf版本是2.6.1，满足BLVC分支1.0版本的caffe，若是Intel分支1.1.1版本，则要求3.5.0以上，所以不适合在Ubuntu 16.04安装。
+备注：apt安装的protobuf版本是2.6.1，满足BVLC分支1.0版本的caffe，若是Intel分支1.1.1版本，则要求3.5.0以上，所以不适合在Ubuntu 16.04安装。
 ```
 
 5. 安装`OpenCV`（可选）
@@ -86,7 +86,7 @@ make runtest
 
 ## 备注
 
-Caffe分为几个版本，本文所用的是原版，即BLVC（[b]erke[l]ey[v]ision [c]affe）。另有Intel、OpenCL、Windows版本，在原版的基础上有特定方面的优化或定制化，详情可由[BLVC的GitHub主页](https://github.com/BVLC/caffe.git)跳转到相应版本的页面去了解，这里不详述。
+Caffe分为几个版本，本文所用的是原版，即BVLC（Berkeley Vision and Learning Center）。另有Intel、OpenCL、Windows版本，在原版的基础上有特定方面的优化或定制化，详情可由[BVLC的GitHub主页](https://github.com/BVLC/caffe.git)跳转到相应版本的页面去了解，这里不详述。
 
 此外，Caffe的运行方式可分为`仅CPU运行`和`有GPU参与`两种方式，安装要求和方式有所不同，后续将进行补充。
 
