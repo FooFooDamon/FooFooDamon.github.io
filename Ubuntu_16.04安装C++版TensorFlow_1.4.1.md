@@ -239,14 +239,70 @@ gcc: error: unrecognized command line option '-mfloat-abi=softfp'
 
 ### 手动拷贝头文件和库文件
 
+1. 拷贝库文件：
+
 ```
-待补充
+sudo cp bazel-bin/tensorflow/libtensorflow_cc.so /usr/local/lib/
+sudo cp bazel-bin/tensorflow/libtensorflow_framework.so /usr/local/lib/
 ```
+
+2. 下载缺失的依赖包并安装：
+
+```
+# 直接运行脚本即可下载依赖包
+
+./tensorflow/contrib/makefile/download_dependencies.sh
+
+# 但只需安装eigen
+
+cd tensorflow/contrib/makefile/downloads/eigen
+mkdir .build
+cd .build
+cmake ..
+make
+sudo make install
+cd -
+
+# 以及protobuf（可选）。如果你的系统已经装有，并且刚好是3.4.0，
+# 恭喜你，这一步可以省略，否则仍然需要折腾一番。
+# 还要注意的是，为了避免与系统已有的protobuf产生冲突，tensorflow
+# 依赖的protobuf最好不要装在系统目录，以下操作就选择装在用户家目录。
+# 当然，也可以选择其它目录，只需记住在写Makefile或CMakeLists.txt时
+# 将其头文件和库文件目录指定好就行了。
+
+cd tensorflow/contrib/makefile/downloads/protobuf
+./configure --prefix=$HOME
+make
+make install
+cd -
+```
+
+还需要说明的是，这些依赖包的缺失不影响tensorflow库的生成，但会影响其使用，因为在包含tensorflow库头文件时，不可避免要包含这些依赖包的头文件。
+
+3. 拷贝头文件：
+
+```
+sudo mkdir /usr/include/tensorflow
+sudo cp -L -r bazel-genfiles /usr/include/tensorflow/
+sudo rm -rf /usr/include/tensorflow/bazel-genfiles/external/local_config_cuda
+sudo cp -r tensorflow /usr/include/tensorflow/
+sudo cp -r third_party /usr/include/tensorflow/
+find /usr/include/tensorflow/ -name "*.o" -o -name "*.cc" | xargs sudo rm
+```
+
+4. 嗯……以上操作是不是很操蛋、很反人类？
 
 ### 验证安装情况
 
+需要自己写小程序来测，可以参考后面参考链接中一个叫`zwx1995zwx`的博客。本文前面“下载缺失依赖包”和“eigen安装”的内容就是参考这个网友的博客的，在此表示感谢！<br>
+
+另外，需要注意应用程序的Makefile至少需要添加以下几个头文件目录：
+
 ```
-待补充
+/usr/include/tensorflow
+/usr/include/tensorflow/bazel-genfiles
+/usr/include/tensorflow/tensorflow/contrib/makefile/downloads/nsync/public
+/usr/local/include/eigen3
 ```
 
 ## 参考（部分链接可能需要翻墙）
@@ -266,6 +322,8 @@ gcc: error: unrecognized command line option '-mfloat-abi=softfp'
 [https://github.com/bazelbuild/bazel/issues/4834](https://github.com/bazelbuild/bazel/issues/4834)
 
 [https://blog.csdn.net/u013510838/article/details/80102438](https://blog.csdn.net/u013510838/article/details/80102438)
+
+[https://blog.csdn.net/zwx1995zwx/article/details/79064064](https://blog.csdn.net/zwx1995zwx/article/details/79064064)
 
 ## 备注
 
