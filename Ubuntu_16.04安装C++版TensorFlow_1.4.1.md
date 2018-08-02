@@ -54,7 +54,7 @@ sudo apt-get update
 sudo apt-get install python-numpy python-dev python-pip python-wheel
 ```
 
-4. 安装`CUDA`和`cuDNN`（GPU版本必需）
+4. 安装`CUDA`和`cuDNN`（GPU版本必需，纯CPU版本也必需！）
 
     可参考：[Ubuntu 16.04 安装 CUDA 8.0 和 cuDNN 7](https://github.com/FooFooDamon/FooFooDamon.github.io/blob/master/Ubuntu_16.04安装CUDA_8.0和cuDNN_7.md)
 
@@ -261,7 +261,7 @@ cd .build
 cmake ..
 make
 sudo make install
-cd -
+cd ~/src/tensorflow-1.4.1/
 
 # 以及protobuf（可选）。如果你的系统已经装有，并且刚好是3.4.0，
 # 恭喜你，这一步可以省略，否则仍然需要折腾一番。
@@ -271,9 +271,11 @@ cd -
 # 将其头文件和库文件目录指定好就行了。
 
 cd tensorflow/contrib/makefile/downloads/protobuf
+./autogen.sh
 ./configure --prefix=$HOME
 make
 make install
+make clean
 cd -
 ```
 
@@ -288,6 +290,13 @@ sudo rm -rf /usr/include/tensorflow/bazel-genfiles/external/local_config_cuda
 sudo cp -r tensorflow /usr/include/tensorflow/
 sudo cp -r third_party /usr/include/tensorflow/
 find /usr/include/tensorflow/ -name "*.o" -o -name "*.cc" | xargs sudo rm
+sudo rm -rf /usr/include/tensorflow/tensorflow/contrib/makefile/downloads/eigen
+sudo rm -rf /usr/include/tensorflow/tensorflow/contrib/makefile/downloads/protobuf
+sudo rm -rf /usr/include/tensorflow/tensorflow/contrib/makefile/downloads/gemmlowp
+sudo rm -rf /usr/include/tensorflow/tensorflow/contrib/makefile/downloads/googletest
+
+# 其实还可以清除更多与C++头文件无关的东西，但太费事，清除以上内容就可以释放很多空间了。
+# 强迫症患者可以继续人肉找出其它多余的东西，这里不再详述。
 ```
 
 4. 嗯……以上操作是不是很操蛋、很反人类？
