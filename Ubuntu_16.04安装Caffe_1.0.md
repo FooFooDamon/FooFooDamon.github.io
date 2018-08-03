@@ -37,7 +37,7 @@ sudo apt install --no-install-recommends libboost-all-dev
 ```
 sudo apt install libprotobuf-dev protobuf-compiler libgoogle-glog-dev libgflags-dev libhdf5-serial-dev
 
-备注：apt安装的protobuf版本是2.6.1，满足BVLC分支1.0版本的caffe，若是Intel分支1.1.1版本，则要求3.5.0以上，所以不适合在Ubuntu 16.04安装。
+备注：关于protobuf版本的特别说明见后面内容。
 ```
 
 5. 安装`OpenCV`（可选）
@@ -53,6 +53,33 @@ sudo apt install libopencv-dev
 ```
 sudo apt install liblmdb-dev libleveldb-dev libsnappy-dev
 ```
+
+### 关于protobuf的特别说明
+
+若使用apt安装的protobuf，其版本在Ubuntu 16.04下是`2.6.1`，满足BVLC分支1.0版本的caffe，
+若是Intel分支1.1.1版本，则要求`3.5.0`以上，直接编译可能会报错。<br>
+
+另外，如果同时装有其它深度学习框架，例如`TensorFlow`，极有可能会出现**protobuf版本打架**的现象！
+一种想法是把apt安装的protobuf版本删除，使用自定义安装的版本。然而，却不能保证以后安装的软件会不会
+再次自动将默认版本protobuf安装回来，毕竟一些复杂的程序、库或框架的依赖太深，且包管理器一些“自动化”
+操作暗地里干了些啥我们也是很难一一获知的。所以，最好有一种允许多个protobuf版本共存的方法。<br>
+
+下面介绍我个人用的一种方法：<br>
+
+首先，确定好自定义安装的protobuf的位置（最好不是系统目录），例如安装在用户家目录`$HOME`，
+即protoc装在`$HOME/bin`，头文件装在`$HOME/include`，库文件装在`$HOME/lib`，编译方法一般是采用源码
+编译，这里不详细介绍。装好之后，在编译caffe之前，进行以下设置：
+
+```
+export CMAKE_INCLUDE_PATH=$HOME/include
+export CMAKE_LIBRARY_PATH=$HOME/lib
+export PATH=$HOME/bin:$PATH
+```
+
+即可让caffe使用自定义安装的protobuf版本了。这里不得不赞一下BVLC版本的caffe，其使用的`proto/caffe.pb.h`
+及对应的源文件是在编译时实时生成的，而不是预先生成并放进源码压缩包。实时生成的灵活性不必多说，可以适应
+不同版本的protobuf。另外，其`CMakeLists.txt`也写得很好，否则以上的`CMAKE_INCLUDE_PATH`和`CMAKE_LIBRARY_PATH`
+环境变量就算设置了也没有用处，也就切换不到装在非系统目录的protobuf库了。
 
 ### 安装caffe
 
