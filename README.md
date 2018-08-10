@@ -14,6 +14,8 @@
 
 * 置顶、持续更新 | [技术债（持续更新）](https://github.com/FooFooDamon/FooFooDamon.github.io/blob/master/技术债（持续更新）.md)
 
+* 2018/08/10 | [TensorFlow踩坑记录](https://github.com/FooFooDamon/FooFooDamon.github.io/blob/master/TensorFlow踩坑记录.md)
+
 * 2018/08/05 | [Linux下HTML转PDF](https://github.com/FooFooDamon/FooFooDamon.github.io/blob/master/Linux下HTML转PDF.md)
 
 * 2018/07/20 | [Ubuntu 16.04 安装 C++ 版 TensorFlow 1.4.1](https://github.com/FooFooDamon/FooFooDamon.github.io/blob/master/Ubuntu_16.04安装C++版TensorFlow_1.4.1.md)
