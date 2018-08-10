@@ -83,7 +83,7 @@ make install
 # --------------------------------------------------
 
 cd $HOME/src
-tar -zxvf opencv-2.4.9.zip
+unzip opencv-2.4.9.zip
 cd opencv-2.4.9/
 mkdir .build/
 cd .build/
