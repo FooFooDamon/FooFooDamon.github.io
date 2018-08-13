@@ -16,7 +16,7 @@ Caffe安装说明网页（见后面参考链接）用少数几条命令就能安
 
 1. 安装`CUDA`和`cuDNN`（GPU版本必需）
 
-    可参考：[Ubuntu 16.04 安装 CUDA 8.0 和 cuDNN 7](https://github.com/FooFooDamon/FooFooDamon.github.io/blob/master/Ubuntu_16.04安装CUDA_8.0和cuDNN_7.md)
+    可参考：<a href="Ubuntu_16.04安装CUDA_8.0和cuDNN_7.md">Ubuntu 16.04 安装 CUDA 8.0 和 cuDNN 7</a>
 
 2. 安装`BLAS`
 

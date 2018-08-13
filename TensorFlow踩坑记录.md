@@ -6,7 +6,7 @@
 
 本文从编译、安装和使用等方面叙述`TensorFlow`可能出现的问题及解决方法。TensorFlow版本为`1.4.1`，操作系统为`Ubuntu 16.04`，不保证文中出现的问题在其它版本或系统也会出现，更不保证文中解决方法对于其它版本或系统也有效，全文内容仅供参考。另，文中的问题针对C++，以后若有需要可能会加入Python和Java等语言。
 
-建议将本文与[《Ubuntu 16.04 安装 C++ 版 TensorFlow 1.4.1》](https://github.com/FooFooDamon/FooFooDamon.github.io/blob/master/Ubuntu_16.04安装C++版TensorFlow_1.4.1.md)搭配阅读。
+建议将本文与<a href="Ubuntu_16.04安装C++版TensorFlow_1.4.1.md">《Ubuntu 16.04 安装 C++ 版 TensorFlow 1.4.1》</a>搭配阅读。
 
 ## 编译之坑
 

@@ -70,7 +70,7 @@ Logfile is /tmp/cuda_install_15336.log
 
 4. ***注意事项***：
 
-a) 以上操作步骤有一项：***Install NVIDIA Accelerated Graphics Driver for Linux-x86_64 375.26?***，最好输入`n`跳过，不然安装起来非常麻烦，容易与当前系统的一些东西产生冲突。该图形驱动可在CUDA之前单独安装，可参考 [Ubuntu 16.04 安装 NVIDIA TITAN Xp 显卡驱动](https://github.com/FooFooDamon/FooFooDamon.github.io/blob/master/Ubuntu_16.04安装NVIDIA_TITAN_Xp显卡驱动.md) 一文。
+a) 以上操作步骤有一项：***Install NVIDIA Accelerated Graphics Driver for Linux-x86_64 375.26?***，最好输入`n`跳过，不然安装起来非常麻烦，容易与当前系统的一些东西产生冲突。该图形驱动可在CUDA之前单独安装，可参考 <a href="Ubuntu_16.04安装NVIDIA_TITAN_Xp显卡驱动.md">Ubuntu 16.04 安装 NVIDIA TITAN Xp 显卡驱动</a> 一文。
 
 b) 安装完成时若报某些库缺失，类似这样的信息：
 
