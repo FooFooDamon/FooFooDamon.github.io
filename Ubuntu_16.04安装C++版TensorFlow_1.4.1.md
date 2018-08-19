@@ -148,6 +148,12 @@ Configuration finished
 执行：
 
 ```
+# 带GPU支持的版本
+bazel build -c opt --config=cuda --verbose_failures //tensorflow:libtensorflow_cc.so
+
+# 或：
+
+# 纯CPU版本
 bazel build -c opt --verbose_failures //tensorflow:libtensorflow_cc.so
 ```
 
@@ -333,6 +339,8 @@ sudo rm -rf /usr/include/tensorflow/tensorflow/contrib/makefile/downloads/google
 [https://blog.csdn.net/u013510838/article/details/80102438](https://blog.csdn.net/u013510838/article/details/80102438)
 
 [https://blog.csdn.net/zwx1995zwx/article/details/79064064](https://blog.csdn.net/zwx1995zwx/article/details/79064064)
+
+[https://blog.csdn.net/wzz18191171661/article/details/70153526](https://blog.csdn.net/wzz18191171661/article/details/70153526)
 
 ## 备注
 
