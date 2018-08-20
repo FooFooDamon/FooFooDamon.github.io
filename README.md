@@ -16,6 +16,8 @@
 
 * 置顶、持续更新 | <a href="技术债（持续更新）.md">技术债（持续更新）</a>
 
+* 置顶、持续更新 | <a href="工具集（持续更新）.md">工具集（持续更新）</a>
+
 * 2018/08/10 | <a href="TensorFlow踩坑记录.md">TensorFlow踩坑记录</a>
 
 * 2018/08/05 | <a href="Linux下HTML转PDF.md">Linux下HTML转PDF</a>
@@ -37,9 +39,9 @@
 
 ### 联系方式
 
-`GitHub主页`：[https://github.com/FooFooDamon](https://github.com/FooFooDamon)
+* `GitHub主页`：[https://github.com/FooFooDamon](https://github.com/FooFooDamon)
 
-`邮箱`：<udc577@126.com>
+* `邮箱`：<udc577@126.com>
 
 
 ### 版权
