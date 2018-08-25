@@ -24,7 +24,23 @@
 
 ### protobuf的链接报错
 
-这个问题比较诡异，在Ubuntu `16.04`和`18.04`都出现过，但原因并不一样。`16.04`报错的原因是因为已安装的`protobuf`版本并非`TensorFlow`所需，加装或重装即可解决。而在`18.04`上，所需版本的`protobuf`已经装上，且库路径什么的也已经设置好，死活就是链接错误，有点怀疑是`bazel`的缺陷，后续若有进展再补上解决方案。
+这个问题比较蛋疼，一种原因是已安装的`protobuf`版本并非`TensorFlow`所需，加装或重装即可解决。而另一种原因就是，如果你在编译`TensorFlow`之前先安装了`Caffe`（另一个深度学习框架）并且这货生成的一个`libproto.a`版本（实际上也是protobuf库）与`TensorFlow`所需的`protobuf`版本不一样时，也会报错。这种情况的解法办法也很简单，将`libproto.a`移到另一个地方再继续编译`TensorFlow`就行了。至于后面还要不要移回来，就随你喜欢了，貌似这个`libproto.a`没有也不会造成什么影响，应该是需要的东西都编译进`Caffe`库了。对了，以上两种报错的现象都是差不多的，会打印`undefined symbol **google**protobuf***`，如果用工具查看相应的库，要么找不到函数符号，要么找到的符号没有地址，例如：
+
+```
+$ nm libproto.a | grep _ZNK6google8protobuf7Message11GetTypeNameB5cxx11Ev
+                 U _ZNK6google8protobuf7Message11GetTypeNameB5cxx11Ev
+```
+
+而正常的库应该类似这样的：
+
+```
+$ nm libprotobuf.so | grep _ZNK6google8protobuf7Message11GetTypeNameB5cxx11Ev
+000000000016c020 T _ZNK6google8protobuf7Message11GetTypeNameB5cxx11Ev
+```
+
+值得一提的是，有些经过编译器优化的库用`nm`命令是查看不了的，这时可尝试使用`readelf`命令并加上`-a`选项。
+
+最后，对于各种库的冲突，只能说林子大了，什么鸟都有，免不了要掐架，习惯就好……
 
 ## 安装之坑
 
@@ -274,4 +290,16 @@ $ find ~/include/tensorflow/ -name "*.h" | xargs grep "JPEG_LIB_VERSION" -n
 ```
 
 4. 下载正确版本的jpeg源码包，重新编译安装，并且OpenCV和业务程序最好也重新编译（见步骤1），重新运行，这回能正常运行了。
+
+### png库
+
+其实跟上面的jpeg坑是一样的，只不过这个库厚道一点，直接打印出警告，省却了自己用GDB去调试的麻烦，警告类似如下：
+
+```
+libpng warning: Application was compiled with png.h from libpng-1.6.34
+libpng warning: Application  is  running with png.c from libpng-1.2.53
+```
+
+没啥好说的，重装这个库吧。并且，最好也重新编译依赖于这个库的组件，例如前文提到的`Caffe`(待定 )，
+真不是一般的酸爽！
 
