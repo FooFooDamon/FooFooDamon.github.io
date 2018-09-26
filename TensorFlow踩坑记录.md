@@ -6,6 +6,8 @@
 
 本文从编译、安装和使用等方面叙述`TensorFlow`可能出现的问题及解决方法。TensorFlow版本为`1.4.1`，操作系统为`Ubuntu 16.04`，不保证文中出现的问题在其它版本或系统也会出现，更不保证文中解决方法对于其它版本或系统也有效，全文内容仅供参考。另，文中的问题针对C++，以后若有需要可能会加入Python和Java等语言。
 
+鉴于`TensorFlow`的霸道和慢速（不清楚后续那些新版本的速度有多大的提升），个人觉得改叫`CancerFlow`或`TensorSlow`比较贴切，不过其出品方是谷歌大厂，这大腿还是不能不抱，唉……
+
 建议将本文与<a href="Ubuntu_16.04安装C++版TensorFlow_1.4.1.md">《Ubuntu 16.04 安装 C++ 版 TensorFlow 1.4.1》</a>搭配阅读。
 
 ## 编译之坑
@@ -103,7 +105,11 @@ unzip opencv-2.4.9.zip
 cd opencv-2.4.9/
 mkdir .build/
 cd .build/
+# 以下cmake命令分CPU版本和GPU版本，可酌情增减一些选项
+# CPU版本，且开启调试模式（Debug）
 cmake -DCMAKE_BUILD_TYPE=Debug -DWITH_CUDA=OFF -DCMAKE_INSTALL_PREFIX=$HOME -DCMAKE_INCLUDE_PATH=$HOME/include -DCMAKE_LIBRARY_PATH=$HOME/lib ..
+# 或使用GPU版本，如果电脑有独立显卡的话。其中CUDA_GENERATION和-std=c++11这个选项在有些环境可能需要加上，不然在编译时报错
+# cmake -DCMAKE_INSTALL_PREFIX=$HOME -DCMAKE_INCLUDE_PATH=$HOME/include -DCMAKE_LIBRARY_PATH=$HOME/lib -DCUDA_GENERATION=Auto -DWITH_TBB=ON -DCMAKE_CXX_FLAGS="-std=c++11" ..
 make
 make install
 ```
