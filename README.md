@@ -18,7 +18,9 @@
 
 * 置顶、持续更新 | <a href="工具集（持续更新）.md">工具集（持续更新）</a>
 
-* 2018/10/06 | <a href="如何在Linux中配置基于密钥认证的SSH（转载）.pdf">如何在Linux中配置基于密钥认证的SSH（转载）.pdf</a>
+* 2018/11/19 | <a href="Ubuntu下LaTex安装及配置.md">Ubuntu下LaTex安装及配置</a>
+
+* 2018/10/06 | <a href="如何在Linux中配置基于密钥认证的SSH（转载）.pdf">如何在Linux中配置基于密钥认证的SSH（转载）</a>
 
 * 2018/08/10 | <a href="TensorFlow踩坑记录.md">TensorFlow踩坑记录</a>
 
