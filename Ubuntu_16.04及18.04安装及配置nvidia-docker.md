@@ -46,6 +46,54 @@ $ sudo add-apt-repository \
 （文件名可能不同，取决于你添加时的命令）移至别处（不必删除，因为日后还想恢复的话会比较容易），
 然后再执行`sudo apt-get update`更新即可。
 
+## 配置无需敲sudo即能使用docker命令
+
+1. 创建一个docker组
+
+```
+sudo groupadd docker
+```
+
+2. 将当前用户加入docker组
+
+```
+sudo usermod -aG docker $USER
+```
+
+3. 重新登录系统
+
+4. 任意用一条docker命令来验证，例如：
+
+```
+docker images
+```
+
+## 修改镜像存放位置（可选）
+
+1. 修改docker服务配置文件：
+
+```
+cd /etc/systemd/system/multi-user.target.wants
+
+sudo vim docker.service
+
+在ExecStart一行添加（或修改）一个选项（的值）：--graph=/Your/directory
+```
+
+2. 重启docker：
+
+```
+sudo systemctl daemon-reload
+
+sudo systemctl restart docker
+```
+
+3. 查看更改后的位置：
+
+```
+docker info | grep "Root Dir"
+```
+
 ## 拉取想要的镜像
 
 ```
