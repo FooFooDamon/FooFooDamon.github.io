@@ -78,6 +78,7 @@ cd /etc/systemd/system/multi-user.target.wants
 sudo vim docker.service
 
 在ExecStart一行添加（或修改）一个选项（的值）：--graph=/Your/directory
+还可顺便添加或修改存储驱动类型：--storage-driver=overlay
 ```
 
 2. 重启docker：
@@ -93,6 +94,9 @@ sudo systemctl restart docker
 ```
 docker info | grep "Root Dir"
 ```
+
+**另**：还可以将以上选项值配置在`/etc/docker/daemon.json`（文件不存在则新建），
+再重启docker服务。
 
 ## 拉取想要的镜像
 
