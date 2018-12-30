@@ -1,5 +1,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
+# Ubuntu 16.04及18.04安装及配置nvidia-docker
+
 ## 根据官方指导进行安装
 
 ```
@@ -25,6 +27,11 @@ docker run --runtime=nvidia --rm nvidia/cuda:9.0-base nvidia-smi
 
 以上是从官方网页摘抄并经过实测的安装过程，适用于首次安装的机子。若已有旧版本的docker，
 则还需要额外的一些操作，详情见`官方GitHub`：https://github.com/NVIDIA/nvidia-docker
+
+至于GPU镜像，直接下载NVIDIA提供的镜像即可，不必自己下载纯净版的操作系统镜像再安装
+显卡驱动和CUDA等，非常麻烦！
+
+至此，nvidia-docker安装完毕。以下是docker常见操作，无兴趣者可忽略。
 
 ## 添加更快的安装源（可选）
 
@@ -144,28 +151,6 @@ root@6f7fac1bfd80:/#
 ## 退出容器并令其后台运行，然后再次进入的一种方法
 
 不要用exit命令退出，而是依次按`Ctrl+P`和`Ctrl+Q`。再次进入则用attach命令，例如`docker attach nvidia_ubuntu_16.04`。
-
-## 给容器安装CUDA和cuDNN
-
-1. 将安装包拷贝到容器内部
-
-```
-[foo@foo-pc ~]$ docker cp cuda_8.0.61_375.26_linux-run nvidia_ubuntu_16.04:/root/
-[foo@foo-pc ~]$
-[foo@foo-pc ~]$ docker cp cudnn-8.0-linux-x64-v7.tgz nvidia_ubuntu_16.04:/root/
-```
-
-2. 先安装或升级一些基础设施
-
-```
-root@6f7fac1bfd80:~# apt install perl
-root@6f7fac1bfd80:~#
-root@6f7fac1bfd80:~# apt install gcc g++ make cmake
-root@6f7fac1bfd80:~#
-root@6f7fac1bfd80:~# apt install automake autoconf libtool pkg-config flex bison
-```
-
-3. 再安装正主，参考：https://foofoodamon.github.io/Ubuntu_16.04安装CUDA_8.0和cuDNN_7.md
 
 ## 将修改过的容器保存成一个新镜像
 
