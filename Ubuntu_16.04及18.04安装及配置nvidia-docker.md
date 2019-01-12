@@ -28,6 +28,10 @@ docker run --runtime=nvidia --rm nvidia/cuda:9.0-base nvidia-smi
 以上是从官方网页摘抄并经过实测的安装过程，适用于首次安装的机子。若已有旧版本的docker，
 则还需要额外的一些操作，详情见`官方GitHub`：https://github.com/NVIDIA/nvidia-docker
 
+另外需注意的是，若提示缺少依赖、未安装`docker-ce`，则需要先安装`docker-ce`，再返回
+进行以上操作。安装`docker-ce`只需一条命令：`sudo apt install docker-ce`。其中涉及到
+安装源的配置，见后面描述。
+
 至于GPU镜像，直接下载NVIDIA提供的镜像即可，不必自己下载纯净版的操作系统镜像再安装
 显卡驱动和CUDA等，非常麻烦！
 
@@ -163,4 +167,18 @@ sha256:e40a5a628d57c366f73b296b7351a976d353911e1e35d22d96fd43225a4ade8c
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 nvidia_ubuntu       16.04               e40a5a628d57        14 seconds ago      3.24GB
 ```
+
+## 安装SSH服务以便能多窗口登录（仅推荐在开发环境上配置）
+
+````
+apt install -y openssh-server
+
+# 打开SSH服务配置文件：vim /etc/ssh/sshd_config
+# 增加或修改以下配置项（去掉前面的井号）：
+# PermitRootLogin yes
+# UsePAM no
+
+service ssh start
+
+````
 
