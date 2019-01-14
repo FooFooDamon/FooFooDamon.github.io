@@ -171,13 +171,17 @@ nvidia_ubuntu       16.04               e40a5a628d57        14 seconds ago      
 ## 安装SSH服务以便能多窗口登录（仅推荐在开发环境上配置）
 
 ````
+# 先使用passwd命令来设置docker容器内的用户密码（如果还没有密码）
+# 然后执行以下操作：
+
 apt install -y openssh-server
 
-# 打开SSH服务配置文件：vim /etc/ssh/sshd_config
+# 再打开SSH服务配置文件：vim /etc/ssh/sshd_config
 # 增加或修改以下配置项（去掉前面的井号）：
 # PermitRootLogin yes
 # UsePAM no
 
+# 最后启动SSH服务，若已运行则使用restart
 service ssh start
 
 ````
