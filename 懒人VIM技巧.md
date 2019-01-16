@@ -34,7 +34,9 @@
 
 ## 常用快捷键备忘录
 
-待补充……
+跳转到函数定义：`Ctrl + ]`
+
+回跳：`Ctrl + T`
 
 ## 快速安装`YouCompleteMe`插件
 
@@ -48,4 +50,67 @@ vim-addons install youcompleteme
 
 网上很多教程可能因为写得较早的原因，安装过程都比较繁琐。此处则只需几条命令，
 不需额外配置，装好后开箱即用。当然，需要更高级、更个性化的定制则除外。
+
+## `jedi-vim`——用于python的补全及跳转
+
+### 创建VIM插件目录（若已存在则跳过）
+
+````
+mkdir -p ~/.vim/autoload ~/.vim/bundle
+````
+
+### 安装`pathogen`用于管理插件
+
+把`pathogen`相关的VIM脚本下载到插件自动加载目录下即可完成安装：
+
+````
+curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+````
+
+然后，在`~/.vimrc`文件添加以下语句：
+
+````
+execute pathogen#infect()
+````
+
+并且注意若`~/.vimrc`包含以下语句，则上述语句应放在其前面：
+
+````
+syntax on
+filetype plugin indent on
+````
+
+### 安装及配置`jedi-vim`
+
+更新`jedi`：
+
+````
+pip install jedi
+````
+
+再安装`jedi-vim`：
+
+````
+git clone --recursive https://github.com/davidhalter/jedi-vim.git ~/.vim/bundle/jedi-vim
+````
+
+完毕。
+
+### `jedi-vim`常用快捷键（摘自其官方GitHub）
+
+* Completion ``<C-Space>``
+* Goto assignments ``<leader>g`` (typical goto function)
+* Goto definitions ``<leader>d`` (follow identifier as far as possible, includes imports and statements)
+* Show Documentation/Pydoc ``K`` (shows a popup with assignments)
+* Renaming ``<leader>r``
+* Usages ``<leader>n`` (shows all the usages of a name)
+* Open module, e.g. ``:Pyimport os`` (opens the ``os`` module)
+
+其中，``<leader>``在VIM默认是反斜杠“\”。
+
+### 参考材料
+
+* https://github.com/tpope/vim-pathogen
+
+* https://github.com/davidhalter/jedi-vim
 
