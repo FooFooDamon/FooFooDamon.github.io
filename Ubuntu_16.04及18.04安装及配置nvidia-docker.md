@@ -168,6 +168,22 @@ REPOSITORY          TAG                 IMAGE ID            CREATED             
 nvidia_ubuntu       16.04               e40a5a628d57        14 seconds ago      3.24GB
 ```
 
+## 将镜像备份为一个文件
+
+````
+$ docker save -o nvidia_ubuntu_16.04.docker.img.tar nvidia_ubuntu:16.04
+或：
+$ docker save > nvidia_ubuntu_16.04.docker.img.tar nvidia_ubuntu:16.04
+````
+
+## 从备份文件导出镜像到另一台机器
+
+````
+$ docker load -i nvidia_ubuntu_16.04.docker.img.tar
+或：
+$ docker load < nvidia_ubuntu_16.04.docker.img.tar
+````
+
 ## 安装SSH服务以便能多窗口登录（仅推荐在开发环境上配置）
 
 ````
