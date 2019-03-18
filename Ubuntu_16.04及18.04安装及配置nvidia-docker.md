@@ -2,7 +2,37 @@
 
 # Ubuntu 16.04及18.04安装及配置nvidia-docker
 
-## 根据官方指导进行安装
+## 先安装`docker-ce`（若已安装则忽略）
+
+````
+sudo apt update
+
+sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg-agent \
+    software-properties-common
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+sudo apt-key fingerprint 0EBFCD88
+
+sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+
+sudo apt update
+
+sudo apt-get install docker-ce docker-ce-cli containerd.io
+````
+
+参考材料：
+
+https://docs.docker.com/install/linux/docker-ce/ubuntu/
+
+## 再加壳：安装`nvidia-docker`
 
 ```
 # Add the package repositories
@@ -22,15 +52,11 @@ sudo apt-get install -y nvidia-docker2
 sudo pkill -SIGHUP dockerd
 
 # Test nvidia-smi with the latest official CUDA image
-docker run --runtime=nvidia --rm nvidia/cuda:9.0-base nvidia-smi
+sudo docker run --runtime=nvidia --rm nvidia/cuda:9.0-base nvidia-smi
 ```
 
 以上是从官方网页摘抄并经过实测的安装过程，适用于首次安装的机子。若已有旧版本的docker，
 则还需要额外的一些操作，详情见`官方GitHub`：https://github.com/NVIDIA/nvidia-docker
-
-另外需注意的是，若提示缺少依赖、未安装`docker-ce`，则需要先安装`docker-ce`，再返回
-进行以上操作。安装`docker-ce`只需一条命令：`sudo apt install docker-ce`。其中涉及到
-安装源的配置，见后面描述。
 
 至于GPU镜像，直接下载NVIDIA提供的镜像即可，不必自己下载纯净版的操作系统镜像再安装
 显卡驱动和CUDA等，非常麻烦！
