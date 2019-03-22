@@ -147,7 +147,7 @@ docker pull ubuntu:16.04
 ## 创建一个新容器并配置中文环境
 
 ```
-[foo@foo-pc ~]$ docker run -t -i --runtime=nvidia ubuntu:16.04 /bin/bash
+[foo@foo-pc ~]$ docker run -v /etc/localtime:/etc/localtime:ro --ulimit core=-1 -t -i --runtime=nvidia ubuntu:16.04 /bin/bash
 root@6f7fac1bfd80:/#
 root@6f7fac1bfd80:/# sed -i "/archive\.ubuntu/s//cn.archive.ubuntu/g" /etc/apt/sources.list
 root@6f7fac1bfd80:/#
@@ -162,11 +162,21 @@ exit
 [foo@foo-pc ~]$
 ```
 
-其中，`-t`选项表示分配一个虚拟终端（terminal），`-i`表示交互式（interactive；不加则无法
-进行交互式操作，再按`Ctrl + C`可回到宿主机Shell环境，但该容器还在运行，用`attach`或`exec`
-可再次进入容器，不过前者仍然无法进行交互式操作），`--runtime=nvidia`表示让容器在运行期间
-使用NVIDIA的设施（即显卡驱动等，若不需要用到则可以不加），`sed -i ...`一行的作用是将部分
-软件源替换成国内源以加快`apt`下载速度。
+其中：
+
+* `-v /etc/localtime:/etc/localtime:ro`表示将本地时区文件挂载进容器，以保持与宿主机时区同步，
+`ro`表示只读（read-only）；`-v`也可用于挂载目录。
+
+* `--ulimit core=-1`能令docker在程序core dumped时能生成core文件且不限制其大小。
+
+* `-t`选项表示分配一个虚拟终端（terminal）。
+
+* `-i`表示交互式（interactive），不加则无法进行交互式操作，再按`Ctrl + C`可回到宿主机Shell环境，
+但该容器还在运行，用`attach`或`exec`可再次进入容器，不过前者仍然无法进行交互式操作。
+
+* `--runtime=nvidia`表示让容器在运行期间使用NVIDIA的设施（即显卡驱动等），若不需要用到则可以不加。
+
+* `sed -i ...`一行的作用是将部分软件源替换成国内源以加快`apt`下载速度。
 
 ## 查看、重命名并重新启动刚才的容器
 
