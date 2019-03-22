@@ -147,8 +147,9 @@ docker pull ubuntu:16.04
 ## 创建一个新容器并配置中文环境
 
 ```
-[foo@foo-pc ~]$ docker run -i -t --runtime=nvidia ubuntu:16.04 /bin/bash
+[foo@foo-pc ~]$ docker run -t -i --runtime=nvidia ubuntu:16.04 /bin/bash
 root@6f7fac1bfd80:/#
+root@6f7fac1bfd80:/# sed -i "/archive\.ubuntu/s//cn.archive.ubuntu/g" /etc/apt/sources.list
 root@6f7fac1bfd80:/#
 root@6f7fac1bfd80:/# apt update
 root@6f7fac1bfd80:/#
@@ -160,6 +161,12 @@ root@6f7fac1bfd80:/# exit
 exit
 [foo@foo-pc ~]$
 ```
+
+其中，`-t`选项表示分配一个虚拟终端（terminal），`-i`表示交互式（interactive；不加则无法
+进行交互式操作，再按`Ctrl + C`可回到宿主机Shell环境，但该容器还在运行，用`attach`或`exec`
+可再次进入容器，不过前者仍然无法进行交互式操作），`--runtime=nvidia`表示让容器在运行期间
+使用NVIDIA的设施（即显卡驱动等，若不需要用到则可以不加），`sed -i ...`一行的作用是将部分
+软件源替换成国内源以加快`apt`下载速度。
 
 ## 查看、重命名并重新启动刚才的容器
 
@@ -227,4 +234,9 @@ apt install -y openssh-server
 service ssh start
 
 ````
+
+2019/03/22更新：若仅为了能多窗口登录容器，可不必安装SSH，
+使用`docker exec -ti nvidia_ubuntu_16.04 bash`即可。不过，某些场景下还是需要用到SSH，
+例如docker容器在远程机器，安装上SSH服务后就可以直接连接容器，而就不必先登录远程宿主
+机，再执行`docker exec`，多做一步。
 
