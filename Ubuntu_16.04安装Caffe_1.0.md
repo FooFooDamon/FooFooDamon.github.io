@@ -20,9 +20,17 @@ Caffe安装说明网页（见后面参考链接）用少数几条命令就能安
 
 2. 安装`BLAS`
 
+基础版（无多线程加速）则执行：
+
 ```
 sudo apt install libatlas-base-dev
 ```
+
+可多线程运行版则执行：
+
+````
+sudo apt install libopenblas-dev
+````
 
 3. 安装`Boost`
 
@@ -92,7 +100,11 @@ cd caffe-1.0
 mkdir build
 cd build
 # 要求系统先装好2.8.7版本以上的cmake
-cmake -DCMAKE_INSTALL_PREFIX=/usr/local .. # 如果只使用CPU，还可加上 -DCPU_ONLY=ON 选项
+# 若只使用CPU，则需要加上：-DCPU_ONLY=ON
+# 若前面安装的是openblas，则需要加上：-DBLAS=open
+# 若要安装到非系统目录，例如/usr/local，则可加上：-DCMAKE_INSTALL_PREFIX=/usr/local
+# 更多编译选项可自行查阅CMakeLists.txt或Makefile
+cmake ..
 make
 sudo make install
 ```
