@@ -69,10 +69,11 @@ sudo apt-get install nfs-utils
 2、将远程目录挂载到本地，本地目录自行确定：
 
 ```
-sudo mount -t nfs xxx.xxx.xxx.xxx:/home/foo/git /home/foo/local_git
+sudo mount -t nfs -o nolock,soft xxx.xxx.xxx.xxx:/home/foo/git /home/foo/local_git
 ```
 
-其中xxx.xxx.xxx.xxx指的是服务器的IP。为方便起见，可将这条命令加入开机启动设置（例如/etc/rc.local）。
+其中，xxx.xxx.xxx.xxx指的是服务器的IP，`-o nolock,soft`则是防止服务端不可用时客户端卡住
+的情况（待验证）。为方便起见，可将这条命令加入开机启动设置（例如/etc/rc.local）。
 
 如果挂载出现权限错误，即类似：
 
