@@ -20,6 +20,9 @@ sudo apt-get install openjdk-8-jdk
 
 2. 安装`bazel`（至关重要！！！）
 
+***以下deb包安装方式不推荐，请勿使用，其内容仅保留用作反面教程！！***
+简易的安装方式应该是下载并直接执行`bazel-0.5.4-installer-linux-x86_64.sh`。
+
 ```
 echo "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
 
