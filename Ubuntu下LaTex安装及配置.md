@@ -104,13 +104,13 @@ $ fc-list :lang=zh-cn
 
 ## 参考材料
 
-<a href="分享_10 款 Linux 平台上最好的 LaTeX 编辑器.pdf">分享_10 款 Linux 平台上最好的 LaTeX 编辑器</a>
+<a href="references/分享_10 款 Linux 平台上最好的 LaTeX 编辑器.pdf">分享_10 款 Linux 平台上最好的 LaTeX 编辑器</a>
 
-<a href="Linux环境搭建中文LaTeX排版系统 - Blog - CSDN博客.pdf">Linux环境搭建中文LaTeX排版系统</a>
+<a href="references/Linux环境搭建中文LaTeX排版系统 - Blog - CSDN博客.pdf">Linux环境搭建中文LaTeX排版系统</a>
 
-<a href="TexMaker安装及中文输出-简单生活.pdf">TexMaker安装及中文输出</a>
+<a href="references/TexMaker安装及中文输出-简单生活.pdf">TexMaker安装及中文输出</a>
 
-<a href="解决LaTeX中文输出问题_金玉木石_新浪博客.pdf">解决LaTeX中文输出问题</a>
+<a href="references/解决LaTeX中文输出问题_金玉木石_新浪博客.pdf">解决LaTeX中文输出问题</a>
 
-<a href="再说在LaTeX中使用中文字体_jowtte_新浪博客.pdf">再说在LaTeX中使用中文字体</a>
+<a href="references/再说在LaTeX中使用中文字体_jowtte_新浪博客.pdf">再说在LaTeX中使用中文字体</a>
 
