@@ -153,6 +153,24 @@ $ sudo dpkg -i libcudnn7-dev_7.0.5.15-1+cuda8.0_amd64.deb
 
 这种方式的安装如果报错，一般是某些依赖关系没满足，根据其报错的信息补足依赖关系即可，无法在此详述。另外，如果这种安装方法出现头文件不能被正确识别或读取，可手动修改头文件名称或权限，详见参考链接。
 
+## 用`apt`安装
+
+`cuDNN`还可以用`apt`进行安装，具体为：先用`apt-cache`查询（支持`Tab`键补全），
+再指定版本安装即可。示例如下：
+
+````
+$ apt-cache madison libcudnn<敲一次或多次Tab键>
+libcudnn7      libcudnn7-dev
+
+$ apt-cache madison libcudnn7
+ libcudnn7 | 7.0.5.15-1+cuda8.0 | file:/var/nv-tensorrt-repo-ga-cuda8.0-trt3.0.2-20180108  Packages
+
+$ apt-cache madison libcudnn7-dev 
+libcudnn7-dev | 7.0.5.15-1+cuda8.0 | file:/var/nv-tensorrt-repo-ga-cuda8.0-trt3.0.2-20180108  Packages
+
+$ sudo apt install libcudnn7=7.0.5.15-1+cuda8.0 libcudnn7-dev=7.0.5.15-1+cuda8.0
+````
+
 ## 参考
 
 [https://blog.csdn.net/10km/article/details/61915535](https://blog.csdn.net/10km/article/details/61915535)
