@@ -54,10 +54,12 @@ vim-addons install youcompleteme
 ````
 flags = [
     '-isystem',
-    '/your/header/path1'
+    '/your/header/path1',
 
 	'-isystem',
-    '/your/header/path2'
+    '/your/header/path2',
+
+	<More ...>
 ]
 ````
 
