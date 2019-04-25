@@ -32,13 +32,9 @@
 <a href="references/手把手教你把Vim改装成一个IDE编程环境(图文) - 吴垠的专栏 - 博客频道 - CSDN.NET.pdf">这里</a>
 查看备份文档。
 
-## 常用快捷键备忘录
+## 安装及配置`YouCompleteMe`插件
 
-跳转到函数定义：`Ctrl + ]`
-
-回跳：`Ctrl + T`
-
-## 快速安装`YouCompleteMe`插件
+### 快速安装
 
 以下适用于`Ubuntu`系统，版本`14.04`以上：
 
@@ -50,6 +46,22 @@ vim-addons install youcompleteme
 
 网上很多教程可能因为写得较早的原因，安装过程都比较繁琐。此处则只需几条命令，
 不需额外配置，装好后开箱即用。当然，需要更高级、更个性化的定制则除外。
+
+### 添加自定义头文件目录
+
+新建或追加`~/.vim/.ycm_extra_conf.py`：
+
+````
+flags = [
+    '-isystem',
+    '/your/header/path1'
+
+	'-isystem',
+    '/your/header/path2'
+]
+````
+
+值得说明的是，若已经将这些目录`set`进`path`里（见后面配置），则该配置操作可以不做。
 
 ## `jedi-vim`——用于python的补全及跳转
 
@@ -113,4 +125,30 @@ git clone --recursive https://github.com/davidhalter/jedi-vim.git ~/.vim/bundle/
 * https://github.com/tpope/vim-pathogen
 
 * https://github.com/davidhalter/jedi-vim
+
+## 常见配置
+
+* 追加自定义的头文件目录。示例：`set path+=$HOME/include`
+
+## 常用快捷键备忘录
+
+### 内置
+
+* 回跳（到光标上次所在）：`Ctrl + o`
+
+* 前跳（与`Ctrl + o`相对）：`Ctrl + i`
+
+* 跳到文件：`gf`（即：goto file。若是非系统目录里的头文件，还需设置`path`，见前面配置）
+
+* 跳转到函数定义：`Ctrl + ]`
+
+* 回跳：`Ctrl + t`
+
+### `jedi-vim`
+
+见`jedi-vim`一节。
+
+### 其它
+
+待补充
 
