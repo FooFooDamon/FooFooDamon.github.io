@@ -134,6 +134,22 @@ git clone --recursive https://github.com/davidhalter/jedi-vim.git ~/.vim/bundle/
 
 ### 内置
 
+* 命令模式转为编辑模式：`i`（即：insert）
+
+* 命令模式转为可视化模式：`v`（即：visual）
+
+* 恢复命令模式：`Esc`
+
+* 撤销、重做更改：分别为`u`（即：undo）、`Ctrl + r`（即：redo）
+
+* 左、下、上、右移动光标：分别为`h`、`j`、`k`、`l`
+
+* 向前、后翻屏：分别为`Ctrl + f`（即：forward）、`Ctrl + b`（即：backward）
+
+* 跳到文件开头、结尾：分别为`gg`、`Shift + g`
+
+* 跳到行开头、结尾：分别为`Shift + ^`、`Shift + $`
+
 * 回跳（到光标上次所在）：`Ctrl + o`
 
 * 前跳（与`Ctrl + o`相对）：`Ctrl + i`
@@ -143,6 +159,16 @@ git clone --recursive https://github.com/davidhalter/jedi-vim.git ~/.vim/bundle/
 * 跳转到函数定义：`Ctrl + ]`
 
 * 回跳：`Ctrl + t`
+
+* 单行局部、单行整行、N行的复制：分别为`y`（需先在可视化模式下选定内容）、`yy`、`Nyy`
+（N为具体行数，y为yank）之后，再`p`（即：paste）
+
+* 单行局部、单行整行、N行的剪切/删除：与上相似，将`y`换成`d`（即：delete）即可，
+且在删除时不需要加`p`
+
+* 列模式插入：`Ctrl + v` -> 移动光标选取多行 -> `Shift + i` -> 输入要插入的内容 -> 两次`Esc`
+
+* 列模式删除：`Ctrl + v` -> 移动光标选取多行 -> `d`
 
 ### `jedi-vim`
 
