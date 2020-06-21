@@ -75,13 +75,20 @@ mkdir -p ~/.vim/autoload ~/.vim/bundle
 
 ### 安装`pathogen`用于管理插件
 
-把`pathogen`相关的VIM脚本下载到插件自动加载目录下即可完成安装：
+
+直接用apt命令来安装：
+
+````
+sudo apt install vim-pathogen
+````
+
+或者把`pathogen`相关的VIM脚本下载到插件自动加载目录下亦可：
 
 ````
 curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 ````
 
-然后，在`~/.vimrc`文件添加以下语句：
+安装完成后，在`~/.vimrc`文件添加以下语句：
 
 ````
 execute pathogen#infect()
@@ -95,6 +102,14 @@ filetype plugin indent on
 ````
 
 ### 安装及配置`jedi-vim`
+
+#### 方法一：
+
+````
+sudo apt install vim-python-jedi
+````
+
+#### 方法二：
 
 更新`jedi`：
 
