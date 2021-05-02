@@ -105,7 +105,7 @@ sudo usermod -aG docker $USER
 docker images
 ```
 
-## 修改镜像存放位置（可选）
+## 修改镜像存放位置以及一些常见配置（可选）
 
 1. 修改docker服务配置文件：
 
@@ -115,10 +115,10 @@ cd /etc/systemd/system/multi-user.target.wants
 sudo vim docker.service
 
 在ExecStart一行添加（或修改）一个选项（的值）：--graph=/Your/directory
-还可顺便添加或修改存储驱动类型：--storage-driver=overlay
+
 ```
 
-2. 重启docker：
+2. 重启docker服务：
 
 ```
 sudo systemctl daemon-reload
@@ -132,8 +132,17 @@ sudo systemctl restart docker
 docker info | grep "Root Dir"
 ```
 
-**另**：还可以将以上选项值配置在`/etc/docker/daemon.json`（文件不存在则新建），
-再重启docker服务。
+**注**：在**docker程序更新时，以上配置文件可能会被还原**，为避免此问题，
+可将以上选项值配置在`/etc/docker/daemon.json`（文件不存在则新建），
+再重启docker服务。镜像存放位置及一些常见的配置项如下（双斜线后为注释，
+实际使用时要删除）：
+
+```
+"data-root": "/Your/directory" // 镜像存放位置
+"storage-driver": "overlay2" // 存储驱动类型，根据实际需求而定
+"live-restore": true // docker守护进程（服务）崩溃或重启时，容器保持运行
+"insecure-registries": [ "www.yourdomain.com" ] // 通常（临时）用于内部非安全仓库，使用该配置项后可以不用配置安全证书
+```
 
 ## 拉取想要的镜像
 
