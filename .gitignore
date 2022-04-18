@@ -1,5 +1,8 @@
 .*.swp
 *.log
 *.aux
+*.fdb_latexmk
+*.fls
 *.synctex.gz
+*.toc
 xx.pdf
