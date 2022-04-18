@@ -1,12 +1,13 @@
 \documentclass[12pt]{article}
 \usepackage{xeCJK} % 字符集
-\setCJKmainfont{AR PL UKai CN}
+\setCJKmainfont{文鼎ＰＬ简报宋}
 \usepackage{geometry} % 页面边距
 \geometry{left = 4pt, right = 8pt, top = 1cm, bottom = 1.5cm}
 \usepackage{color}
 \pagecolor[rgb]{0.9, 0.99, 0.9}
-\usepackage[bookmarks = true, colorlinks, linkcolor = black]{hyperref}
+\usepackage[bookmarks = true, colorlinks = true, linkcolor = blue]{hyperref}
 \usepackage{amsmath} % 数学公式排版
+\usepackage{unicode-math}
 \begin{document}
 
 \begin{center}
@@ -22,7 +23,10 @@
 
 \newpage
 
+\renewcommand{\contentsname}{目录}
+\begin{center}
 \tableofcontents
+\end{center}
 \newpage
 
 \section{微积分}
@@ -52,7 +56,9 @@ f'(x) & = \frac{dy}{dx}\\
 
 \subsubsection{四则运算的求导法则}
 
-\paragraph{和}
+\paragraph{\textbf{\emph{\underline{和}}}}
+
+\quad \\
 
 若有：
 
@@ -80,7 +86,9 @@ h'(x) & = \lim_{\Delta x \to 0}\frac{(f(x + \Delta x) + g(x + \Delta x)) - (f(x)
 \end{aligned}
 \end{equation*}
 
-\paragraph{差}
+\paragraph{\textbf{\emph{\underline{差}}}}
+
+\quad \\
 
 若有：
 
@@ -100,7 +108,9 @@ h'(x) = f'(x) - g'(x)
 
 推导同上。
 
-\paragraph{积}
+\paragraph{\textbf{\emph{\underline{积}}}}
+
+\quad \\
 
 若有：
 
@@ -128,8 +138,10 @@ h'(x) & = \lim_{\Delta x \to 0}\frac{f(x + \Delta x) \cdot g(x + \Delta x) - f(x
 & = f'(x)g(x) + f(x)g'(x)
 \end{aligned}
 \end{equation*}
+\\
+\paragraph{\textbf{\emph{\underline{商}}}}
 
-\paragraph{商}
+\quad \\
 
 若有：
 
