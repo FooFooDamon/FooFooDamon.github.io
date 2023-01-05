@@ -34,8 +34,14 @@ pandoc -o xx.pdf *.html
 
 ### 示例
 
+本地文档：
 ```
 wkhtmltopdf --no-images --disable-javascript --disable-local-file-access --disable-plugins xx.html xx.pdf
+```
+
+网址：
+```
+wkhtmltopdf 'https://github.com/' github.pdf
 ```
 
 ## pdftk（用于合并多个PDF）
