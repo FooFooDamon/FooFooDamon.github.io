@@ -63,5 +63,5 @@
 
 ### 版权
 
-待补充
+Apache License Version 2.0
 
