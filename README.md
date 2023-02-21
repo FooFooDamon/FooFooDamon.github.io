@@ -21,6 +21,8 @@
 
 * 置顶、持续更新 | <a href="懒人VIM技巧.md">懒人VIM技巧</a>
 
+* 2023/02/21 | <a href="嵌入式Linux前期准备（软件篇）.md">嵌入式Linux前期准备（软件篇）</a>
+
 * 2023/02/20 | <a href="编译Linux内核时使用较高版本make导致每次均全量编译的问题.md">编译Linux内核时使用较高版本make导致每次均全量编译的问题</a>
 
 * 2019/01/12 | <a href="ubuntu字符界面中文乱码 - chinabinlang的专栏 - CSDN博客.pdf">ubuntu字符界面中文乱码（转载）</a>
