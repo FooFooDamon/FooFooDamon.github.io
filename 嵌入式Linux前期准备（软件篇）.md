@@ -113,7 +113,7 @@
 
 ### 4.2 NFS服务及目录挂载
 
-* 参考《[Linux下通过NFS挂载远程目录](https://foofoodamon.github.io/Linux下通过NFS挂载远程目录.md)》。
+* 参考《[Linux下通过NFS挂载远程目录](Linux下通过NFS挂载远程目录.md)》。
 
 ### 4.3 TFTP服务
 
