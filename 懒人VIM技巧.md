@@ -259,7 +259,7 @@ git clone --recursive https://github.com/davidhalter/jedi-vim.git ~/.vim/bundle/
 
 见`jedi-vim`一节。
 
-### 其它
+## 其它（2023.02.22更新）
 
 * 后续再涉及到更多配置、更多语言的话，不会再更新本文，而是推荐大家在空闲之余了解一下VIM脚本编程，
 即`VIMScript`或`VIM Scripting`，这样有利于自行定制化，个中便利和乐趣谁试谁谁知道。
