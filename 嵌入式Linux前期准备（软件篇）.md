@@ -42,7 +42,7 @@
     ````
     $ sudo apt install minicom
     $
-    $ sudo minicom -s
+    $ sudo minicom -s # 并对以下标有序号的菜单项按顺序进行操作
             +-----[configuration]------+
             | Filenames and paths      |
             | File transfer protocols  |
@@ -54,7 +54,7 @@
             | Exit                     |
             | Exit from Minicom        | <--- (3)
             +--------------------------+
-    (1):
+    以下是步骤(1)的明细项:
     +-----------------------------------------------------------------------+
     | A -    Serial Device      : /dev/ttyUSB0                              |
     | B - Lockfile Location     : /var/lock                                 |
@@ -67,6 +67,9 @@
     |    Change which setting?                                              |
     +-----------------------------------------------------------------------+
     ````
+        注：以上只是最基础的设备，此外还可进入“Screen and keyboard”里，
+        按提示设置“自动换行”，这有利于显示一些字数很多的打印内容
+        （例如U-Boot环境变量的打印）。
 
     * 使用：
 
