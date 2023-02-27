@@ -95,8 +95,10 @@
     ````
 
 * 最后在`~/.bashrc`加入以下语句：
+
     ````
     export PATH=${PATH}:~/bin/gcc-linaro-arm-linux-gnueabihf-4.9-2014.09_linux/bin
+
     export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:~/bin/gcc-linaro-arm-linux-gnueabihf-4.9-2014.09_linux/arm-linux-gnueabihf/libc/lib/arm-linux-gnueabihf:~/bin/gcc-linaro-arm-linux-gnueabihf-4.9-2014.09_linux/arm-linux-gnueabihf/libc/usr/lib/arm-linux-gnueabihf
     ````
 
@@ -153,5 +155,23 @@
 
 ## 6、U-Boot配置
 
-* 待补充……
+以下环境变量值仅作举例，实际使用时需自行修改：
+
+````
+=> setenv bootdelay 3
+=> setenv gatewayip 192.168.1.1
+=> setenv serverip 192.168.1.2
+=> setenv ipaddr 192.168.1.3
+=> setenv netmask 255.255.255.0
+=> setenv dt_addr 0x83000000
+=> setenv img_addr 0x80800000
+=> setenv debugboot 'tftp ${dt_addr} debug.dtb; tftp ${img_addr} zImage; bootz ${img_addr} - ${dt_addr};'
+=> saveenv
+````
+
+后续启动用于调试的系统，只需执行`run debugboot`即可。
+
+**特别注意**：首次`run debugboot`，或者每次修改并保存环境变量之后，
+U-Boot可能会先进行**复位**（终端有可能输出`resetting ...`之类的提示），
+然后进行默认启动（即执行`bootcmd`环境变量里的操作），下一次`run debugboot`才恢复正常。
 
