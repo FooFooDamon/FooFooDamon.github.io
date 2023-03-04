@@ -169,9 +169,18 @@
 => saveenv
 ````
 
-后续启动用于调试的系统，只需执行`run debugboot`即可。
+后续若需要启动用于调试的系统时，只需执行`run debugboot`即可。
 
 **特别注意**：首次`run debugboot`，或者每次修改并保存环境变量之后，
 U-Boot可能会先进行**复位**（终端有可能输出`resetting ...`之类的提示），
 然后进行默认启动（即执行`bootcmd`环境变量里的操作），下一次`run debugboot`才恢复正常。
+
+如果想更方便，还可以添加以下设置（记得保存）：
+
+````
+=> setenv localboot 'bootcmd原先的内容'
+=> setenv bootcmd 'run debugboot'
+````
+
+则以后都会以调试的形式进行启动。
 
