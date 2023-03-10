@@ -87,7 +87,7 @@ $ mkdir ~/myglibc
     $ sudo apt install gawk bison
     ````
 
-### 4.4 编译及安装
+### 4.4 编译
 
 ````
 $ make -j $(grep -c processor /proc/cpuinfo)
