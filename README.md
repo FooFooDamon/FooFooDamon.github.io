@@ -19,6 +19,7 @@
 - | -
 置顶、持续更新 | <a href="工具集（持续更新）.md">工具集（持续更新）</a>
 置顶、持续更新 | <a href="懒人VIM技巧.md">懒人VIM技巧</a>
+2023/03/21 | <a href="Buildroot及BusyBox深度排雷.md">Buildroot及BusyBox深度排雷</a>
 2023/03/17 | <a href="嵌入式根文件系统构建实录.md">嵌入式根文件系统构建实录</a>
 2023/03/10 | <a href="glibc编译演示.md">glibc编译演示</a>
 2023/02/21 | <a href="嵌入式Linux前期准备（软件篇）.md">嵌入式Linux前期准备（软件篇）</a>
