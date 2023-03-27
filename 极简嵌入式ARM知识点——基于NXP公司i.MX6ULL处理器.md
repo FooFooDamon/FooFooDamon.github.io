@@ -330,7 +330,7 @@
     LT | Signed Less Than，有符号型的小于 | N != V
     GT | Signed Greater Than，有符号型的大于 | Z = 0 且 N = V
     LE | Signed Less than or Equal，有符号型的小于或等于 | Z = 1 或 N != V
-    AL | Always，总是，默认值 | -
+    AL | Always，总是，默认值 |
 
 * 多数指令还可以带`S`后缀（Set flags，设置标志），若有，则紧跟指令、写在`条件后缀`之前；
 若无，则不会影响`CPSR`的相关标志位。
@@ -358,36 +358,75 @@
 
 * 一个可执行文件由多个段组成，如下：
 
-    | 代号 | 含义 | 作用 |
-    | -- | -- | -- |
-    | .bss | 以符号作为开头的块区域 | 存放未初始化或初始化为0的全局变量和静态变量，在程序执行前自动清零，故此段**不占储存器空间**，仅**标记**所含全部**变量占用的空间大小**。 |
-    | .data | 数据段 | 存放**已初始化**的**非0**全局变量和静态变量。|
-    | .rodata | 只读数据段 | 存放只读数据。是否一定存在，以及存在的位置，均有待确认。 |
-    | .text | 正文段 | 存放程序代码，以及常量，故该区域通常设置为只读，但某些架构也允许写，即在运行期修改代码。 |
+    <table border="1">
+        <tr>
+            <th>代号</th>
+            <th>含义</th>
+            <th>作用</th>
+        </tr>
+        <tr>
+            <td>.bss</td>
+            <td>以符号作为开头的块区域</td>
+            <td>存放未初始化或初始化为0的全局变量和静态变量，在程序执行前自动清零，故此段<strong>不占储存器空间</strong>，仅<strong>标记</strong>所含全部<strong>变量占用的空间大小</strong>。</td>
+        </tr>
+        <tr>
+            <td>.data</td>
+            <td>数据段</td>
+            <td>存放<strong>已初始化</strong>的<strong>非0</strong>全局变量和静态变量。</td>
+        </tr>
+        <tr>
+            <td>.rodata</td>
+            <td>只读数据段</td>
+            <td>存放只读数据。是否一定存在，以及存在的位置，均有待确认。</td>
+        </tr>
+        <tr>
+            <td>.text</td>
+            <td>正文段</td>
+            <td>存放程序代码，以及常量，故该区域通常设置为只读，但某些架构也允许写，即在运行期修改代码。</td>
+        </tr>
+    </table>
 
 ### 10.2 运行期加载到内存时所呈现的布局
 
 * 除了前述的文件布局内容，还增加了以下内容：
 
-    代号 | 含义 | 作用
-    -- | -- | --
-    heap | 堆 | 运行期动态分配的内存段，从低地址向高地址扩张。
-    stack | 栈 | 存放非静态局部变量，从高地址向低地址扩张。
-    mmap | 文件映射 | 处于堆栈之间，扩张方向与栈相同。
+    <table border="1">
+        <tr>
+            <th>代号</th>
+            <th>含义</th>
+            <th>作用</th>
+        </tr>
+        <tr>
+            <td>heap</td>
+            <td>堆</td>
+            <td>运行期动态分配的内存段，从低地址向高地址扩张。</td>
+        </tr>
+        <tr>
+            <td>stack</td>
+            <td>栈</td>
+            <td>存放非静态局部变量，从高地址向低地址扩张。</td>
+        </tr>
+        <tr>
+            <td>mmap</td>
+            <td>内存映射</td>
+            <td>处于堆栈之间，扩张方向与栈相同。</td>
+        </tr>
+    </table>
 
 * 总的（虚拟）内存布局（以32位系统为例）如下：
 
-    起始地址 | 分段
-    -- | --
-    0xFFFFFFFF | /
-    0xC0000000 | kernel space (1GB)
-    uncertain | stack
-    uncertain | mmap
-    uncertain | heap
-    uncertain | .bss
-    uncertain | .data
-    uncertain | .text
-    0x0 | /
+    <table border="1">
+        <tr> <th>起始地址</th> <th>分段</th> </tr>
+        <tr> <td>0xFFFFFFFF</td> <td>/</td> </tr>
+        <tr> <td>0xC0000000</td> <td>kernel space (1GB)</td> </tr>
+        <tr> <td>uncertain</td> <td>stack</td> </tr>
+        <tr> <td>uncertain</td> <td>mmap</td> </tr>
+        <tr> <td>uncertain</td> <td>heap</td> </tr>
+        <tr> <td>uncertain</td> <td>.bss</td> </tr>
+        <tr> <td>uncertain</td> <td>.data</td> </tr>
+        <tr> <td>uncertain</td> <td>.text</td> </tr>
+        <tr> <td>0x0</td> <td>/</td> </tr>
+    </table>
 
     值得注意的是，部分段的起始地址不确定，是特意随机化以对抗破解攻击，
     不过32位地址空间有限，削弱了效果。
