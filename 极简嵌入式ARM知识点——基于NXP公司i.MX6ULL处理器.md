@@ -471,7 +471,85 @@
 
 待补充。
 
-## 21、其余功能模块简介，以及相应的地址空间
+## 21、其余模块的功能简介、寄存器定义、及内存映射
+
+### 21.1 IO复用<a id="IO复用"></a>
+
+* 所谓的`IO复用`（IO Multiplexing），是指一个`引脚`（`Pin`）可以被多个功能模块所用
+（但在给定的任一时刻只能配置成一种功能状态），
+在对应的寄存器配置方面有多个`信号选项`（`Signal Option`）可供选择。
+
+* 设置`引脚`与`信号`之间的映射关系的`复用器`（`Multiplexer`）叫`IOMUX`。
+
+* 各个复用选项的详情见[参考资料3](#ref_3)的“4.1.1 Muxing Options”小节，
+或具体模块的“**External Signals**”小节。现仅将其分属的模块列举如下：
+
+    代号 | 含义
+    -- | --
+    PLATFORM | 平台
+    CCM | Clock Controller Module，时钟控制器模块
+    CSI | CMOS Sensor Interface，CMOS传感器接口
+    ECSPI 1~4 | Enhanced Configurable Serial Peripheral Interface，增强型可配置串行外设接口，共4路
+    EIM | External Interface Module，外部接口模块
+    ENET 1~2 | Ethernet，以太网，共2路
+    EPIT 1~2 | Enhanced Periodic Interrupt Timer，增强型周期性中断定时器，共2路
+    EPDC | Electrophoretic Display Controller，电泳显示器控制器
+    FlexCAN 1~2 | Flexible Controller Area Network，弹性控制器局域网，共2路
+    GPIO 1~5 | General Purpose Input/Output，通用型输入输出，共5路（每路引脚数不一样）
+    GPT 1~2 | General Purpose Timer，通用型定时器，共2路
+    I2C 1~4 | Inter-Integrated Circuit，内部（还是跨域？？）集成电路，共4路
+    KPP | Keypad Port，键盘端口
+    LCDIF | Liquid Crystal Display Interface，液晶显示器接口
+    MMDC | Multi Mode DDR Controller，多模式DDR内存控制器
+    MQS | Medium Quality Sound，中等质量音响
+    NAND | 与非型闪存
+    PWM 1~8 | Pulse Width Modulation，脉冲宽度调制，共8路
+    QSPI | Quad Serial Peripheral Interface，四通路（？？）串行外设接口
+    SAI 1~3 | Synchronous Audio Interface，同步音频接口
+    SDMA | Smart Direct Memory Access Controller，智能型直接内存访问控制器
+    SJC | System JTAG Controller，系统JTAG控制器
+    SNVS | Secure Non-Volatile Storage，安全型非易失性储存器
+    SRC | System Reset Controller，系统重置控制器
+    SPDIF | Sony/Philips Digital Interface，索尼/菲利普数字接口
+    UART 1~8 | Universal Asynchronous Receiver/Transmitter，通用异步收发器（即串口），共8路
+    USB | Universal Serial Bus，通用串行总线
+    USDHC 1~2 | Ultra Secured Digital Host Controller，超安全主机控制器（用于读写SD/MMC储存卡），共2路
+    WDOG 1~3 | Watchdog，看门狗，共3路
+    XTALOSC | Crystal Oscillator，晶（体）振（荡器）
+
+* 确定复用功能之后，再使用`IO复用控制器`（`IOMUX Controller`）来设置该功能的私有特性，
+该控制器称作`IOMUXC`，有以下寄存器：
+    * `IOMUXC_SW_MUX_CTL_PAD_<PAD NAME>`或`IOMUXC_SW_MUX_CTL_GRP_<GROUP NAME>`：
+    （1）配置一个焊盘（`Pad`）或焊盘组的`复用选项`（`Multiplexing Option`，
+    在寄存器中表现为`ALT`字段）；（2）激活相应的`输入路径强制`（`Forcing of Input Path`，
+    在寄存器中表现为`SION`字段，即`Software Input ON`之意）特性。
+    * `IOMUXC_SW_PAD_CTL_PAD_<PAD NAME>`或`IOMUXC_SW_PAD_CTL_GRP_<GROUP NAME>`：
+    对一个焊盘或焊盘组进行特定设置。
+    * `IOMUXC_GPR_GPR0`～`IOMUXC_GPR_GPR13`：通用寄存器，根据`SoC`实际需求而定。
+
+* 以上涉及的具体寄存器的功能定义及内存映射详见[参考资料3](#ref_3)的以下章节：
+    * `32.4 IOMUXC GPR Memory Map/Register Definition`
+    * `32.5 IOMUXC SNVS Memory Map/Register Definition`
+    * `32.6 IOMUXC Memory Map/Register Definition`
+
+* 最后，配置`具体模块的寄存器`，进行实际的数据收发。
+
+### 21.2 GPIO
+
+* 相关寄存器：
+    * `GPIO_DR`：Data Register，数据寄存器
+    * `GPIO_GDIR`：Direction，方向寄存器
+    * `GPIO_PSR`：Pad Sample Register，焊盘采样寄存器
+    * `GPIO_ICR1`、`GPIO_ICR2`：Interrupt Control Register，中断控制寄存器
+    * `GPIO_EDGE_SEL`：Edge Select，边缘选择触发器
+    * `GPIO_IMR`：Interrupt Mask，中断掩码寄存器
+    * `GPIO_ISR`：Interrupt Status Register，中断状态寄存器
+
+* 编程指导：详见[参考资料3](#ref_3)“28.4.3 GPIO Programming”。
+
+* 寄存器定义及内存映射：详见[参考资料3](#ref_3)“28.5 GPIO Memory Map/Register Definition”。
+
+### 其他
 
 待补充。
 
@@ -485,20 +563,28 @@ ARM | Advanced RISC Machine | 高级RISC机器
 BSS | Block Started by Symbol | 以符号作为开头的块区域
 CAN | Controller Area Network | 控制器局域网
 CISC | Complex Instruction Set Computer | 复杂指令集计算机
+CMOS | Complementary Metal Oxide Semiconductor | 互补金属氧化物半导体
 CPU | Central Processing Unit | 中央处理器
+CSI | CMOS Sensor Interface | CMOS传感器接口
 DDR | Double Data Rate (Synchronous Dynamic Random Access Memory) | 双倍数据速率（同步动态随机访问储存器）
 DRAM | Dynamic Random Access Memory | 动态随机访问储存器
 EEPROM | Electrically Erasable Programmable Read-Only Memory | 可电气擦除的可编程只读储存器
 GIC | Generic Interrupt Controller | 通用中断控制器
+GPIO | General Purpose Input/Output | 通用型输入/输出
 I2C / IIC | Inter-Integrated Circuit | 内部（还是跨域？？）集成电路
+JTAG | Joint Test Action Group | 联合测试行动组，一种调试接口标准
+LCD | Liquid Crystal Display | 液晶显示器
 MMU | Memory Management Unit | 内存管理单元
 RAM | Random Access Memory | 随机访问储存器
 RISC | Reduced Instruction Set Computer | 精简指令集计算机
 ROM | Read-Only Memory | 只读储存器
 PPI | Private Peripheral Interrupt | 私有外设中断
 PWM | Pulse Width Modulation | 脉冲宽度调制
+SDHC | Secure Digital High Capacity | 高容量安全数字（规范/标准），即新一代的SD卡规范/标准
 SGI | Software-Generated Interrupt | （由）软件产生的中断
 SIMD | Single Instruction Multiple Data | 单指令多数据
+SNVS | Secure Non-Volatile Storage | 安全型非易失性储存器
+SoC | System on Chip | 片上系统
 SPI | Serial Peripheral Interface / Shared Peripheral Interrupt | 串行外（围）设（备）接口 / 共享型外设中断
 SDRAM | Synchronous Dynamic Random Access Memory | 同步动态随机访问储存器
 SRAM | Static  Random Access Memory | 静态随机访问储存器
