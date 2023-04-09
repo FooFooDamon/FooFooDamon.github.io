@@ -1,12 +1,5 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-<script>
-    window.onload = function() {
-        if (window.location.href.search(/README.md/i) >= 0)
-            window.location.href = window.location.origin;
-    }
-</script>
-
 ## 欢迎
 
 ---------------------------------------------------------------------------
