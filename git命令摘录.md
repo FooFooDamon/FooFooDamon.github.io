@@ -2,7 +2,7 @@
 
 # <center>git命令摘录</center>
 
-[<<< 返回主页](README.md)
+[<<<< 返回主页](README.md)
 
 **特别注意**：
 
@@ -106,5 +106,5 @@ $ git tag -d '${TAG}'
 $ git push origin ':refs/tags/${TAG}'
 ````
 
-[<<< 返回主页](README.md)
+[<<<< 返回主页](README.md)
 
