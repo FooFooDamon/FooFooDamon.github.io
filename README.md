@@ -28,7 +28,7 @@
 2019/01/12 | <a href="ubuntu字符界面中文乱码 - chinabinlang的专栏 - CSDN博客.pdf">ubuntu字符界面中文乱码（转载）</a>
 2018/12/30 | [Ubuntu 16.04及18.04安装及配置nvidia-docker](Ubuntu_16.04及18.04安装及配置nvidia-docker.md)
 2018/11/19 | [Ubuntu下LaTex安装及配置](Ubuntu下LaTex安装及配置.md)
-2018/10/06 | [如何在Linux中配置基于密钥认证的SSH（转载）](如何在Linux中配置基于密钥认证的SSH（转载）.pdf)
+2018/10/06 | [如何在Linux中配置基于密钥认证的SSH——转载](如何在Linux中配置基于密钥认证的SSH——转载.pdf)
 2018/08/10 | [TensorFlow踩坑记录](TensorFlow踩坑记录.md)
 2018/08/05 | [Linux下HTML转PDF](Linux下HTML转PDF.md)
 2018/07/20 | [Ubuntu 16.04 安装 C++ 版 TensorFlow 1.4.1](Ubuntu_16.04安装C++版TensorFlow_1.4.1.md)
