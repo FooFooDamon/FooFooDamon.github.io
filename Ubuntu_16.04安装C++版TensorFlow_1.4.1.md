@@ -59,7 +59,7 @@ sudo apt-get install python-numpy python-dev python-pip python-wheel
 
 4. 安装`CUDA`和`cuDNN`（GPU版本必需，纯CPU版本也必需！）
 
-    可参考：<a href="Ubuntu_16.04安装CUDA_8.0和cuDNN_7.md">Ubuntu 16.04 安装 CUDA 8.0 和 cuDNN 7</a>
+    可参考：[Ubuntu 16.04 安装 CUDA 8.0 和 cuDNN 7](Ubuntu_16.04安装CUDA_8.0和cuDNN_7.md)
 
 
 ### 配置TensorFlow的编译条件

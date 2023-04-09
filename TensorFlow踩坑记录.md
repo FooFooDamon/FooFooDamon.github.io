@@ -8,7 +8,7 @@
 
 鉴于`TensorFlow`的霸道和慢速（不清楚后续那些新版本的速度有多大的提升），个人觉得改叫`CancerFlow`或`TensorSlow`比较贴切，不过其出品方是谷歌大厂，这大腿还是不能不抱，唉……
 
-建议将本文与<a href="Ubuntu_16.04安装C++版TensorFlow_1.4.1.md">《Ubuntu 16.04 安装 C++ 版 TensorFlow 1.4.1》</a>搭配阅读。
+建议将本文与[《Ubuntu 16.04 安装 C++ 版 TensorFlow 1.4.1》](Ubuntu_16.04安装C++版TensorFlow_1.4.1.md)搭配阅读。
 
 ## 编译之坑
 

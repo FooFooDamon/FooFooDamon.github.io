@@ -22,7 +22,7 @@
 
 * `原因`：`OpenSSH`出于安全的考虑，默认会以非特权用户的角色去处理来自客户端的身份认证请求，
 即所谓的**特权分离**机制，原理可阅读这篇[英文博客](https://jfrog.com/blog/examining-openssh-sandboxing-and-privilege-separation-attack-surface-analysis/)
-（链接若失效可点击<a href="references/openssh_privilege_separation.pdf">此处</a>查看备份文档）。
+（链接若失效可点击[此处](references/openssh_privilege_separation.pdf)查看备份文档）。
 此机制要求有一个非特权用户（即非root用户）供其使用，否则便会报上述错误。
 而`OpenSSH`会通过`/etc/passwd`等文件验证`sshd`用户，
 但`Buildroot`的**用户表**（Users Tables）机制却没向上述文件写入`sshd`用户信息，
