@@ -17,8 +17,7 @@
 
 置顶 | <a href="温馨提示.md">温馨提示</a>
 - | -
-置顶、持续更新 | <a href="工具集（持续更新）.md">工具集（持续更新）</a>
-置顶、持续更新 | <a href="懒人VIM技巧.md">懒人VIM技巧</a>
+置顶、持续更新 | <a href="记不住又用得多的东东.md">记不住又用得多的东东</a>
 2023/04/08 | <a href="懒人版Linux驱动Makefile.md">懒人版Linux驱动Makefile</a>
 2023/03/27 | <a href="极简嵌入式ARM知识点——基于NXP公司i.MX6ULL处理器.md">极简嵌入式ARM知识点——基于NXP公司i.MX6ULL处理器</a>
 2023/03/21 | <a href="Buildroot及BusyBox深度排雷.md">Buildroot及BusyBox深度排雷</a>
