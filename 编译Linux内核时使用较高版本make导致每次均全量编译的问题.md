@@ -2,6 +2,8 @@
 
 # 编译Linux内核时使用较高版本make导致每次均全量编译的问题
 
+[<<<< 返回主页](README.md)
+
 ## 1、前言
 
 标题有点长，但没办法，现象就是这么个现象，少几个字都不足以完整描述问题。
@@ -109,4 +111,6 @@ sudo apt install lib32ncurses5 lib32z1 lib32stdc++6
 
 * Makefile的哪部分、哪些写法触发这种Bug（暂定为Bug），暂无时间研究，
 要么留待以后探究，要么后续的make解决这个Bug。
+
+[<<<< 返回主页](README.md)
 
