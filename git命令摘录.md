@@ -1,8 +1,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="windows-target" content="_top"/>
 
 # <center>git命令摘录</center>
 
-[<<<< 返回主页](README.md?_blank)
+[<<<< 返回主页](README.md)
 
 ---------------------------------------------------------------------------
 
@@ -110,5 +111,5 @@ $ git push origin ':refs/tags/${TAG}'
 
 ---------------------------------------------------------------------------
 
-[<<<< 返回主页](README.md)
+[<<<< 返回主页](README.md){:target="_blank"}
 
