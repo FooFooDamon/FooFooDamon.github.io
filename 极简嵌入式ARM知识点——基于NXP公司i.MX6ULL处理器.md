@@ -1,5 +1,4 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<base target="_blank" />
 
 # 极简嵌入式ARM知识点——基于NXP公司i.MX6ULL处理器
 
@@ -53,7 +52,7 @@
         * `PL1`：应用于`USR`和`HYP`以外的模式。
         * `PL2`：应用于`HYP`模式。
 
-* 总结得出以下关系：
+* 总结得出以下关系（整理自[参考材料2](#ref_2)的“Chapter 3 ARM Processor Modes and Registers”）：
     <table id="处理器模式关系表" border="1">
         <tr>
             <th>权限级别</th>
@@ -77,6 +76,7 @@
             <td>PL2</td>
             <td>11010</td>
             <td>HYP</td>
+            <td></td>
         </tr>
             <td>PL1</td>
             <td>10110</td>
@@ -922,13 +922,13 @@ USB | Universal Serial Bus | 通用串行总线
 
 ## 23、参考材料
 
-1. <a id="ref_1" href="references/ARM Architecture Reference Manual ARMv7-A and ARMv7-R edition.pdf">ARM Architecture Reference Manual ARMv7-A and ARMv7-R edition</a>
+1. <a id="ref_1" href="references/ARM Architecture Reference Manual ARMv7-A and ARMv7-R edition.pdf" target="_blank">ARM Architecture Reference Manual ARMv7-A and ARMv7-R edition</a>
 （宜作为字典，按需查询）
 
-2. <a id="ref_2" href="references/ARM Cortex-A Series Programmer's Guide V4.0.pdf">ARM Cortex-A Series Programmer's Guide V4.0</a>
+2. <a id="ref_2" href="references/ARM Cortex-A Series Programmer's Guide V4.0.pdf" target="_blank">ARM Cortex-A Series Programmer's Guide V4.0</a>
 （建议通读一遍）
 
-4. <a id="ref_3" href="references/i.MX 6ULL Applications Processor Reference Manual.pdf">i.MX 6ULL Applications Processor Reference Manual</a>
+4. <a id="ref_3" href="references/i.MX 6ULL Applications Processor Reference Manual.pdf" target="_blank">i.MX 6ULL Applications Processor Reference Manual</a>
 （宜作为字典，按需查询）
 
 ## 24、温馨提示<a id="温馨提示"></a>
