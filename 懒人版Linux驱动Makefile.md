@@ -195,7 +195,7 @@ include ${PWD}/../../common/linux_driver.mk
 
 ## 5、完整脚本
 
-详见[懒编程秘笈](https://github.com/FooFooDamon/lazy_coding_skills)项目的`makefile/linux_driver.mk`，
+详见<a href="https://github.com/FooFooDamon/lazy_coding_skills" target="_blank">懒编程秘笈</a>项目的`makefile/linux_driver.mk`，
 内容与本文的脚本无多大差别，主要是参数和注释更详细，且后续若有更新，仅更新`GitHub`项目，
 本文的脚本内容不会再同步。
 
