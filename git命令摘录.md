@@ -1,5 +1,5 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta http-equiv="windows-target" content="_top"/>
+<meta http-equiv="windows-target" content="_blank"/>
 
 # <center>git命令摘录</center>
 
