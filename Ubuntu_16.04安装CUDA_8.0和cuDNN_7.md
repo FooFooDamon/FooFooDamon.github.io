@@ -1,4 +1,5 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<base target="_blank" />
 
 # Ubuntu 16.04 安装 CUDA 8.0 和 cuDNN 7
 

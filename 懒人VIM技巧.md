@@ -1,4 +1,5 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<base target="_blank" />
 
 # 懒人VIM技巧
 
@@ -262,7 +263,7 @@ git clone --recursive https://github.com/davidhalter/jedi-vim.git ~/.vim/bundle/
 ## 其它（2023.02.22更新）
 
 * 后续再涉及到更多配置、更多语言的话，不会再更新本文，而是推荐大家在空闲之余了解一下VIM脚本编程，
-即`VIMScript`或`VIM Scripting`，这样有利于自行定制化，个中便利和乐趣谁试谁谁知道。
+即`VIMScript`或`VIM Scripting`，这样有利于自行定制化，个中便利和乐趣谁试谁知道。
 
 * 最后放出本人的VIM配置供各位参考，详见“[懒编程秘笈](https://github.com/FooFooDamon/lazy_coding_skills)”项目的`vim`目录。
 

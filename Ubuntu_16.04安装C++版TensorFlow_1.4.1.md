@@ -1,4 +1,5 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<base target="_blank" />
 
 # Ubuntu 16.04 安装 C++ 版 TensorFlow 1.4.1
 

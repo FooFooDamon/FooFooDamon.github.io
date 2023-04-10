@@ -1,4 +1,5 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<base target="_blank" />
 
 # Ubuntu 16.04及18.04安装及配置nvidia-docker
 

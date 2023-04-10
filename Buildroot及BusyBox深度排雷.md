@@ -1,4 +1,5 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<base target="_blank" />
 
 # Buildroot及BusyBox深度排雷
 

@@ -1,4 +1,5 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<base target="_blank" />
 
 # 极简嵌入式ARM知识点——基于NXP公司i.MX6ULL处理器
 
