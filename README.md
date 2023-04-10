@@ -1,5 +1,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
+<head>
+    <base target="_blank">
+</head>
+
 ## 欢迎
 
 ---------------------------------------------------------------------------
