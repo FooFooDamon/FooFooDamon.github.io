@@ -1,9 +1,4 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta http-equiv="target" content="_blank"/>
-
-<head>
-    <base target="_blank">
-</head>
 
 # <center>git命令摘录</center>
 
