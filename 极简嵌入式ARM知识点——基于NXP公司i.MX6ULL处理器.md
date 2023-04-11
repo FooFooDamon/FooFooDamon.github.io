@@ -844,7 +844,7 @@ SPI | CS/SS<br>SCK<br>MOSI/SDO<br>MISO/SDI | 一主多从 | 一般可达到：x 
     WDOG 1~3 | Watchdog，看门狗，共3路
     XTALOSC | Crystal Oscillator，晶（体）振（荡器）
 
-* 确定复用功能之后，再使用`IO复用控制器`（`IOMUX Controller`）来设置该功能的私有特性，
+* 在实际操作中，首先要通过`IO复用控制器`（`IOMUX Controller`）来设置引脚复用，
 该控制器称作`IOMUXC`，有以下寄存器：
     * `IOMUXC_SW_MUX_CTL_PAD_<PAD NAME>`或`IOMUXC_SW_MUX_CTL_GRP_<GROUP NAME>`：
     （1）配置一个焊盘（`Pad`）或焊盘组的`复用选项`（`Multiplexing Option`，
@@ -859,7 +859,8 @@ SPI | CS/SS<br>SCK<br>MOSI/SDO<br>MISO/SDI | 一主多从 | 一般可达到：x 
     * `32.5 IOMUXC SNVS Memory Map/Register Definition`
     * `32.6 IOMUXC Memory Map/Register Definition`
 
-* 最后，配置`具体模块的寄存器`，进行实际的数据收发。
+* 最后，配置`具体模块的寄存器`（寄存器明细项及其内存映射详见特定章节，此处列举不了），
+进行实际的数据收发。
 
 ### 21.2 GPIO
 
