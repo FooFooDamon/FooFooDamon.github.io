@@ -14,6 +14,7 @@
 置顶 | [温馨提示](温馨提示.md)
 -- | --
 置顶、持续更新 | [记不住又用得多的东东](记不住又用得多的东东.md)
+2023/04/17 | [Linux驱动开发备忘录](Linux驱动开发备忘录.md)
 2023/04/08 | [懒人版Linux驱动Makefile](懒人版Linux驱动Makefile.md)
 2023/03/27 | [极简嵌入式ARM知识点——基于NXP公司i.MX6ULL处理器](极简嵌入式ARM知识点——基于NXP公司i.MX6ULL处理器.md)
 2023/03/21 | [Buildroot及BusyBox深度排雷](Buildroot及BusyBox深度排雷.md)
