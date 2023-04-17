@@ -637,9 +637,100 @@
         7. 编写中断服务函数。
     * `寄存器`详情：见[参考资料3](#ref_3)“30.6 GPT Memory Map/Register Definition”小节。
 
-## 20、通信接口
+## 20、有线以太网
 
-### 20.1 一些重要概念
+* 为何要拆分成`MAC`和`PHY`两部分：
+    * `MAC`对应链路层，负责通信协议的控制与处理；
+    `PHY`对应物理层，通过`数-模`双向转换进行数据收发。
+    * `MAC`芯片是全数字器件，而`PHY`还含有大量的模拟器件，
+    后者对集成有很大挑战，所以主流方案都是将`MAC`集成到CPU内部，
+    而`PHY`作为外部芯片，既降低了成本，又可为`MAC`设置`DMA`大大加速数据包处理。
+    * 两者的数据接口是`MII`或`RMII`，控制接口是`MDIO`（类似于`I2C`）。
+    * `PHY`对外则会先连接`变压器`、再连`RJ45`接口（即网线接口），
+    部分`RJ45`可能会内置`变压器`。
+    * 由于`i.MX6ULL`已集成`MAC`（详见后面），而在实际做产品时可能会选用不同的`PHY`芯片，
+    所以一般移植的重点是`PHY`的参数调整。由于`PHY`芯片寄存器地址线宽是`5`位，
+    亦即支持最多`32`个寄存器，并且`IEEE`规定了前`16`个基础寄存器的功能，
+    所以无论采用哪个厂家的`PHY`芯片，单靠前`16`个寄存器就足以驱动起来，
+    亦即可以采用通用驱动代码，但要使用芯片的专用特性，就需要原厂驱动了。
+    关于`PHY`基础寄存器的说明，详见`IEEE Std 802.3™-2018`文档`SECTION2`第`22.2.4 Management functions`小节。
+
+* `MII`与`RMII`的区别：
+    * `MII`即`Media Independent Interface`，**介质独立接口**，
+    是最初的`IEEE-802.3`以太网标准接口，特点是收发时钟分开，
+    且收发都是`4`条数据线，最大缺点也是线太多，达到`16`条，
+    所以已越来越少用。
+    * `RMII`即`Reduced MII`，属于**精简型**的`MII`接口，
+    特点是收发共用同一时钟，且收发数据线都缩减到`2`条，
+    线的数量只有`7`条，但需要**翻倍的时钟频率**以保证传输速率。
+    * 此外还有`GMII`、`RGMII`等接口，都是在前两者基础上发展起来的，
+    不再赘述。
+
+* 网络分层：
+    <table style="text-align: center">
+        <tr>
+            <th>OSI层级</th>
+            <th>OSI模型</th>
+            <th>TCP/IP模型</th>
+            <th>TCP/IP层级</th>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td>应用层</td>
+            <td rowspan="3">应用层</td>
+            <td rowspan="3">4</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>表示层</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>会话层</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td colspan="2">传输层</td>
+            <td>3</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td colspan="2">网络层</td>
+            <td>2</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>链路层</td>
+            <td rowspan="2">链路层</td>
+            <td rowspan="2">1</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>物理层</td>
+        </tr>
+    </table>
+
+* `i.MX6ULL`的`10/100-Mbps Ethernet MAC`（`ENET`）功能特性：
+    * 实现`三`层网络**硬件级**加速，可加速常见协议（IP、TCP、UDP、ICMP等）数据包的处理。
+    通过硬件加速模块来执行关键功能（perform critical functions），
+    比在软件层面用大帧头来实现（with large software overhead）相同的功能要好很多。
+    * 带`RMON`（`Remote Network Monitoring`）计数功能。
+    * 内置`FIFO`缓冲区，减少接收丢包。
+    * 高级电源管理，可用于`魔术包`（`magic packet`）检测和`掉电模式`（`power-down` mode）。
+    * 内置专用`DMA`，可优化`ENET`核心与`SoC`之间的数据传输，
+    还支持`IEEE 1588`标准的`增强型缓冲描述符`（`enhanced buffer descriptor`），
+    而且`IEEE 1588`还提供`工业自动化应用`场景下的`分布式控制节点`所需的`精确时钟同步`机制。
+    * 自动`流（量）控（制）`（`Flow Control`），不需应用层干预。
+    * 可通过`MII`（2.5/25MHz）、`MII-Lite`（同前）或`RMII`（50MHz）接口与各种`PHY`无缝衔接。
+    * 内含单播和多播地址过滤，减少高层应用的负担。
+    * 能合并`MAC`模块产生的中断，降低CPU负担。
+    * 支持`IPv4`和`IPv6`，并且有自动的IP、TCP、UDP、ICMP的校验码生成及检验、数据包和错误统计、
+    可配置的错误帧丢弃/收发字节序转换/32位字对齐/剥除填充内容……之类的特性。
+    * 其余细节及寄存器详情见[参考资料3](#ref_3)“Chapter 22 10/100-Mbps Ethernet MAC (ENET)”。
+
+## 21、常见的基础通信接口
+
+### 21.1 一些重要概念
 
 * `同步`与`异步`：区别在于是否需要`时钟信号`的`同步机制`：
     * `同步`通信：数据传输的`时序`是由同一个`时钟信号控制`的。收发双方均需在每个时钟周期内，
@@ -671,7 +762,7 @@
     * **注2**：`波特率`一般只用于`串口`（`UART`），其他情况基本上都用`比特率`。
     * **注3**：`波特`已包含`速率`的意思，其实不必再加一个`率`。
 
-### 20.2 串口（UART）
+### 21.2 串口（UART）
 
 * 全称详见[缩略词表格](#缩略词)。
 
@@ -709,7 +800,7 @@
     * 分析待补充。
     * 寄存器详情见[参考资料3](#ref_3)“55.15 UART Memory Map/Register Definition”小节。
 
-### 20.3 I2C
+### 21.3 I2C
 
 * 全称详见[缩略词表格](#缩略词)。
 
@@ -755,7 +846,7 @@
     * 分析待补充。
     * 寄存器详情见[参考资料3](#ref_3)“31.7 I2C Memory Map/Register Definition”小节。
 
-### 20.4 SPI
+### 21.4 SPI
 
 * 全称详见[缩略词表格](#缩略词)。
 
@@ -786,11 +877,11 @@
     * 分析待补充。
     * 寄存器详情见[参考资料3](#ref_3)“20.7 ECSPI Memory Map/Register Definition”小节。
 
-### 20.x 其余
+### 21.x 其余
 
 待补充。
 
-### 20.y 各通信接口对比
+### 21.y 各通信接口对比
 
 名称 | 引脚 | 连接方式 | 速率 | 协议特色 | 典型用途
 -- | -- | -- | -- | -- | --
@@ -798,9 +889,9 @@ UART | GND<br>RXD<br>TXD | 一对一 | 典型：115200 Bd | 最简单 | 目标�
 I2C | SCL<br>SDA | 一主多从 | 标准：100 Kb/s<br>高速：400 Kb/s | 基于地址；<br>应答式 | 温度传感器、陀螺仪、加速度计、触摸屏等
 SPI | CS/SS<br>SCK<br>MOSI/SDO<br>MISO/SDI | 一主多从 | 一般可达到：x Mb/s | 无地址，有片选；<br>时序更简单，速度比I2C更快 | 传感器、储存器、实时时钟、数模转换等
 
-## 21、其余模块的功能简介、寄存器定义、及内存映射
+## 22、其余模块的功能简介、寄存器定义、及内存映射
 
-### 21.1 IO复用<a id="IO复用"></a>
+### 22.1 IO复用<a id="IO复用"></a>
 
 * 所谓的`IO复用`（IO Multiplexing），是指一个`引脚`（`Pin`）可以被多个功能模块所用
 （但在给定的任一时刻只能配置成一种功能状态），
@@ -851,7 +942,7 @@ SPI | CS/SS<br>SCK<br>MOSI/SDO<br>MISO/SDI | 一主多从 | 一般可达到：x 
     在寄存器中表现为`ALT`字段）；（2）激活相应的`输入路径强制`（`Forcing of Input Path`，
     在寄存器中表现为`SION`字段，即`Software Input ON`之意）特性。
     * `IOMUXC_SW_PAD_CTL_PAD_<PAD NAME>`或`IOMUXC_SW_PAD_CTL_GRP_<GROUP NAME>`：
-    对一个焊盘或焊盘组进行特定设置。
+    对一个焊盘或焊盘组进行特定设置，即配置电气特性，例如上下拉电阻、是否开漏输出等。
     * `IOMUXC_GPR_GPR0`～`IOMUXC_GPR_GPR13`：通用寄存器，根据`SoC`实际需求而定。
 
 * 以上涉及的具体寄存器的功能定义及内存映射详见[参考资料3](#ref_3)的以下章节：
@@ -862,7 +953,7 @@ SPI | CS/SS<br>SCK<br>MOSI/SDO<br>MISO/SDI | 一主多从 | 一般可达到：x 
 * 最后，配置`具体模块的寄存器`（寄存器明细项及其内存映射详见特定章节，此处列举不了），
 进行实际的数据收发。
 
-### 21.2 GPIO
+### 22.2 GPIO
 
 * 相关寄存器：
     * `GPIO_DR`：Data Register，数据寄存器
@@ -881,7 +972,7 @@ SPI | CS/SS<br>SCK<br>MOSI/SDO<br>MISO/SDI | 一主多从 | 一般可达到：x 
 
 待补充。
 
-## 22、蛋疼的缩略词（需结合语境）<a id="缩略词"></a>
+## 23、蛋疼的缩略词（需结合语境）<a id="缩略词"></a>
 
 英文缩写 | 英文全称 | 中文翻译（仅供参考）
 -- | -- | --
@@ -895,14 +986,17 @@ CMOS | Complementary Metal Oxide Semiconductor | 互补金属氧化物半导体
 CPU | Central Processing Unit | 中央处理器
 CSI | CMOS Sensor Interface | CMOS传感器接口
 DDR | Double Data Rate (Synchronous Dynamic Random Access Memory) | 双倍数据速率（同步动态随机访问储存器）
+DMA | Direct Memory Access | 直接内存访问
 DRAM | Dynamic Random Access Memory | 动态随机访问储存器
 EEPROM | Electrically Erasable Programmable Read-Only Memory | 可电气擦除的可编程只读储存器
+FIFO | First In First Out | 先入先出
 GIC | Generic Interrupt Controller | 通用中断控制器
 GPIO | General Purpose Input/Output | 通用型输入/输出
 I2C / IIC | Inter-Integrated Circuit | 内部（还是跨域？？）集成电路
 JTAG | Joint Test Action Group | 联合测试行动组，一种调试接口标准
 LCD | Liquid Crystal Display | 液晶显示器
 MMU | Memory Management Unit | 内存管理单元
+OSI | Open System Interconnection | 开放式系统互联
 PLL | Phase Locked Loop | 锁相环
 PPI | Private Peripheral Interrupt | 私有外设中断
 PWM | Pulse Width Modulation | 脉冲宽度调制
@@ -921,7 +1015,7 @@ TTL | Transistor-Transistor Logic | 晶体管-晶体管逻辑
 UART | Universal Asynchronous Receiver/Transmitter | 通用异步收发器，通常简称为串口
 USB | Universal Serial Bus | 通用串行总线
 
-## 23、参考材料
+## 24、参考材料
 
 1. <a id="ref_1" href="references/ARM Architecture Reference Manual ARMv7-A and ARMv7-R edition.pdf" target="_blank">ARM Architecture Reference Manual ARMv7-A and ARMv7-R edition</a>
 （宜作为字典，按需查询）
@@ -932,7 +1026,7 @@ USB | Universal Serial Bus | 通用串行总线
 4. <a id="ref_3" href="references/i.MX 6ULL Applications Processor Reference Manual.pdf" target="_blank">i.MX 6ULL Applications Processor Reference Manual</a>
 （宜作为字典，按需查询）
 
-## 24、温馨提示<a id="温馨提示"></a>
+## 25、温馨提示<a id="温馨提示"></a>
 
 **书山有路找捷径，学海无涯抓重点！**
 
