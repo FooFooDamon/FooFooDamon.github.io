@@ -103,6 +103,85 @@
 
 * 函数接口：`of_xx()`
 
+* 管脚复用——以i.MX6ULL为例：
+    * 头文件：`arch/arm/boot/dts/imx6ul*-pinfunc*.h`
+    * 复用配置项格式：`MX6UL_PAD_*`或`MX6ULL_PAD_*`的格式为：
+    `<mux_reg conf_reg input_reg mux_mode input_val>`：
+        * <font color="red">`mux_reg`</font>：`复用寄存器`的地址**偏移量**，至于**基址**，
+        则可通过`iomuxc`或`iomuxc_snvs`节点的`reg`属性指定，即`iomuxc`基址为`0x020E0000`，
+        `iomuxc_snvs`则为`0x02290000`。对应到官方文档的寄存器定义，则名为`IOMUXC[_SNVS]_SW_MUX_CTL_PAD_*`。
+        * `conf_reg`：`电气特性配置寄存器`的地址**偏移量**，**基址**同上。
+        对应到官方文档的寄存器定义，则名为`IOMUXC[_SNVS]_SW_PAD_CTL_PAD_*`。
+        值要根据功能及应用场景手动指定，寄存器内各二进制位的定义（`DRAM`和`GRP`除外）如下：
+            * `bit[31:17]`：预留未用。
+            * `bit[16]`：`HYS`（`Hysteresis`），是否开启`磁滞`特性，
+            在管脚设置成`输入`时开启该特性可以**过滤掉部分电磁干扰**：
+                * `0`：关闭。
+                * `1`：开启。
+            * `bit[15:14]`：`PUS`（`Pull Select?`），`上下拉电阻`的选择：
+                * `00`：`100K`欧`下`拉。
+                * `01`：`47K`欧`上`拉。
+                * `10`：`100K`欧`上`拉。
+                * `11`：`22K`欧`上`拉。
+            * `bit[13]`：`PUE`（`Pull E???`），`上下拉或保持`的选择，
+            其中`保持`特性是指当断电之后此管脚能保持住断电前的状态，对`输入`和`输出`管脚均有意义：
+                * `0`：保持。
+                * `1`：上下拉。
+            * `bit[12]`：`PKE`（`Pull/Keep Enable`），是否开启上下拉/保持特性：
+                * `0`：关闭。
+                * `1`：开启。
+            * `bit[11]`：`ODE`（`Open Drain Enable`），是否开启`开漏输出`特性。
+            在管脚设置成`输出`时才有意义：
+                * `0`：关闭。
+                * `1`：开启。
+            * `bit[10:8]`：预留未用。
+            * `bit[7:6]`：`SPEED`，速度：
+                * `00`：低速（`50MHz`）。
+                * `01`：中速（`100MHz`）。
+                * `10`：中速（`100MHz`）。
+                * `11`：最高速（`200MHz`）。
+            * `bit[5:3]`：`DSE`（`Drive Strength E???`），输出驱动能力，
+            在管脚设置成`输出`时才有意义，且电阻越小，驱动能力越强：
+                * `000`：关闭输出驱动能力。
+                * `001`：`R0`（3.3V配260欧；1.8V配150欧；DDR内存则使用240欧）。
+                * `010`：`R0/2`（电阻为`R0`的`1/2`，以下同理）。
+                * `011`：`R0/3`。
+                * `100`：`R0/4`。
+                * `101`：`R0/5`。
+                * `110`：`R0/6`。
+                * `111`：`R0/7`。
+            * `bit[2:1]`：预留未用。
+            * `bit[0]`：`SRE`（`Slew Rate E???`），电平转换（翻转）速率，
+            快翻转则波形更陡，慢则更平缓：
+                * `0`：慢速。
+                * `1`：快速。
+        * <font color="green">`input_reg`</font>：`输入寄存器`的地址**偏移量**，为`0`则表示无输入寄存器，
+        **基址**同`iomuxc`。对应到官方文档的寄存器定义，则名为`IOMUXC_*_SELECT_INPUT`，
+        相当于`mux_reg`下的一个**次级开关**。
+        * <font color="red">`mux_mode`</font>：`复用模式`，即`mux_reg`的值。二进制位定义如下：
+            * `bit[31:5]`：预留未用。
+            * `bit[4]`：`SION`（`Software Input ON`）标志位，值为`1`表示锁定为某一种功能输入路径，
+            为`0`则表示输入路径由以下`模式选项`决定。
+            * `bit[3:0]`：`模式选项`，详见具体寄存器的定义。
+        * <font color="green">`input_val`</font>：`输入值`，即`input_reg`的值，
+        若无`input_reg`则忽略本值。二进制位定义如下：
+            * `bit[31:m+1]`：预留未用。
+            * `bit[m:0]`：`DAISY`（菊花链？）。次级开关值，详见具体寄存器的定义。
+    * 通常结合`引脚控制子系统`（`pinctrl`）一起使用，在以上项的基础上再加一个用于设置`conf_reg`的值，
+    即构成一个完整的pinctrl引脚定义。并且，每个具体的`conf_reg`在官方文档中的定义都包含默认值，
+    多数场合直接使用默认值即可。
+    * 更多原理性的内容及具体寄存器定义详见[参考材料1](#ref_1)以下章节和框图：
+        * `Figure 28-1. Chip IOMUX Scheme`
+        * `Figure 28-3. GPIO pad functional diagram`
+        * `Figure 28-4. Schmitt trigger transfer characteristic`
+        * `Figure 28-5. Receiver output in CMOS and hysteresis`
+        * `Figure 28-6. Output Driver Functional Diagram`
+        * `Figure 28-7. Keeper functional diagram`
+        * `Figure 28-8. Output buffer in open drain mode`
+        * `Figure 32-3. Daisy chain illustration`
+        * `32.5 IOMUXC SNVS Memory Map/Register Definition`
+        * `32.6 IOMUXC Memory Map/Register Definition`
+
 ## 9、GPIO
 
 * 头文件：
@@ -296,4 +375,8 @@
 ## 21、常见通信协议
 
 待补充。
+
+## 附录：参考材料
+
+1. <a id="ref_1" href="references/i.MX 6ULL Applications Processor Reference Manual.pdf" target="_blank">i.MX 6ULL Applications Processor Reference Manual</a>
 
