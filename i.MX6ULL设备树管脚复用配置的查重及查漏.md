@@ -2,10 +2,6 @@
 
 # i.MX6ULL设备树管脚复用配置的查重及查漏
 
-[<<<< 返回主页](README.md)
-
----------------------------------------------------------------------------
-
 ## 1、背景
 
 * `i.MX6ULL`是一款基于`Cortex-A7`、具有很高性价比的`ARM`处理器，
@@ -123,8 +119,4 @@ grep "^#define[[:space:]]\+[A-Z0-9_]\+__${IOMUXC}" ${HEADER_FILES} | awk '{ prin
 以下章节：
     * 32.5 IOMUXC SNVS Memory Map/Register Definition
     * 32.6 IOMUXC Memory Map/Register Definition
-
----------------------------------------------------------------------------
-
-[<<<< 返回主页](README.md)
 
