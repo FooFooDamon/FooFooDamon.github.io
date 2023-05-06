@@ -107,7 +107,7 @@
     * 头文件：`arch/arm/boot/dts/imx6ul*-pinfunc*.h`
     * 复用配置项格式：`MX6UL_PAD_*`或`MX6ULL_PAD_*`的格式为：
     `<mux_reg conf_reg input_reg mux_mode input_val>`：
-        * <font color="red">`mux_reg`</font>：`复用寄存器`的地址**偏移量**，至于**基址**，
+        * <font color="red">mux_reg</font>：`复用寄存器`的地址**偏移量**，至于**基址**，
         则可通过`iomuxc`或`iomuxc_snvs`节点的`reg`属性指定，即`iomuxc`基址为`0x020E0000`，
         `iomuxc_snvs`则为`0x02290000`。对应到官方文档的寄存器定义，则名为`IOMUXC[_SNVS]_SW_MUX_CTL_PAD_*`。
         * `conf_reg`：`电气特性配置寄存器`的地址**偏移量**，**基址**同上。
@@ -155,21 +155,24 @@
             快翻转则波形更陡，慢则更平缓：
                 * `0`：慢速。
                 * `1`：快速。
-        * <font color="green">`input_reg`</font>：`输入寄存器`的地址**偏移量**，为`0`则表示无输入寄存器，
+        * <font color="green">input_reg</font>：`输入寄存器`的地址**偏移量**，为`0`则表示无输入寄存器，
         **基址**同`iomuxc`。对应到官方文档的寄存器定义，则名为`IOMUXC_*_SELECT_INPUT`，
         相当于`mux_reg`下的一个**次级开关**。
-        * <font color="red">`mux_mode`</font>：`复用模式`，即`mux_reg`的值。二进制位定义如下：
+        * <font color="red">mux_mode</font>：`复用模式`，即`mux_reg`的值。二进制位定义如下：
             * `bit[31:5]`：预留未用。
             * `bit[4]`：`SION`（`Software Input ON`）标志位，值为`1`表示锁定为某一种功能输入路径，
             为`0`则表示输入路径由以下`模式选项`决定。
             * `bit[3:0]`：`模式选项`，详见具体寄存器的定义。
-        * <font color="green">`input_val`</font>：`输入值`，即`input_reg`的值，
+        * <font color="green">input_val</font>：`输入值`，即`input_reg`的值，
         若无`input_reg`则忽略本值。二进制位定义如下：
             * `bit[31:m+1]`：预留未用。
             * `bit[m:0]`：`DAISY`（菊花链？）。次级开关值，详见具体寄存器的定义。
     * 通常结合`引脚控制子系统`（`pinctrl`）一起使用，在以上项的基础上再加一个用于设置`conf_reg`的值，
     即构成一个完整的pinctrl引脚定义。并且，每个具体的`conf_reg`在官方文档中的定义都包含默认值，
-    多数场合直接使用默认值即可。
+    多数场合可参考默认值并进行少量改动即可，但少数情形除外，
+    例如`MX6UL_PAD_ENETn_TX_CLK__ENETn_REF_CLKn`（n = 1, 2）的取值应为`0x4001b009`（**原理暂未清楚**），
+    采用文档默认值或示例设备树中的`0x4001b031`均不能正常工作。换而言之，**官方文档有部分错误**，
+    **不可盲信，在实际开发中应同时参考其他资料，以实际情况为准！**
     * 更多原理性的内容及具体寄存器定义详见[参考材料1](#ref_1)以下章节和框图：
         * `Figure 28-1. Chip IOMUX Scheme`
         * `Figure 28-3. GPIO pad functional diagram`
