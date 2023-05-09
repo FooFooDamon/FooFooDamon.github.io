@@ -117,5 +117,40 @@
 
 `kobs-ng`是一个可在目标板内Linux系统将U-Boot烧写到NAND Flash的工具。
 
-编译错误及解决方案待补充。
+若使用`2019.02.6`版本的`Buildroot`搭配`4.9`版本的`交叉编译器`，则会发生编译错误，
+将此两者的版本分别更新为`2023.02`和`7.5.0`即可解决。顺便附上`kobs-ng`的配置路径：
+
+````
+Target packages  --->
+    -*- BusyBox
+        Hardware handling  --->
+            [*] Freescale i.MX libraries  --->
+                [*]   imx-kobs
+````
+
+### 2.6 解决`ip`命令设置`CAN`接口时产生的报错
+
+* `现象`：
+
+    执行以下命令时：
+    ````
+    $ ip link set can0 type can bitrate 1000000 restart-ms 1000
+    $ ip link set can0 up
+    ````
+
+    产生以下报错：
+    ````
+    ip: either "dev" is duplicate, or "type" is garbage
+    flexcan 2090000.can can0: bit-timing not yet defined
+    ip: SIOCSIFFLAGS: Invalid argument
+    ````
+
+* `原因`：`BusyBox`的`ip`命令不支持`CAN`，需要使用`Buildroot`的。
+
+* `方案`：执行`make menuconfig`，按以下路径选中`iproute2`选项，再重新`make`即可：
+    ````
+    Target packages  --->
+        Networking applications  --->
+            [*] iproute2
+    ````
 
