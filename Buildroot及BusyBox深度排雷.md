@@ -13,7 +13,9 @@
 * **注1**：以下各个解决方案通常要求重新编译`Buildroot`，
 根据实际情况而定，不再赘述。
 
-* **注2**：本文所有的定制化目录及文件均放在`Buildroot`源码根目录下的`custom`文件夹内，
+* **注2**：除非特别说明，所有命令均在`Buildroot`根目录下执行。
+
+* **注3**：本文所有的定制化目录及文件均放在`Buildroot`源码根目录下的`custom`文件夹内，
 定制化原理详见“前言”里的文章“添加自定义目录及文件”章节的内容，后文不再赘述。
 
 ### 2.1 OpenSSH：Privilege separation user sshd does not exist
@@ -111,7 +113,91 @@
 
 ### 2.4 令BusyBox接受中文输入
 
-待补充。
+* 将待修改的源码文件复制一份，用于后面的补丁制作：
+
+    ````
+    cp output/build/busybox-*/libbb/printable_string.c output/build/busybox-*/libbb/unicode.c ~/
+    ````
+
+* 执行`vim output/build/busybox-*/libbb/printable_string.c`，
+将函数`printable_string`（`1.29.3`版本）或`printable_string2`（`1.36.0`版本）以下内容：
+
+    ````
+    /* 省略很多行 */
+            if (c < ' ')
+                break;
+            if (c >= 0x7f)
+                break;
+            s++;
+    /* 省略若干行 */
+                if (c == '\0')
+                    break;
+                if (c < ' ' || c >= 0x7f)
+                    *d = '?';
+                d++;
+    /* 省略很多行 */
+    ````
+
+    修改为：
+
+    ````
+    /* 省略很多行 */
+            if (c < ' ')
+                break;
+            /*if (c >= 0x7f)
+                break;*/
+            s++;
+    /* 省略若干行 */
+                if (c == '\0')
+                    break;
+                if (c < ' '/* || c >= 0x7f*/)
+                    *d = '?';
+                d++;
+    /* 省略很多行 */
+    ````
+
+* 执行`vim output/build/busybox-*/libbb/unicode.c`，
+将函数`unicode_conv_to_printable2`以下内容：
+
+    ````
+    /* 省略很多行 */
+                    *d++ = (c >= ' ' && c < 0x7f) ? c : '?';
+                    src++;
+    /* 省略若干行 */
+                    if (c < ' ' || c >= 0x7f)
+                        *d = '?';
+                    d++;
+    /* 省略很多行 */
+    ````
+
+    修改为：
+
+    ````
+    /* 省略很多行 */
+                    *d++ = (c >= ' '/* && c < 0x7f*/) ? c : '?';
+                    src++;
+    /* 省略若干行 */
+                    if (c < ' '/* || c >= 0x7f*/)
+                        *d = '?';
+                    d++;
+    /* 省略很多行 */
+    ````
+
+* 制作补丁（补丁文件名随便取，可以参考其他补丁文件名）：
+
+    ````
+    $ diff -urN ~/printable_string.c output/build/busybox-1.36.0/libbb/printable_string.c > package/busybox/0005-libbb-printable_string.patch
+    $
+    $ sed -i -e 's/\(---[ \t]\+\)[^ \t]\+\(\/printable_string\.c[ \t]*\)/\1a\/libbb\2/' \
+        -e 's/\(+++[ \t]\+\)[^ \t]\+\(\/printable_string\.c[ \t]*\)/\1b\/libbb\2/' package/busybox/0005-libbb-printable_string.patch
+    $
+    $ diff -urN ~/unicode.c output/build/busybox-1.36.0/libbb/unicode.c > package/busybox/0006-libbb-unicode_conv_to_printable2.patch
+    $
+    $ sed -i -e 's/\(---[ \t]\+\)[^ \t]\+\(\/unicode\.c[ \t]*\)/\1a\/libbb\2/' \
+        -e 's/\(+++[ \t]\+\)[^ \t]\+\(\/unicode\.c[ \t]*\)/\1b\/libbb\2/' package/busybox/0006-libbb-unicode_conv_to_printable2.patch
+    ````
+
+    这样，即使以后对整个工程`make clean`再重新`make`，也不需要执行前面几步的手动操作，编译脚本会自动打补丁。
 
 ### 2.5 解决`kobs-ng`编译错误
 
