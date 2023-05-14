@@ -116,7 +116,7 @@
 * 将待修改的源码文件复制一份，用于后面的补丁制作：
 
     ````
-    cp output/build/busybox-*/libbb/printable_string.c output/build/busybox-*/libbb/unicode.c ~/
+    $ cp output/build/busybox-*/libbb/printable_string.c output/build/busybox-*/libbb/unicode.c ~/
     ````
 
 * 执行`vim output/build/busybox-*/libbb/printable_string.c`，
