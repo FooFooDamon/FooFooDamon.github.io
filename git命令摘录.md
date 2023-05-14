@@ -84,11 +84,28 @@ $ git add '${PATH1}'[ '${PATH2}' '${PATH3}' ...]
 $ git commit --amend --no-edit
 ````
 
-## 5、提交到远程
+## 5、推送到远程
 
 ### 5.1 基本用法
 
 ````
+$ git push
+````
+
+### 5.2 推送大文件
+
+使用`大文件存储`（`LFS`，`Large File Storage`）机制。
+
+推送示例：
+
+````
+$ git lfs track gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz
+$ git add .gitattributes
+$ git commit .gitattributes -m ".gitattributes：插入新规则项：ARM GCC 7.5.0 交叉编译器压缩包"
+$ git push
+$ git add gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz
+$ git commit gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz \
+    -m "添加 ARM GCC 7.5.0 交叉编译器压缩包"
 $ git push
 ````
 
