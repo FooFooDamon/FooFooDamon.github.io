@@ -209,7 +209,9 @@
         /* USER CODE BEGIN WHILE */
         while (1)
         {
-            /* <font style="color: red">在此处添加</font><a id="user_code"></a> */
+        ````
+        &emsp;&emsp;&emsp;/* <font style="color: red">在此处添加</font><a id="user_code"></a> */
+        ````
             /* USER CODE END WHILE */
 
             /* USER CODE BEGIN 3 */
