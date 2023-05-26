@@ -388,15 +388,17 @@
 
 * 在正式发布程序时，需要先用`STM32F103C6TX_ON_FLASH.ld`覆盖`STM32F103C6TX_FLASH.ld`，再编译。
 而在日常开发和测试中，则先用`STM32F103C6TX_ON_RAM.ld`覆盖`STM32F103C6TX_FLASH.ld`，再编译。
-至于烧录方式，两者是一样的，详见前文。
-
-* 验证方法：仍以前面的[黑佬窝](#proj_led_blinks)项目为例，先将`led_blinks(1000);`逻辑烧进闪存，
-再将`led_blinks(5000);`逻辑烧进内存，此时LED应以`5`秒的时间间隔闪烁，按下复位键或断电再上电，
-如果LED重新以`1`秒的时间间隔闪烁，就说明成功。
+至于烧录方式，两者几乎一样，为简明起见，具体操作方式见后文。
 
 * 前述源码文件的修改和链接脚本的切换，可以写进`Makefile`，
 详见<a href="https://github.com/FooFooDamon/lazy_coding_skills" target="_blank">懒编程秘笈</a>项目
 `makefile/stm32f1x_private.mk`文件的`flash_as_storage`和`ram_as_storage`目标，
 使用时也要将该文件复制或链接到项目根目录下，切换命令则是`make flash_as_storage`和`make ram_as_storage`。
-注意每次切换之后，都要重新`make`一次。
+注意每次切换之后，都要重新`make`一次。至于烧录，则分别是`make burn_to_flash`和`make burn_to_ram`，
+对这两个命令的具体内容感兴趣的，可自行查看相关的`Makefile`，其实就是将前文`OpenOCD`烧录命令稍作修改，
+此处不再详述。
+
+* 验证方法：仍以前面的[黑佬窝](#proj_led_blinks)项目为例，先将`led_blinks(1000);`逻辑烧进闪存，
+再将`led_blinks(5000);`逻辑烧进内存，此时LED应以`5`秒的时间间隔闪烁，按下复位键或断电再上电，
+如果LED重新以`1`秒的时间间隔闪烁，就说明烧录闪存和烧录内存都成功了。
 
