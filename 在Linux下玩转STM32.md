@@ -11,7 +11,8 @@
     虽然有比它更便宜的裸片型号，但做成最小系统或者开发板之后，价格就变得很吓人！
     焊工不好的人不宜直接焊裸片，钱包不鼓的人买不起贵价板，最佳选择就不言而喻了！
     * 原理图：可自行向卖家索要，此处不展示。
-    * 实物图<a id="stm32_img"></a>：![stm32f103c6t6](references/stm32f103c6t6.png)
+    * 实物图（若显示不清，可右击，在新标签页打开，放大观看，
+    下同）<a id="stm32_img"></a>：![stm32f103c6t6](references/stm32f103c6t6.png)
 
 * `USB转TTL`**串口**模块一个（附带杜邦线），可用于：
     * 烧录用户程序。
@@ -323,6 +324,8 @@
 * 多种烧录方式，比如烧到闪存（Flash）、内存（SRAM）等。
 
 * 生成命令党所用的编辑器的代码浏览配置。
+
+* 其他……
 
 该`Makefile`具体实现详见<a href="https://github.com/FooFooDamon/lazy_coding_skills" target="_blank">懒编程秘笈</a>项目的`makefile/stm32_cube_ide.mk`。
 可将其下载下来放到你的STM32项目的根目录，并重命名为`Makefile`，其用法在此不再赘述，
