@@ -328,7 +328,7 @@
 * 其他……
 
 该`Makefile`具体实现详见<a href="https://github.com/FooFooDamon/lazy_coding_skills" target="_blank">懒编程秘笈</a>项目的`makefile/stm32_cube_ide.mk`。
-可将其下载下来放到你的STM32项目的根目录，并重命名为`Makefile`，其用法在此不再赘述，
+可将其复制或链接到你的STM32项目的根目录，并重命名为`Makefile`，其用法在此不再赘述，
 直接查看其内容即可了解，因其非常简单明了。
 
 ### 4.4 在该架构下如何协同工作
@@ -339,4 +339,64 @@
 
 * 该架构暂时只适用于`Unix/Linux`党，因为`Windows`版的`STM32CubeIDE`未测试过，
 其生成的`Makefile`里某些编译参数（尤其是路径）可能与前述的脚本不兼容。
+
+## 5、进阶技巧：将程序烧进内存
+
+### 5.1 背景及动机
+
+* `闪存`（`Flash`）是有擦写寿命的，如果在日常开发中，不管多细小的改动，
+每次均烧写一次闪存，其寿命将会很快耗尽，增加硬件成本。
+
+* `内存`（`SRAM`）则不存在这个问题，但内存通常容量很小，
+所以这个技巧只适用于小程序。
+
+### 5.2 方法及步骤
+
+* 找出并修改`Core/Src/system_stm32f1xx.c`以下内容（按手动加入的中文注释的提示操作）：
+    ````
+    /* Note: Following vector table addresses must be defined in line with linker
+             configuration. */
+    /*!< Uncomment the following line if you need to relocate the vector table
+         anywhere in Flash or Sram, else the vector table is kept at the automatic
+         remap of boot address selected */
+    /* #define USER_VECT_TAB_ADDRESS */ /* 要烧进内存则将此行注释变成代码，否则保持注释状态 */
+
+    #if defined(USER_VECT_TAB_ADDRESS)
+    /*!< Uncomment the following line if you need to relocate your vector Table
+         in Sram else user remap will be done in Flash. */
+    /* #define VECT_TAB_SRAM */ /* 要烧进内存则将此行注释变成代码，否则保持注释状态 */
+    #if defined(VECT_TAB_SRAM)
+    #define VECT_TAB_BASE_ADDRESS   SRAM_BASE       /*!< Vector Table base address field.
+                                                         This value must be a multiple of 0x200. */
+    #define VECT_TAB_OFFSET         0x00000000U     /*!< Vector Table base offset field.
+                                                         This value must be a multiple of 0x200. */
+    #else
+    #define VECT_TAB_BASE_ADDRESS   FLASH_BASE      /*!< Vector Table base address field.
+                                                         This value must be a multiple of 0x200. */
+    #define VECT_TAB_OFFSET         0x00000000U     /*!< Vector Table base offset field.
+                                                         This value must be a multiple of 0x200. */
+    #endif /* VECT_TAB_SRAM */
+    #endif /* USER_VECT_TAB_ADDRESS */
+    ````
+
+* 将`STM32F103C6TX_FLASH.ld`复制两份，一份重命名为`STM32F103C6TX_ON_FLASH.ld`，
+另一份则重命名为`STM32F103C6TX_ON_RAM.ld`，并将后面这份的所有`>FLASH`和`>RAM AT> FLASH`
+均改成`>RAM`。需要说明的是，网上很多文章的做法是将`MEMORY`区块里的`RAM`和`FLASH`设置项
+调换顺序并重新映射地址，亦即将原本的内存一分为二，一部分伪装成原本的闪存，
+另一部分则继续作为内存使用——个人觉得这种做法不太好，因为每部分应该划多大区域不好确定，
+可能不同的项目有不同的需求，还不如作为一个整体来用，将链接脚本里所有的段都加载到内存。
+
+* 在正式发布程序时，需要先用`STM32F103C6TX_ON_FLASH.ld`覆盖`STM32F103C6TX_FLASH.ld`，再编译。
+而在日常开发和测试中，则先用`STM32F103C6TX_ON_RAM.ld`覆盖`STM32F103C6TX_FLASH.ld`，再编译。
+至于烧录方式，两者是一样的，详见前文。
+
+* 验证方法：仍以前面的[黑佬窝](#proj_led_blinks)项目为例，先将`led_blinks(1000);`逻辑烧进闪存，
+再将`led_blinks(5000);`逻辑烧进内存，此时LED应以`5`秒的时间间隔闪烁，按下复位键或断电再上电，
+如果LED重新以`1`秒的时间间隔闪烁，就说明成功。
+
+* 前述源码文件的修改和链接脚本的切换，可以写进`Makefile`，
+详见<a href="https://github.com/FooFooDamon/lazy_coding_skills" target="_blank">懒编程秘笈</a>项目
+`makefile/stm32f1x_private.mk`文件的`flash_as_storage`和`ram_as_storage`目标，
+使用时也要将该文件复制或链接到项目根目录下，切换命令则是`make flash_as_storage`和`make ram_as_storage`。
+注意每次切换之后，都要重新`make`一次。
 
