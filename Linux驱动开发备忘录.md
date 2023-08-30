@@ -19,6 +19,8 @@
 
 * `struct {inode, file, file_operations}`：`<linux/fs.h>`
 
+* `struct list_head`：`<linux/list.h>`
+
 ## 3、模块入口与出口
 
 * module_init(xx_init)
@@ -86,6 +88,10 @@
     * 卸载：`cdev_del()`
 
 ## 7、内存操作
+
+* 分配及释放：
+    * 函数：`kmalloc()`、`kfree()` from `<linux/slab.h>`
+    * 标志：`GFP_ATOMIC`、`GFP_KERNEL`、…… from `<linux/gfp.h>`
 
 * 复制：
     * `copy_{from,to}_user()`：
@@ -376,6 +382,68 @@
     * `PHY`实现逻辑在`drivers/net/phy`目录，通用驱动则是`phy_device.c`。
 
 ## 21、常见通信协议
+
+### 21.1 串口（UART）
+
+待补充。
+
+### 21.2 I2C
+
+待补充。
+
+### 21.3 SPI
+
+待补充。
+
+### 21.4 控制器局域网（CAN）
+
+待补充。
+
+### 21.5 USB
+
+* 头文件：`<linux/usb.h>`
+
+* 抽象层级：
+    * 内核角度：其他子系统（字符设备、网络设备等）-> USB设备驱动 -> USB核心层 -> USB主机控制器驱动
+    * USB设备角度：设备（Device）-> 配置（Configuration）-> 接口（Interface）-> 端点（Endpoint）/ 管道（Pipe）
+
+* 注册与注销：
+    * 接口驱动：
+        * 数据结构：`struct usb_driver`、`struct usb_device_id`、`struct usbdrv_wrap`
+        * 操作接口：`usb_register_driver()`、`usb_register()`、`usb_deregister()`
+    * 设备驱动：
+        * 数据结构：`struct usb_device_driver`、`struct usbdrv_wrap`
+        * 操作接口：`usb_register_device_driver()`、`usb_deregister_device_driver()`
+    * 使用主设备号与应用程序通信的驱动：
+        * 数据结构：`struct usb_interface`、`struct usb_class_driver`
+        * 操作接口：`usb_register_dev()`、`usb_deregister_dev()`
+
+* 主要数据结构的访问与互转：
+    * 数据结构：`struct usb_device`、`struct usb_interface`
+    * 操作接口：
+        * `interface_to_usbdev()`
+        * `usb_get_intfdata()`、`usb_set_intfdata()`
+
+* 管道操作接口：`usb_{snd,rcv}{ctrl,isoc,bulk,int}pipe()`
+
+* 缓冲区操作接口：
+    * ~~旧：`usb_buffer_{alloc,free}()`~~
+    * 新：`usb_{alloc,free}_coherent()`
+
+* 异步处理逻辑——`URB`（`USB Request Block`）：
+    * 数据结构：`struct urb`
+    * 操作接口：
+        * 分配与释放：`usb_alloc_urb()`、`usb_free_urb()`
+        * 初始化：`usb_fill_{control,bulk,int}_urb()`（等时型即isoc URB需手动初始化）、`usb_init_urb()`
+        * 提交任务：`usb_submit_urb()`（初始化URB或从中断函数退出时，都要提交一次）
+        * 终止任务：`usb_kill_urb()`（等待完成）、`usb_unlink_urb()`（当指定`URB_ASYNC_UNLINK`标志时不等待）。
+        注意要避免与回调函数里的释放URB逻辑的冲突，可能需要加锁。此外，在回调函数里也不能休眠。
+
+* 同步处理逻辑：
+    * 收发数据：`usb_{control,bulk,interrupt}_msg()`（不能用于中断上下文或持有自旋锁，不能中途取消执行）
+    * 其他：`usb_get_descriptor()`、`usb_get_status()`、`usb_string()`、……
+
+### 21.X 待补充
 
 待补充。
 
