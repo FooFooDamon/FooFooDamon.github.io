@@ -3,7 +3,7 @@
 
 # 懒人VIM技巧
 
-## 前言
+## 1、前言
 
 本文适用于符合以下一点或以上而导致无固定、称手的IDE可长期使用的人士：
 
@@ -26,7 +26,7 @@
 也可能需要多个插件协作。限于个人精力及能力，不能一一说清，故在大范围下只能采用
 “**所需插件取其并集，最终使用效果及适用语言取其交集**”的方式。目前（已测试过）适用的语言有：C/C++、Python。
 
-## 入门级插件
+## 2、入门级插件
 
 * `Ctags`：代码跳转。需要生成一些中间文件作为查询的索引，且代码有修改时需要重新生成。
 （2020/06/26备注：使用`YouCompleteMe`跳转更方便，且不必生成及更新中间文件。）
@@ -44,15 +44,16 @@
 <a href="references/手把手教你把Vim改装成一个IDE编程环境(图文) - 吴垠的专栏 - 博客频道 - CSDN.NET.pdf">这里</a>
 查看备份文档。
 
-## 安装及配置`YouCompleteMe`插件
+## 3、安装及配置`YouCompleteMe`插件
 
-### 快速安装
+### 3.1 快速安装
 
 以下适用于`Ubuntu`系统，版本`14.04`以上：
 
 ````
 sudo apt-get install vim-addon-manager 
 sudo apt-get install vim-youcompleteme
+sudo apt install clangd # 新版本YouCompleteMe默认依赖的语法分析引擎
 vim-addons install youcompleteme
 ````
 
@@ -61,13 +62,13 @@ vim-addons install youcompleteme
 
 为简化说明，后面将用`YCM`指代`YouCompleteMe`。
 
-### 编写插件配置文件
+### 3.2 编写插件配置文件
 
 YCM的配置文件是一个Python文件，所以它**既是数据，也是代码**，
 换而言之，只要搞清其原理并恰当运用Python提供的机制，该配置文件可以达到既简洁又灵活的效果。
 以下是一个与网上多数文章不同的配置方案。
 
-#### 标准配置
+#### 3.2.1 标准配置
 
 ````
 import os
@@ -98,11 +99,12 @@ def FlagsForFile(filename, **kwargs):
 “NoExtraConfDetected: No .ycm_extra_conf.py file detected”的警告且不能正确跳转，而直接复制配置文件又会有重复且后续修改麻烦，
 所以使用链接操作。
 
-该配置的后续更新详见[https://github.com/FooFooDamon/cpp_assistant]()项目的`conf/ycm_basic_conf.py`文件。
+该配置的后续更新详见“[~~C++助手~~](https://github.com/FooFooDamon/cpp_assistant)”~~项目的`conf/ycm_basic_conf.py`文件或~~
+“[懒编程秘笈](https://github.com/FooFooDamon/lazy_coding_skills)”项目的`python/ycm_conf_for_c_and_cpp.py`文件。
 
 其余语言的标准配置可参考上述内容自行设计。
 
-#### 具体项目的配置
+#### 3.2.2 具体项目的配置
 
 在项目的根目录（针对简单项目只需要一个配置的场景）或者某个子模块的根目录（适用于复杂项目下不同子模块有不同配置的场景）
 创建一个名为`.ycm_extra_conf.py`的文件，这样做的好处是不必手动在`~/.vimrc`
@@ -121,7 +123,7 @@ flags.extend([ "-I", os.path.join(MODULE_ROOT, "include") ]) # 头文件路径�
 
 即可进行代码的补全及跳转。
 
-### `~/.vimrc`设置
+### 3.3 `~/.vimrc`设置
 
 * 关闭YCM配置加载询问：`let g:ycm_confirm_extra_conf = 0`
 
@@ -130,15 +132,15 @@ flags.extend([ "-I", os.path.join(MODULE_ROOT, "include") ]) # 头文件路径�
 此外，YCM单独跳转到定义或声明位置的命令分别是`YcmCompleter GoToDefinition`和`YcmCompleter GoToDeclaration`，
 注意别漏了前置冒号和结尾`<CR>`。
 
-## `jedi-vim`——用于Python的补全及跳转（在Python方面可能比YCM更专业）
+## 4、`jedi-vim`——用于Python的补全及跳转（在Python方面可能比YCM更专业）
 
-### 创建VIM插件目录（若已存在则跳过）
+### 4.1 创建VIM插件目录（若已存在则跳过）
 
 ````
 mkdir -p ~/.vim/autoload ~/.vim/bundle
 ````
 
-### 安装`pathogen`用于管理插件
+### 4.2 安装`pathogen`用于管理插件
 
 
 直接用apt命令来安装（系统较新时推荐使用）：
@@ -166,15 +168,15 @@ syntax on
 filetype plugin indent on
 ````
 
-### 安装及配置`jedi-vim`
+### 4.3 安装及配置`jedi-vim`
 
-#### 方法一（较简单，推荐在较新系统上使用，若行不通再使用方法二）：
+#### 4.3.1 方法一（较简单，推荐在较新系统上使用，若行不通再使用方法二）：
 
 ````
 sudo apt install vim-python-jedi
 ````
 
-#### 方法二：
+#### 4.3.2 方法二：
 
 更新`jedi`：
 
@@ -190,7 +192,7 @@ git clone --recursive https://github.com/davidhalter/jedi-vim.git ~/.vim/bundle/
 
 完毕。
 
-### `jedi-vim`常用快捷键（摘自其官方GitHub）
+### 4.4 `jedi-vim`常用快捷键（摘自其官方GitHub）
 
 * Completion ``<C-Space>``
 * Goto assignments ``<leader>g`` (typical goto function)
@@ -202,19 +204,19 @@ git clone --recursive https://github.com/davidhalter/jedi-vim.git ~/.vim/bundle/
 
 其中，``<leader>``在VIM默认是反斜杠“\”。
 
-### 参考材料
+### 4.5 参考材料
 
 * https://github.com/tpope/vim-pathogen
 
 * https://github.com/davidhalter/jedi-vim
 
-## 常见配置
+## 5、常见配置
 
 * 追加自定义的头文件目录（`Ctags`所需）。示例：`set path+=$HOME/include`，多个路径则用英文逗号隔开。
 
-## 常用快捷键备忘录
+## 6、常用快捷键备忘录
 
-### 内置
+### 6.1 内置
 
 * 命令模式转为编辑模式：`i`（即：insert）
 
@@ -252,18 +254,30 @@ git clone --recursive https://github.com/davidhalter/jedi-vim.git ~/.vim/bundle/
 
 * 列模式删除：`Ctrl + v` -> 移动光标选取多行 -> `d`
 
-### `YouCompleteMe`
+### 6.2 `YouCompleteMe`
 
 见`YouCompleteMe`一节。
 
-### `jedi-vim`
+### 6.3 `jedi-vim`
 
 见`jedi-vim`一节。
 
-## 其它（2023.02.22更新）
+## 7、其它
+
+### 7.1 2023.02.22更新
 
 * 后续再涉及到更多配置、更多语言的话，不会再更新本文，而是推荐大家在空闲之余了解一下VIM脚本编程，
 即`VIMScript`或`VIM Scripting`，这样有利于自行定制化，个中便利和乐趣谁试谁知道。
 
 * 最后放出本人的VIM配置供各位参考，详见“[懒编程秘笈](https://github.com/FooFooDamon/lazy_coding_skills)”项目的`vim`目录。
+
+### 7.2 2023.10.22更新
+
+* 忍不住破“`2023.02.22更新`”的戒，因为新版`YCM`的功能增强了，其依赖的语法分析引擎换成了`clangd`，
+一种很火很好用的`LSP`（`Language Server Protocol`）方案。在`clangd`的帮助下，
+新版`YCM`**突破了旧版`不能跨文件跳转到函数定义`的限制**，更增添了`列举函数的引用情况`等功能，
+而想要获得这些好处，只需加装一个`clangd`（网上很多文章尤其是旧文章没有提及），
+并且在`.ycm_extra_conf.py`多定义一个与旧版`FlagsForFile`函数相似的`Settings`函数即可，
+具体示例可参考“[懒编程秘笈](https://github.com/FooFooDamon/lazy_coding_skills)”项目的`python/ycm_conf_for_*.py`脚本，
+详细说明可访问`YCM`的[代码主页](https://github.com/ycm-core/YouCompleteMe)或[GitHub Pages](http://ycm-core.github.io/YouCompleteMe/)。
 
