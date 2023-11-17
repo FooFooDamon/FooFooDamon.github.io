@@ -23,66 +23,67 @@
 
 * Windows版USB转串口驱动：略。
 
-* SecureCRT、Putty、MobaXTerm等：适用于Windows，略。
+* `SecureCRT`、`PuTTY`、`MobaXTerm`等：适用于Windows，略。
 
-* minicom：适用于Linux，如下：
+* `minicom`、`PuTTY`：适用于Linux，仅介绍`minicom`如下：
 
     * 查看串口硬件连接是否被识别：
-
-    ````
-    $ lsmod | grep usbserial
-    usbserial              45056  3 ch341
-    $
-    $ dmesg | grep ttyUSB
-    [  890.175796] usb 1-11: ch341-uart converter now attached to ttyUSB0
-    ````
+        ````
+        $ lsmod | grep usbserial
+        usbserial              45056  3 ch341
+        $
+        $ dmesg | grep ttyUSB
+        [  890.175796] usb 1-11: ch341-uart converter now attached to ttyUSB0
+        ````
 
     * 安装并配置`minicom`：
-
-    ````
-    $ sudo apt install minicom
-    $
-    $ sudo minicom -s # 并对以下标有序号的菜单项按顺序进行操作
-            +-----[configuration]------+
-            | Filenames and paths      |
-            | File transfer protocols  |
-            | Serial port setup        | <--- (1)
-            | Modem and dialing        |
-            | Screen and keyboard      |
-            | Save setup as dfl        | <--- (2)
-            | Save setup as..          |
-            | Exit                     |
-            | Exit from Minicom        | <--- (3)
-            +--------------------------+
-    以下是步骤(1)的明细项:
-    +-----------------------------------------------------------------------+
-    | A -    Serial Device      : /dev/ttyUSB0                              |
-    | B - Lockfile Location     : /var/lock                                 |
-    | C -   Callin Program      :                                           |
-    | D -  Callout Program      :                                           |
-    | E -    Bps/Par/Bits       : 115200 8N1                                |
-    | F - Hardware Flow Control : No                                        |
-    | G - Software Flow Control : No                                        |
-    |                                                                       |
-    |    Change which setting?                                              |
-    +-----------------------------------------------------------------------+
-    ````
+        ````
+        $ sudo apt install minicom
+        $
+        $ sudo minicom -s # 并对以下标有序号的菜单项按顺序进行操作
+                +-----[configuration]------+
+                | Filenames and paths      |
+                | File transfer protocols  |
+                | Serial port setup        | <--- (1)
+                | Modem and dialing        |
+                | Screen and keyboard      |
+                | Save setup as dfl        | <--- (2)
+                | Save setup as..          |
+                | Exit                     |
+                | Exit from Minicom        | <--- (3)
+                +--------------------------+
+        以下是步骤(1)的明细项:
+        +-----------------------------------------------------------------------+
+        | A -    Serial Device      : /dev/ttyUSB0                              |
+        | B - Lockfile Location     : /var/lock                                 |
+        | C -   Callin Program      :                                           |
+        | D -  Callout Program      :                                           |
+        | E -    Bps/Par/Bits       : 115200 8N1                                |
+        | F - Hardware Flow Control : No                                        |
+        | G - Software Flow Control : No                                        |
+        |                                                                       |
+        |    Change which setting?                                              |
+        +-----------------------------------------------------------------------+
+        ````
         注：以上只是最基础的设备，此外还可进入“Screen and keyboard”里，
         按提示设置“自动换行”，这有利于显示一些字数很多的打印内容
         （例如U-Boot环境变量的打印）。
 
     * 使用：
+        ````
+        $ sudo minicom -c on
+        Welcome to minicom 2.7.1
 
-    ````
-    $ sudo minicom -c on
-    Welcome to minicom 2.7.1
+        OPTIONS: I18n
+        Compiled on Aug 13 2017, 15:25:34.
+        Port /dev/ttyUSB0, 12:27:58
 
-    OPTIONS: I18n
-    Compiled on Aug 13 2017, 15:25:34.
-    Port /dev/ttyUSB0, 12:27:58
-
-    Press CTRL-A Z for help on special keys
-    ````
+        Press CTRL-A Z for help on special keys
+        ````
+        若有多个串口，且波特率等参数也与默认配置不同，则可通过命令行参数来指定，例如：
+        ````
+        $ sudo minicom -c on -D /dev/ttyUSB1 -b 38400
+        ````
 
 ## 3、交叉编译工具链
 
@@ -95,7 +96,6 @@
     ````
 
 * 最后在`~/.bashrc`加入以下语句：
-
     ````
     export PATH=${PATH}:~/bin/gcc-linaro-arm-linux-gnueabihf-4.9-2014.09_linux/bin
 
