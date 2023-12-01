@@ -1,4 +1,5 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<base target="_blank" />
 
 # Linux驱动开发备忘录
 
@@ -21,6 +22,8 @@
 
 * `struct list_head`：`<linux/list.h>`
 
+* 其他：用到时再补充。
+
 ## 3、模块入口与出口
 
 * module_init(xx_init)
@@ -42,6 +45,8 @@
 * `printk()`、`pr_{debug,info,notice,warning,err}()`：`<linux/printk.h>`
 
 * `dev_{dbg,info,notice,warn,err}()`：`<linux/device.h>`
+
+* 更多的接口详见“[懒编程秘笈](https://github.com/FooFooDamon/lazy_coding_skills)”项目的`c_and_cpp/native/klogging.h`文件。
 
 ## 5、设备节点
 
@@ -79,7 +84,7 @@
         * `unregister_chrdev_region()`：初始化时不管是调用`alloc_chrdev_region()`，
         还是`register_chrdev_region()`，均通过此函数释放。
 
-* 数据结构：`struct cdev` from `<linux/cdev.h>`
+* 数据结构：`struct cdev`，位于`<linux/cdev.h>`
 
 * 操作：`<linux/cdev.h>`
     * 动态分配：`cdev_alloc()`
@@ -90,8 +95,8 @@
 ## 7、内存操作
 
 * 分配及释放：
-    * 函数：`kmalloc()`、`kfree()` from `<linux/slab.h>`
-    * 标志：`GFP_ATOMIC`、`GFP_KERNEL`、…… from `<linux/gfp.h>`
+    * 函数：`kmalloc()`、`kfree()`，位于`<linux/slab.h>`
+    * 标志：`GFP_ATOMIC`、`GFP_KERNEL`、……，位于`<linux/gfp.h>`
 
 * 复制：
     * `copy_{from,to}_user()`：
@@ -201,8 +206,8 @@
 
 * `原子变量`：
     * **最轻量**，但仅能操作`整型`及`二进制位`。
-    * 数据结构：`atomic_t` from `<linux/types.h>`
-    * 操作接口：`atomic_*()` from `<linux/atomic.h>`
+    * 数据结构：`atomic_t`，位于`<linux/types.h>`
+    * 操作接口：`atomic_*()`，位于`<linux/atomic.h>`
 
 * `自旋锁`：
     * 原地转圈圈**空等**，占用CPU时间。适用于**短时加锁**的场景。
@@ -212,33 +217,35 @@
     于是`死锁`现象就发生了。此外，`中断`及其`下半部`机制也能争夺调度权，
     所以**普通函数**最好在**获取锁之前先关中断**、**释放锁前后再开中断**，
     中断服务函数则只需调用简单的加解锁函数即可，`下半部`函数则调用带`_bh`后缀的锁函数。
-    * 数据结构：`spinlock_t` from `<linux/spinlock_types.h>`
-    * 操作接口：`spin_*()` from `linux/spinlock.h`（已包含上述头文件）
+    * 数据结构：`spinlock_t`，位于`<linux/spinlock_types.h>`
+    * 操作接口：`spin_*()`，位于`<linux/spinlock.h>`（已包含上述头文件）
 
 * `读写锁`：
     * **宽松版**的`自旋锁`：允许多个同时读，只有发生一个或以上的写操作时才需要加锁,
     即读与读可以并行，而读与写、写与写需要独占。其余与自旋锁类似。
-    * 数据结构：`rwlock_t` from `<linux/rwlock_types.h>`
-    * 操作接口：`rwlock_init()`、`{read,write}_*()` from `<linux/rwlock.h>`（
+    * 数据结构：`rwlock_t`，位于`<linux/rwlock_types.h>`
+    * 操作接口：`rwlock_init()`、`{read,write}_*()`，位于`<linux/rwlock.h>`（
     但该头文件不能直接包含，需要使用自旋锁的头文件）
 
 * `顺序锁`：
     * **宽松版**的`读写锁`：允许多读、多读一写（会有脏读），但写与写还是要独占。
     其余与读写锁类似。
-    * 数据结构：`seqlock_t` from `<linux/seqlock.h>`
-    * 操作接口：`seqlock_init()`、`{read,write}_*()` from `<linux/seqlock.h>`
+    * 数据结构：`seqlock_t`，位于`<linux/seqlock.h>`
+    * 操作接口：`seqlock_init()`、`{read,write}_*()`，位于`<linux/seqlock.h>`
 
 * `信号量`：
     * **计数型**的锁，在等待锁的时候宿主线程会进入休眠状态，所以不耗费CPU，
     但会有上下文切换的开销，所以适用于可能会长时间占用资源且允许休眠的场合（
     中断服务函数不能休眠）。
-    * 数据结构：`struct semaphore` from `<linux/semaphore.h>`
-    * 操作接口：`sema_init()`、`up()`、`down()`、`down_*()` from `<linux/semaphore.h>`
+    * 数据结构：`struct semaphore`，位于`<linux/semaphore.h>`
+    * 操作接口：`sema_init()`、`up()`、`down()`、`down_*()`，位于`<linux/semaphore.h>`
 
 * `互斥体`：
     * **锁如其名**，理念上类似于**二值型**的`信号量`，但在实现上不一定基于`信号量`。
-    * 数据结构：`struct mutex` from `<linux/mutex.h>`
-    * 操作接口：`mutex_*()` from `<linux/mutex.h>`
+    * 数据结构：`struct mutex`，位于`<linux/mutex.h>`
+    * 操作接口：`mutex_*()`，位于`<linux/mutex.h>`
+
+* 更详细的解释可参考一位网友的[读书笔记](references/《Linux内核设计与实现》读书笔记（十）-内核同步方法-闫宝平-博客园.pdf)。
 
 ## 11、内核定时器
 
@@ -300,8 +307,8 @@
     * `设备`：代码逻辑因**器件**而异。但在引入`设备树`之后，就不必写代码以及加载`.ko`了。
     * `总线`：充当**中介**角色，`驱动`和`设备`均需向总线`注册`，`总线`会进行`匹配`，
     若匹配成功则会将它们`关联`在一起。支持哪些总线，可在`/sys/bus`目录查看。
-        * 数据结构：`struct bus_type` from `<linux/device.h>`
-        * 操作接口：`bus_*` from `<linux/device.h>`
+        * 数据结构：`struct bus_type`，位于`<linux/device.h>`
+        * 操作接口：`bus_*`，位于`<linux/device.h>`
 
 * Platform`驱动`：并非一种新的驱动，而是一个通用抽象，最终还是要依赖字符驱动、块驱动等。
 数据结构`struct platform_driver`和操作接口`platform_driver_{register,unregister}()`
