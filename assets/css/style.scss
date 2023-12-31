@@ -1,0 +1,31 @@
+---
+view_width: 1024px
+---
+
+@import "jekyll-theme-merlot";
+
+div.shell {
+    width: {{ page.view_width }};
+}
+
+header {
+    max-width: {{ page.view_width }};
+}
+
+div#no-downloads {
+    width: {{ page.view_width }};
+    background-position-x: center;
+}
+
+span.inner {
+    width: {{ page.view_width }};
+}
+
+span.banner-fix {
+    width: {{ page.view_width }};
+}
+
+footer {
+    max-width: {{ page.view_width }};
+}
+
