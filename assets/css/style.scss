@@ -14,6 +14,8 @@ header {
 
 div#no-downloads {
     width: {{ page.view_width }};
+    padding-left: 237px; /* = view_width / 2 - 550px / 2，其中550px是背景图片宽度。下同 */
+    background-position: 237px 171px; /* 171px是模板渲染后得出的值，不要更改 */
 }
 
 span.inner::after {
