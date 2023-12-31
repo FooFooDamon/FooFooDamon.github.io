@@ -16,7 +16,7 @@ div#no-downloads {
     width: {{ page.view_width }};
 }
 
-div#no-downloads span {
+span.inner::after {
     width: {{ page.view_width }};
     background-position: center top;
 }
