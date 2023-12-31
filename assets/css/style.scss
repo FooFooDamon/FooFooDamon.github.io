@@ -14,11 +14,11 @@ header {
 
 div#no-downloads {
     width: {{ page.view_width }};
-    background-position: center top;
 }
 
 span.inner {
     width: {{ page.view_width }};
+    background-position: center top;
 }
 
 span.banner-fix {
