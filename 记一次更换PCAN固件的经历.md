@@ -358,7 +358,8 @@ https://github.com/normaldotcom/canable-fw.git
 * 可执行`lsmod | grep "peak\|pcan"`来查看驱动的加载情况。
 默认情况下没加载驱动，所以没有输出。
 
-* 运行`pcanview`则会提示驱动找不到：![pcanview_01](references/can2usb/pcanview_01.png)
+* 运行`pcanview`则会提示驱动找不到：<br>
+    ![pcanview_01](references/can2usb/pcanview_01.png)
 
 ### 4.4 第二愁：`Linux`自带的驱动不支持`pcanview`
 
@@ -469,17 +470,21 @@ https://github.com/normaldotcom/canable-fw.git
         $ ifconfig can0
         can0: 获取接口信息时发生错误: Device not found
         ```
-    * 正常情况下，`pcanview`启动如下图：![pcanview_02](references/can2usb/pcanview_02.png)
+    * 正常情况下，`pcanview`启动如下图：<br>
+    ![pcanview_02](references/can2usb/pcanview_02.png)<br>
     注意：启动`pcanview`时是可以指定一些选项的，执行`pcanview -h`即可查看支持哪些选项，
     但**只是预留接口，并未实现功能**！可能对`PEAK-System`公司来说，`Linux`用户稀少，
     没什么商业价值，所以就没做吧。
 
-    * 连接成功如下图（注意第三个窗格及底部状态栏的显示）：![pcanview_03](references/can2usb/pcanview_03.png)
+    * 连接成功如下图（注意第三个窗格及底部状态栏的显示）：<br>
+    ![pcanview_03](references/can2usb/pcanview_03.png)
 
-    * 接下位机就可以正常接收数据了，如下图（部分信息已作模糊处理）：![pcanview_04](references/can2usb/pcanview_04.png)
+    * 接下位机就可以正常接收数据了，如下图（部分信息已作模糊处理）：<br>
+    ![pcanview_04](references/can2usb/pcanview_04.png)
 
     * 若默认或手动指定的速率与实际设备的不匹配，
-    则接收不了数据且会提示下线：![pcanview_05](references/can2usb/pcanview_05.png)
+    则接收不了数据且会提示下线：<br>
+    ![pcanview_05](references/can2usb/pcanview_05.png)
 
     * 现在以`速率`为例，说说传递驱动参数的几种方式：
         * 首先是一种`modprobe`手册（即`man`命令）说了可以传、但实际上可能传不了的方式：
