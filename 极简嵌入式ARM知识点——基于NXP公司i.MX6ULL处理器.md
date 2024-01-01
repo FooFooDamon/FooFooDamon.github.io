@@ -1,6 +1,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-# 极简嵌入式ARM知识点——基于NXP公司i.MX6ULL处理器
+# 极简嵌入式ARM知识点<br>——基于NXP公司i.MX6ULL处理器
 
 ## 1、前言
 

@@ -1,6 +1,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-# i.MX6ULL设备树管脚复用配置的查重及查漏
+# i.MX6ULL设备树管脚复用配置<br>的查重及查漏
 
 ## 1、背景
 

@@ -1,6 +1,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-# 编译Linux内核时使用较高版本make导致每次均全量编译的问题
+# 编译Linux内核时使用较高版本make<br>导致每次均全量编译的问题
 
 ## 1、前言
 
