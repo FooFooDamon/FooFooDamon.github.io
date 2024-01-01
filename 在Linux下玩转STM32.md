@@ -12,20 +12,17 @@
     焊工不好的人不宜直接焊裸片，钱包不鼓的人买不起贵价板，最佳选择就不言而喻了！
     * 原理图：可自行向卖家索要，此处不展示。
     * 实物图（若显示不清，可右击，在新标签页打开，放大观看，
-    下同）<a id="stm32_img"></a>：
-        ![stm32f103c6t6](references/stm32f103c6t6.png)
+    下同）<a id="stm32_img"></a>：<br>![stm32f103c6t6](references/stm32f103c6t6.png)
 
 * `USB转TTL`**串口**模块一个（附带杜邦线），可用于：
     * 烧录用户程序。
     * 串口编程。
-    * 实物图<a id="usb2ttl_img"></a>：
-        ![usb2ttl](references/usb2ttl.png)
+    * 实物图<a id="usb2ttl_img"></a>：<br>![usb2ttl](references/usb2ttl.png)
 
 * `ST-Link`一个（附带杜邦线），可用于：
     * 烧录用户程序。
     * 调试用户程序。
-    * 实物图<a id="stlink_img"></a>：
-        ![stlink](references/stlink.png)
+    * 实物图<a id="stlink_img"></a>：<br>![stlink](references/stlink.png)
 
 * 其余外设：按个人学习或项目需要自行补充。
 
