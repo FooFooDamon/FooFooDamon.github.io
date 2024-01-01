@@ -1,36 +1,54 @@
 ---
-view_width: 1024px
+view_width_outer: 1024px
+view_width_inner: 974px
 ---
 
 @import "jekyll-theme-merlot";
 
 @media only screen and (orientation: landscape) {
     div.shell {
-        width: {{ page.view_width }};
+        width: {{ page.view_width_outer }};
     }
 
     header {
-        max-width: {{ page.view_width }};
+        max-width: {{ page.view_width_outer }};
     }
 
     div#no-downloads {
-        width: {{ page.view_width }};
-        padding-left: 237px; /* = view_width / 2 - 550px / 2，其中550px是背景图片宽度。下同 */
+        width: {{ page.view_width_outer }};
+        padding-left: 237px; /* = view_width_outer / 2 - 550px / 2，其中550px是背景图片宽度。下同 */
         background-position: 237px 171px; /* 171px是模板渲染后得出的值，不要更改 */
     }
+    /*div#no-downloads {
+        background-size: cover;
+        width: 95%;
+    }*/
 
     /* 不起作用 */
     /*span.inner::after {
-        width: {{ page.view_width }};
+        width: {{ page.view_width_outer }};
         background-position: center top;
+    }*/
+    /* 高度未调整成功 */
+    /*span.inner {
+        background-size: cover;
+        width: 100%;
+        height: 95%;
     }*/
 
     span.banner-fix {
-        width: {{ page.view_width }};
+        width: {{ page.view_width_outer }};
     }
+    /*span.banner-fix {
+        background-size: cover;
+        width: {{ page.view_width_inner }};
+        margin-left: 24px;
+    }*/
 
     footer {
-        max-width: {{ page.view_width }};
+        max-width: {{ page.view_width_outer }};
+        background-size: cover;
+        height: 24px;
     }
 }
 
