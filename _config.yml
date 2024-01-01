@@ -1,6 +1,6 @@
 theme: jekyll-theme-merlot
 title: 雪山肥富的杰洽博客
 description: >
-  <br><img src="avatar.png" alt="avatar" width="64" height="64" />
+  <br><img src="avatar.png" alt="avatar" width="64" height="64" style="border:none" />
   <br>增肥是方向，暴富是梦想，都犹在雪山之巅可望不可及，惟有做技术写博客聊以解忧
   <br><br><a href="https://foofoodamon.github.io/" target="_top" style="color: white">&lt;&lt;&lt; 返回主页</a>
