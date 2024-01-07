@@ -240,3 +240,22 @@ Target packages  --->
             [*] iproute2
     ````
 
+### 2.7 LEB size mismatch
+
+* `现象`：
+
+    系统启动时挂载根文件系统出现以下报错：
+    ````
+    UBIFS error (ubi0:0 pid 1): validate_sb: LEB size mismatch: 129024 in superblock, 126976 real
+    ````
+
+* `原因`：构建根文件系统时，指定的`逻辑块`大小与实际的大小不一致。
+
+* `方案`：执行`make menuconfig`，找到相关参数项并修改（注：原默认值为`0x1f800`），
+再重新`make`以及烧录即可：
+    ````
+    Filesystem images  --->
+        [*] ubifs root filesystem
+        (0x1f000) logical eraseblock size
+    ````
+
