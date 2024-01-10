@@ -27,3 +27,9 @@
 * 格式化磁盘：`sudo mkfs.yyyy /dev/sdXn`，其中，`yyyy`为`ntfs`、`ext4`等，
 `X`为a、b、c等，`n`为1、2、3等。
 
+* 温度监测：
+    * 安装监控程序：`sudo apt install lm-sensors`
+    * 侦测硬件情况：`sudo sensors-detect`
+    * 日常使用：`sensors -A`
+    * 扩展：直接读取`/sys/class/hwmon`目录内的参数亦可，以后再补充。
+
