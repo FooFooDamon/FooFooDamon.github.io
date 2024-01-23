@@ -251,11 +251,39 @@ Target packages  --->
 
 * `原因`：构建根文件系统时，指定的`逻辑块`大小与实际的大小不一致。
 
-* `方案`：执行`make menuconfig`，找到相关参数项并修改（注：原默认值为`0x1f800`），
+* `方案`：执行`make menuconfig`，找到`logical eraseblock size`参数项并修改（注：原默认值为`0x1f800`），
 再重新`make`以及烧录即可：
     ````
     Filesystem images  --->
         [*] ubifs root filesystem
         (0x1f000) logical eraseblock size
     ````
+
+### 2.8 bad VID header offset
+
+* `现象`：
+
+    系统启动时挂载根文件系统出现以下报错：
+    ````
+    UBI error: validate_ec_hdr: bad VID header offset 512, expected 2048
+    ````
+
+* `原因`：构建根文件系统时，指定的`子页面`大小与实际的大小不一致。
+
+* `方案`：执行`make menuconfig`，找到`sub-page size`参数项并修改（注：原默认值为`512`），
+再重新`make`以及烧录即可：
+    ````
+    Filesystem images  --->
+        [*] ubi image containing an ubifs root filesystem
+        (0x20000) physical eraseblock size
+        (2048) sub-page size
+    ````
+
+* **注意**：
+    * 上一小节所用的编译选项是`ubifs root filesystem`，生成的文件带的后缀是`.ubifs`，
+    可以利用厂商提供的工具进行离线烧写，也可在`uboot`命令行用`ubi`命令烧写（
+    详细的命令待补充）。
+    * 本节所用的编译选项是`ubi image containing an ubifs root filesystem`，文件后缀是`.ubi`，
+    可在`uboot`命令行使用`nand`命令烧写（通过`USB`或`TFTP`将镜像读入内存之后，
+    就是简单的`nand erase`和`nand write`操作了，在此不详细叙述，仅需注意填对目标分区的地址或名称即可）。
 
