@@ -11,7 +11,7 @@
 
 * 检测`储存卡`或`U盘`是否是`扩容`卡盘：
     * 安装检测程序（以Ubuntu为例）：`sudo apt install f3`
-    * 检测：`sudo f3probe --destructive --time-ops /dev/sdX`，其中，`X`为a、b、c、……，下同
+    * 检测：`sudo f3probe --time-ops /dev/sdX`，其中，`X`为a、b、c、……，下同
     * 还原真实容量：`sudo f3fix --last-sec=NNNNNNNN /dev/sdX`，其中，`NNNNNNNN`为最后一块扇区号，
     上一条命令的检测结果会显示该值甚至整条还原命令。
 
