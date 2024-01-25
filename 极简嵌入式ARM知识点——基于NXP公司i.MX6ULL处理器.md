@@ -1031,5 +1031,5 @@ USB | Universal Serial Bus | 通用串行总线
 
 **书山有路找捷径，学海无涯抓重点！**
 
-![秘笈](bei3kap1.png)
+![秘笈](assets/images/bei3kap1.png)
 
