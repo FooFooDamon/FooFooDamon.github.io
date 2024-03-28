@@ -3,6 +3,8 @@
 
 # Linux日常小技巧
 
+注：如无特殊说明，文中所用命令均运行于`Ubuntu`。
+
 * 按`Ctrl`+`H`可切换`Nautilus`（`Ubuntu`的默认文件管理器）对于隐藏文件（夹）的显示状态。
 
 * 测试网口带宽（部分参数值仅作举例）：
@@ -10,7 +12,7 @@
     * 客户端执行：`iperf3 -c 192.168.111.111 -i 1 -w 64k -t 60`
 
 * 检测`储存卡`或`U盘`是否是`扩容`卡盘：
-    * 安装检测程序（以Ubuntu为例）：`sudo apt install f3`
+    * 安装检测程序：`sudo apt install f3`
     * 检测：`sudo f3probe --time-ops /dev/sdX`，其中，`X`为a、b、c、……，下同
     * 还原真实容量：`sudo f3fix --last-sec=NNNNNNNN /dev/sdX`，其中，`NNNNNNNN`为最后一块扇区号，
     上一条命令的检测结果会显示该值甚至整条还原命令。
@@ -32,4 +34,13 @@
     * 侦测硬件情况：`sudo sensors-detect`
     * 日常使用：`sensors -A`
     * 扩展：直接读取`/sys/class/hwmon`目录内的参数亦可，以后再补充。
+
+* `SSH`显示远程主机的图形界面：
+    * 远程主机若安装的是不带图形界面（又叫`headless`）的操作系统，
+    可先安装一个轻量级的`X`窗口服务器（可能需要重启系统才能生效）：`sudo apt install xorg`
+    * 在远程主机安装用于测试的`GUI`小程序：`sudo apt install x11-apps`
+    * 远程主机开启`X11`转发功能，具体做法是在`/etc/ssh/sshd_config`增加或修改配置项
+    （可能需要重启`sshd`服务才能生效）：`X11Forwarding yes`
+    * 本地主机运行`ssh`命令时需要加上`-X`选项，即：`ssh -X xxx@xxx.xxx.xxx.xxx`
+    * 测试，在远程主机运行：`xclock`
 
