@@ -44,3 +44,25 @@
     * 本地主机运行`ssh`命令时需要加上`-X`选项，即：`ssh -X xxx@xxx.xxx.xxx.xxx`
     * 测试，在远程主机运行：`xclock`
 
+* 使用`apt`安装软件时保留安装包：
+    ````
+    $ echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' | sudo tee /etc/apt/apt.conf.d/10apt-keep-downloads
+    ````
+
+* 挂载磁盘镜像（通常命名带`.img`后缀）：
+    ````
+    $ sudo apt install kpartx
+    $
+    $ sudo kpartx -av demo.img # 文件名及运行结果仅用于举例
+    add map loop5p1 (252:0): 0 2097152 linear 7:5 61440
+    add map loop5p2 (252:1): 0 13823967 linear 7:5 2158592
+    $
+    $ sudo mount /dev/mapper/loop5p1 /path/to/demo/dir1 # 可选步骤，只在未能自动挂载时才需要手动执行此操作
+    $ sudo mount /dev/mapper/loop5p2 /path/to/demo/dir2 # 同上
+    $
+    $ sudo umount /path/to/demo/dir1 # 先卸载
+    $ sudo umount /path/to/demo/dir2
+    $
+    $ sudo kpartx -dv demo.img # 再删除分区映射信息
+    ````
+
