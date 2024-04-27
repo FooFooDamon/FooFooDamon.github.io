@@ -46,7 +46,7 @@ $
 $ export SHARED_DIR=${HOME}/${BAT_CONTAINER} # 或其他目录
 $
 $ docker run --name=${BAT_CONTAINER} -ti \
-    --network=host \
+    --cap-add CAP_SYS_ADMIN \
     -v $(realpath ${SHARED_DIR}):$(realpath ${SHARED_DIR}) \
     -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
     -v /run/dbus/system_bus_socket:/run/dbus/system_bus_socket:ro \
@@ -72,6 +72,33 @@ $ docker run --name=${BAT_CONTAINER} -ti \
 
 * 除了要挂载必要的目录，还要创建**必要的环境变量**，详见以上含`-e`选项的行。
 
+* `2024-04-27`更新：
+    * 删除`--network=host`以增加网络私密性。
+    * 增加`--cap-add=CAP_SYS_ADMIN`以消除部分应用程序需要`root`用户
+    和`--no-sandbox`模式（可能会更不稳定）的要求，未加之前以普通用户运行应用程序会报以下错误：
+        ````
+        "Failed to move to new namespace: PID namespaces supported, Network namespace supported, but failed: errno = Operation not permitted".
+        ````
+    * 由上一点可引申出对权限的关注，可在稍后的容器内按以下操作查看容器拥有的权限：
+        ````
+        $ apt install libcap-ng-utils
+        $
+        $ # 未指定额外权限
+        $ pscap -a
+        ppid  pid   name        command           capabilities
+        0     1     root        bash              chown, dac_override, fowner, fsetid, kill, setgid, setuid, setpcap, net_bind_service, net_raw, sys_chroot, mknod, audit_write, setfcap
+        $
+        $ # 加上--cap-add=CAP_SYS_ADMIN
+        $ pscap -a
+        ppid  pid   name        command           capabilities
+        0     1     root        bash              chown, dac_override, fowner, fsetid, kill, setgid, setuid, setpcap, net_bind_service, net_raw, sys_chroot, sys_admin, mknod, audit_write, setfcap
+        $
+        $ # 加上--privileged=true（强烈不推荐，容易引发安全漏洞）
+        $ pscap -a
+        ppid  pid   name        command           capabilities
+        0     1     root        bash              full
+        ````
+
 最后，若不想敲一大堆命令，可下载“[懒编程秘笈](https://github.com/FooFooDamon/lazy_coding_skills)”项目的
 `scripts/docker_trapbat.sh`脚本来执行。
 
@@ -82,11 +109,11 @@ $ docker run --name=${BAT_CONTAINER} -ti \
 显然费时费力，不值得提倡。更好的做法是修改已有容器的参数，直接增加待挂载的目录或文件，
 操作如下：
 ````
-$ # 关闭docker服务
-$ sudo systemctl stop docker.*
-$
 $ # 获取目标容器的ID
 $ export BAT_CONTAINER_ID=$(docker ps -a --no-trunc --filter name="^/${BAT_CONTAINER}$" --format '{{.ID}} {{.Names}}' | awk '{ print $1 }')
+$
+$ # 关闭docker服务
+$ sudo systemctl stop docker.*
 $
 $ # 打开参数文件并修改，修改前最好先备份一下。
 $ # 若要添加挂载目录，可在MountPoints字典增加一个子项；
@@ -110,9 +137,14 @@ $ # 先查看一下允许访问的客户端列表（即白名单）
 $ xhost
 $
 $ # 再将前文创建的docker容器账户加入白名单。
-$ # 注意：由于容器是本地，所以第二个字段用localuser，而第三个字段则是容器的用户名，
-$ #      通常是root，其余字段可查阅xhost的使用手册（执行命令：man xhost）。
+$ # 注意：由于容器是本地网络（即--network=host），所以第二个字段用localuser，
+$ #      而第三个字段则是容器的用户名（通常是root），
+$ #      其余字段可查阅xhost的使用手册（执行命令：man xhost）。
 $ xhost +SI:localuser:root
+$
+$ # 2024-04-27更新：不推荐使用--network=host（原因见前文），则白名单配置要使用IP。
+$ # 注意：以下IP仅作举例，具体以容器内分配到的值为准。
+$ xhost +172.17.0.2
 $
 $ # 检查一下白名单是否已包含刚才所加的账户
 $ xhost
@@ -161,7 +193,7 @@ $ apt install -y fonts-wqy-microhei fonts-wqy-zenhei fonts-arphic-ukai fonts-arp
 
 ````
 $ # Linux下非常流行的编辑器
-$ apt install -y --install-recommends vim
+$ apt install -y vim
 $
 $ # 常用的网络小工具
 $ apt install -y net-tools iputils-ping curl wget
@@ -170,11 +202,36 @@ $ # 编译套件，含make和gcc
 $ apt install -y build-essential
 ````
 
+### 3.4 创建一个普通用户用于运行飞鼠软件（`2024-04-27`更新）
+
+````
+$ # 安装sudo命令供普通用户使用
+$ apt install -y sudo
+$
+$ # 新增用户，注意需要将其加入sudo组
+$ useradd -m -s /bin/bash -U -G sudo -p $(openssl passwd -1 fuck_bat) fuck_bat
+$
+$ # 配置中文环境
+$ echo "export LANG=zh_CN.UTF-8" >> /home/fuck_bat/.bashrc
+$
+$ # 将图形显示设置同步到该用户
+$ echo "export DISPLAY=${DISPLAY}" >> /home/fuck_bat/.bashrc
+$ echo "export DBUS_SESSION_BUS_ADDRESS=${DBUS_SESSION_BUS_ADDRESS}" >> /home/fuck_bat/.bashrc
+$
+$ # 启动容器后自动切换到该用户以便运行飞鼠软件
+$ echo 'su - fuck_bat' >> /root/.bashrc
+$
+$ # 退出容器，稍后可使用“docker start -i”启动该窗口，进行后续操作
+$ exit
+````
+
 ## 4、“调教”飞鼠
+
+**注**：以下操作若使用普通用户则需要加上`sudo`。
 
 假设有只飞鼠叫`xx`，其安装包叫`xx.deb`，那么可将其放入前文的共享目录，然后安装：
 ````
-$ dpkg -i ${SHARED_DIR}/xx.deb
+$ dpkg -i ${SHARED_DIR}/xx.deb # 2024-04-27更新：推荐将“dpkg -i”换成“apt install”，可自动解决程序依赖关系
 ````
 
 毫无悬念会报错，因为复杂的软件会有很多依赖项，而这些依赖项在原始的`Ubuntu`系统中肯定没有安装。
@@ -237,6 +294,9 @@ $ /opt/xx/xx --no-sandbox > /dev/null &
 ````
 
 完事之后可以按`Ctrl`+`p`、再按一下`q`来退出容器。再次进入则为`docker attach ${BAT_CONTAINER}`。
+
+`2024-04-27`更新：以上的权限报错可通过在创建容器时指定`--cap-add=CAP_SYS_ADMIN`来解决。同时，
+切换成普通用户（非`root`）来运行应用程序则不再需要指定`--no-sandbox`。
 
 ## 5、参考链接
 
