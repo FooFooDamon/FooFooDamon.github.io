@@ -66,3 +66,12 @@
     $ sudo kpartx -dv demo.img # 再删除分区映射信息
     ````
 
+* 将网页保存成`PDF`文档：
+    * 安装所需程序：`sudo apt install wkhtmltopdf`
+    * 转换在线网页：
+        * 示例：`wkhtmltopdf 'http://www.xxx.com/xxx.html' xxx.pdf`
+        * 注意事项：对于某些动了手脚干扰页面排版（如`*CDN`）或要求登录/付费才能打印的网页（如`3*0doc`），
+        可加上`--disable-javascript`选项来尝试解决。
+    * 转换离线网页：待解决，会在读取文件时报`Frame load interrupted by policy change`的错误，
+    即使加上`--enable-local-file-access`也不行。
+
