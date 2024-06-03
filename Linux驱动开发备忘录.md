@@ -26,19 +26,50 @@
 
 ## 3、模块入口与出口
 
-* module_init(xx_init)
-    * `<linux/init.h>`
+* `module_init`(xx_init)
+    * `<linux/init.h>` or `<linux/module.h>` depending on the `MODULE` macro
     * __init int xx_init(void)
 
-* module_exit(xx_exit)
-    * `<linux/init.h>`
+* `module_exit`(xx_exit)
+    * `<linux/init.h>` or `<linux/module.h>` depending on the `MODULE` macro
     * __exit void xx_exit(void)
 
-* MODULE_LICENSE(str)
+* `MODULE_LICENSE`(str)
     * `<linux/module.h>`
 
-* MODULE_AUTHOR(str)
+* `MODULE_AUTHOR`(str)
     * `<linux/module.h>`
+
+* `*_initcall[_sync]`(fn)
+    * 一种可在不同内核启动阶段调用相应函数的机制
+    * 有多种级别，这些级别也反映了被调用函数的顺序和所存放的`ELF`段
+    * 仅适用于保证内核正常启动的必要内置模块（built-in modules，即静态链接在内核镜像中的模块），
+    对于可动态加载和卸载的模块则要用`module_init`()，不重要的内置模块也可用`module_init`()或顺序靠后的`initcall`
+    * 头文件：`<linux/init.h>` or `<linux/module.h>` depending on the `MODULE` macro
+    * 目前可用的`initcall`：
+        ````
+        /*
+         * A "pure" initcall has no dependencies on anything else, and purely
+         * initializes variables that couldn't be statically initialized.
+         */
+        #define pure_initcall(fn)               __define_initcall(fn, 0)
+
+        #define core_initcall(fn)               __define_initcall(fn, 1)
+        #define core_initcall_sync(fn)          __define_initcall(fn, 1s)
+        #define postcore_initcall(fn)           __define_initcall(fn, 2)
+        #define postcore_initcall_sync(fn)      __define_initcall(fn, 2s)
+        #define arch_initcall(fn)               __define_initcall(fn, 3)
+        #define arch_initcall_sync(fn)          __define_initcall(fn, 3s)
+        #define subsys_initcall(fn)             __define_initcall(fn, 4)
+        #define subsys_initcall_sync(fn)        __define_initcall(fn, 4s)
+        #define fs_initcall(fn)                 __define_initcall(fn, 5)
+        #define fs_initcall_sync(fn)            __define_initcall(fn, 5s)
+        #define rootfs_initcall(fn)             __define_initcall(fn, rootfs)
+        #define device_initcall(fn)             __define_initcall(fn, 6)
+        #define device_initcall_sync(fn)        __define_initcall(fn, 6s)
+        #define late_initcall(fn)               __define_initcall(fn, 7)
+        #define late_initcall_sync(fn)          __define_initcall(fn, 7s)
+        ````
 
 ## 4、调试及打印
 
