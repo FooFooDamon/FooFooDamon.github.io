@@ -17,6 +17,14 @@
     * 还原真实容量：`sudo f3fix --last-sec=NNNNNNNN /dev/sdX`，其中，`NNNNNNNN`为最后一块扇区号，
     上一条命令的检测结果会显示该值甚至整条还原命令。
 
+* 检测及修复磁盘（包括储存卡）坏块操作举例：
+    ````
+    $ sudo fdisk -l
+    $ sudo badblocks -v /dev/sda10 > badsectors.txt
+    $ sudo fsck -l badsectors.txt /dev/sda10
+    ````
+    摘自：https://www.lxlinux.net/12104.html
+
 * 磁盘分区操作：
     * 列举：`sudo fdisk -l /dev/sdX`
     * 交互式操作：`sudo fdisk /dev/sdX`
