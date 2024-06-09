@@ -75,3 +75,14 @@
     * 转换离线网页：待解决，会在读取文件时报`Frame load interrupted by policy change`的错误，
     即使加上`--enable-local-file-access`也不行。
 
+* 观察软/硬中断的发生情况：
+    * 应用场景举例：当发现`ksoftirqd/0`或其它与软/硬中断相关的内核线程`CPU`占用率过高时。
+    * 命令（需开多个终端窗口分别运行）：
+        ````
+        $ top # 然后依次按Shift+p、数字1键，并留意hi（硬中断）和si（软中断）两列指标
+        $
+        $ watch -d cat /proc/softirqs # 监测软中断发生情况
+        $
+        $ watch -d awk "'{ if (\$2 > 10000) print \$0 }'" /proc/interrupts # 监测硬中断发生情况，由于行数太多，需过滤大多数数值较小的行
+        ````
+
