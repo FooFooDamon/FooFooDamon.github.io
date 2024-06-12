@@ -94,3 +94,8 @@
         $ watch -d awk "'{ if (\$2 > 10000) print \$0 }'" /proc/interrupts # 监测硬中断发生情况，由于行数太多，需过滤大多数数值较小的行
         ````
 
+* 解决`Ubuntu` `22.04`连接安卓手机时出现的`the name 1.2721 was not provided by any .service files`报错：
+    * 解决方案：在终端执行`nautilus -q`再重新连接手机即可。
+    * 原因分析：可能是上一次数据传输过程中，因为线缆松动等原因导致状态异常，
+    重启电脑里的文件管理器（`Ubuntu`的`GNOME`桌面环境默认文件管理器是`Nautilus`）即可。
+
