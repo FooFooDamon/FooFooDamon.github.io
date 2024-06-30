@@ -83,6 +83,10 @@
     * 转换离线网页：待解决，会在读取文件时报`Frame load interrupted by policy change`的错误，
     即使加上`--enable-local-file-access`也不行。
 
+* 删除`PDF`文档的部分页：`pdftk input.pdf cat 1-2 4-7 9-end output output.pdf # 删除第3和第8页`
+
+* 合并多个`PDF`文档：`pdftk xx1.pdf xx2.pdf xx3.pdf output xx.pdf`
+
 * 观察软/硬中断的发生情况：
     * 应用场景举例：当发现`ksoftirqd/0`或其它与软/硬中断相关的内核线程`CPU`占用率过高时。
     * 命令（需开多个终端窗口分别运行）：
