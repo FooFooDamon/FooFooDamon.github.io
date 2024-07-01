@@ -48,10 +48,10 @@
     * 头文件：`<linux/init.h>` or `<linux/module.h>` depending on the `MODULE` macro
     * 目前可用的`initcall`：
         ````
-        /*
-         * A "pure" initcall has no dependencies on anything else, and purely
-         * initializes variables that couldn't be statically initialized.
-         */
+        //
+        // A "pure" initcall has no dependencies on anything else, and purely
+        // initializes variables that couldn't be statically initialized.
+        //
         #define pure_initcall(fn)               __define_initcall(fn, 0)
 
         #define core_initcall(fn)               __define_initcall(fn, 1)
