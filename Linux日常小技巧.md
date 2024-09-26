@@ -103,3 +103,15 @@
     * 原因分析：可能是上一次数据传输过程中，因为线缆松动等原因导致状态异常，
     重启电脑里的文件管理器（`Ubuntu`的`GNOME`桌面环境默认文件管理器是`Nautilus`）即可。
 
+* **进程**级别的网络流量监控：
+    * 使用`nethogs`：
+        * 安装：`sudo apt install nethogs`
+        * 使用示例：`sudo nethogs eth0`
+        * 更多命令行选项及交互式指令详见：`man nethogs`
+
+* 禁用`Ubuntu`的**无人值守升级程序**：
+    * 原因：对于通过手机热点上网的用户，可节省流量资费。
+    * 停止：`sudo systemctl stop unattended-upgrades.service`
+    * 禁用：`sudo systemctl disable unattended-upgrades.service`
+    * 注：禁用之后要定期手动更新系统，以确保安全。
+
