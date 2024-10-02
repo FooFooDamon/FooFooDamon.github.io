@@ -115,3 +115,15 @@
     * 禁用：`sudo systemctl disable unattended-upgrades.service`
     * 注：禁用之后要定期手动更新系统，以确保安全。
 
+* 视频转`GIF`动图：
+    * 可使用`FFmpeg`，例如：`ffmpeg -i xx.mp4 -vf "fps=5,scale=800:-1:flags=lanczos" -f gif xx.gif`
+        * `-i xx.mp4`：指定输入的视频文件（路径）。
+        * `-f gif`：指定输出格式是`GIF`。最后的`xx.gif`则是输出的图片文件（路径）。
+        * `-vf "fps=5,scale=800:-1:flags=lanczos"`：`-vf`选项指定视频过滤器参数，如下：
+            * `fps=5`：将帧率设置为每秒`5`帧，更常用的值是`15`或`30`，对流畅度和文件体积有明显影响，
+            可根据需要指定。
+            * `scale=800:-1:flags=lanczos`：将视频缩放到宽度`800`像素，同时保持纵横比，
+            并使用`Lanczos`插值算法来平滑缩放。
+            * 若需指定其他选项，可在命令行输入`man ffmpeg-filters`，
+            并使用`VIDEO FILTERS`或更具体的关键词来搜索相应的内容。
+
