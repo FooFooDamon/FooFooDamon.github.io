@@ -7,6 +7,30 @@
 
 * 按`Ctrl`+`H`可切换`Nautilus`（`Ubuntu`的默认文件管理器）对于隐藏文件（夹）的显示状态。
 
+* 同步主机时间：
+    * 使用`NTP`（普通精度）：
+        * 服务器：
+            ```
+            $ sudo apt install ntp
+            $ systemctl status ntp
+            $ sudo systemctl start ntp
+            ```
+        * 客户端：
+            ```
+            $ sudo apt install ntpdate
+            $ sudo ntpdate 192.168.1.2 # 先手动同步一次（注意此处填上实际的服务器地址，下同）
+            $ # 然后按前面方法安装ntpd（以便后续自动同步），并在/etc/ntp.conf添加一行：pool 192.168.1.2
+            $ # 最后执行：sudo systemctl restart ntp && ntpq -p
+            ```
+        * 注：`ntpdate`对系统时间的校正是**跳变**的，这对于依赖连续时钟的应用程序是个很严重的问题，
+        所以使用时要多加小心！而`ntpd`则是有一套特定的算法来一点一点地微调时间，是**渐变**的，
+        会安全得多，更加推荐使用。
+    * 使用`PTP`（高精度，但需要网卡硬件支持）：
+        * 查看网卡硬件是否支持`PTP`（`eth0`仅用于举例，下同）：`ethtool -T eth0`
+        * 安装`ptp4l`：`sudo apt install linuxptp`
+        * 主节点设备：`sudo ptp4l -i eth0 -H`
+        * 从节点设备：`sudo ptp4l -i eth0 -H -s`
+
 * 测试网口带宽（部分参数值仅作举例）：
     * 服务侧执行：`iperf3 -s`
     * 客户端执行：`iperf3 -c 192.168.111.111 -i 1 -w 64k -t 60`
@@ -114,6 +138,12 @@
     * 停止：`sudo systemctl stop unattended-upgrades.service`
     * 禁用：`sudo systemctl disable unattended-upgrades.service`
     * 注：禁用之后要定期手动更新系统，以确保安全。
+
+* 禁用`snap`服务：
+    * 理由与前面`无人值守升级程序`的类似，操作命令则是：
+        ```
+        $ sudo systemctl stop snapd.socket # 注：若直接停止*.service的话，仍会自动被这个*.socket拉起
+        ```
 
 * 视频转`GIF`动图：
     * 可使用`FFmpeg`，例如：`ffmpeg -i xx.mp4 -vf "fps=5,scale=800:-1:flags=lanczos" -f gif xx.gif`
