@@ -12,8 +12,10 @@
         * 服务器：
             ```
             $ sudo apt install ntp
-            $ systemctl status ntp
-            $ sudo systemctl start ntp
+            $ # 然后在/etc/ntp.conf配上所在网段（此处网段地址仅作举例）：
+            $ #     restrict 192.168.1.0 mask 255.255.255.0 nomodify notrap
+            $ systemctl status ntp # 查看ntpd进程的状态
+            $ sudo systemctl start ntp # 若已启动，则改用restart以便让前面配置文件的更改生效
             ```
         * 客户端：
             ```
@@ -21,6 +23,7 @@
             $ sudo ntpdate 192.168.1.2 # 先手动同步一次（注意此处填上实际的服务器地址，下同）
             $ # 然后按前面方法安装ntpd（以便后续自动同步），并在/etc/ntp.conf添加一行：pool 192.168.1.2
             $ # 最后执行：sudo systemctl restart ntp && ntpq -p
+            $ # 注意：ntpd也支持手动同步：sudo systemctl stop ntp && sudo ntpd -gq && sudo systemctl start ntp
             ```
         * 注：`ntpdate`对系统时间的校正是**跳变**的，这对于依赖连续时钟的应用程序是个很严重的问题，
         所以使用时要多加小心！而`ntpd`则是有一套特定的算法来一点一点地微调时间，是**渐变**的，
