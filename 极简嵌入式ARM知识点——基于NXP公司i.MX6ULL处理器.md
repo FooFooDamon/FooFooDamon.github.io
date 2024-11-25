@@ -1016,6 +1016,8 @@ TTL | Transistor-Transistor Logic | 晶体管-晶体管逻辑
 UART | Universal Asynchronous Receiver/Transmitter | 通用异步收发器，通常简称为串口
 USB | Universal Serial Bus | 通用串行总线
 
+`2024-11-25`注：更多缩略词可查阅<a href="万恶的字母缩写.html" target="_blank">这篇文章</a>，此表不再更新。
+
 ## 24、参考材料
 
 1. <a id="ref_1" href="references/ARM Architecture Reference Manual ARMv7-A and ARMv7-R edition.pdf" target="_blank">ARM Architecture Reference Manual ARMv7-A and ARMv7-R edition</a>
