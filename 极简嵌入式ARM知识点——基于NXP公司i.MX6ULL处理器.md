@@ -11,10 +11,10 @@
 ## 2、`ARM`版本的特点
 
 * `具体处理器`和`基础架构`分别有各自的版本号：
-例如`ARM7TDMI`和`ARM920T`的架构版本分别为`v4`和`v4T`，`ARM946E-S`为`v5`，
+例如`ARM7-TDMI`和`ARM920T`的架构版本分别为`v4`和`v4T`，`ARM946E-S`为`v5`，
 `ARM1136J-S`为`v6`，等等。
 
-* 从`v6`（还是`v7`？）架构开始，处理器版本不再使用单一数字递增的命名方式，
+* 从`v7`架构开始，处理器版本不再使用单一数字递增的命名方式，
 而开始发布`Cortex-A`、`Cortex-R`、`Cortex-M`等系列，其中`A`表示`Application`、
 `R`表示`Real-time`、`M`表示`Microcontroller`，应对不同场景。
 
@@ -26,15 +26,16 @@
 只能从官方资料查证，不能简单以名称和数字进行推断。
 
 * 可以从下表（源于网上）稍微感受一下命名的混乱（截至`v7`）：
-    架构版本号 | 处理器家族（不完全列举）
-    -- | --
-    `ARMv1` | `ARM1`
-    `ARMv2` | `ARM2`、`ARM3`
-    `ARMv3` | `ARM6`、`ARM7`
-    `ARMv4` | `StrongARM`、`ARM7TDMI`、`ARM9TDMI`
-    `ARMv5` | `ARM7EJ`、`ARM9E`、`ARM10E`、`XScale`
-    `ARMv6` | `ARM11`、`ARM Cortex-M`
-    `ARMv7` | `ARM Cortex-A`、`ARM Cortex-M`、`ARM Cortex-R`
+
+架构版本号 | 处理器家族（不完全列举）
+-- | --
+`ARMv1` | `ARM1`
+`ARMv2` | `ARM2`、`ARM3`
+`ARMv3` | `ARM6`、`ARM7`
+`ARMv4` | `StrongARM`、`ARM8`、`ARM7-TDMI`、`ARM9-TDMI`
+`ARMv5` | `ARM7EJ`、`ARM9E`、`ARM10E`、`XScale`
+`ARMv6` | `ARM11`
+`ARMv7` | `ARM Cortex-A`、`ARM Cortex-M`、`ARM Cortex-R`
 
 ## 3、处理器模式
 
