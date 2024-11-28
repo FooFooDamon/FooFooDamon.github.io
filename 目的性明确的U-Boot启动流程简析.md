@@ -428,7 +428,7 @@ static int gmac_rockchip_probe(struct udevice *dev) // drivers/net/gmac_rockchip
 
 ## 7、项目链接
 
-* 代码详见[U-Boot移植项目](U-Boot移植项目)的`orange-pi-5/2017.09`子目录。
+* 代码详见[U-Boot移植项目](https://github.com/FooFooDamon/uboot_porting)的`orange-pi-5/2017.09`子目录。
 
 * 该项目并不是直接`复刻`（`fork`）某一个`U-Boot`项目进行修改，而是有自己一套组织形式，
 原理详见[这篇文章](移植类项目的版本管理.md)。
