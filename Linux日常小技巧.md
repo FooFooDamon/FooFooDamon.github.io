@@ -7,6 +7,10 @@
 
 * 按`Ctrl`+`H`可切换`Nautilus`（`Ubuntu`的默认文件管理器）对于隐藏文件（夹）的显示状态。
 
+* 休眠、待机（又叫挂起）命令：
+    * 休眠（最省电、运行数据保存到硬盘、所有设备停止工作）：`echo "disk" | sudo tee /sys/power/state`
+    * 待机（唤醒速度快、运行数据仍留在内存、内存仍保持运行）：`echo "mem" | sudo tee /sys/power/state`
+
 * 同步主机时间：
     * 使用`NTP`（普通精度）：
         * 服务器：
