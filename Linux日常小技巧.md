@@ -38,6 +38,10 @@
         * 主节点设备：`sudo ptp4l -i eth0 -H`
         * 从节点设备：`sudo ptp4l -i eth0 -H -s`
 
+* 修改主机时区：
+    * 方法一：直接修改本地时区文件的指向：`sudo ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime`
+    * 方法二：使用`timedatectl`命令：`sudo timedatectl set-timezone Asia/Shanghai`
+
 * 测试网口带宽（部分参数值仅作举例）：
     * 服务侧执行：`iperf3 -s`
     * 客户端执行：`iperf3 -c 192.168.111.111 -i 1 -w 64k -t 60`
