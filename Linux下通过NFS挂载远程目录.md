@@ -2,7 +2,8 @@
 
 # Linux下通过NFS挂载远程目录
 
-该文章是通过参考 https://www.linuxidc.com/Linux/2016-04/130504.htm 并结合亲身实践而写成。转载请注明本文及其参考材料的出处。
+该文章是通过参考 https://www.linuxidc.com/Linux/2016-04/130504.htm 并结合亲身实践而写成。
+转载请注明本文及其参考材料的出处。
 
 ## 环境
 
@@ -25,12 +26,13 @@ sudo vim /etc/exports
 加上目标目录：
 
 ```
-/home/foo/git *(insecure,rw,sync,no_root_squash)
+/home/foo/git *(rw,sync,root_squash,no_subtree_check)
 ```
 
-注：该目录是NFS服务的根目录。星号表示允许所有网段访问，也可指定具体的IP。
+注：该目录是NFS服务的根目录。**星号**表示允许所有网段访问（**仅作示范之用**，
+现实中除非是绝对可信的局域网，否则**绝不推荐使用**！），也可指定具体的IP。
 但一个网段内的所有主机却不能用`xxx.xxx.xxx.*`表示，而要写成类似`xxx.xxx.xxx.0/24`的形式，
-这可能是服务器的解析逻辑不够完善。
+这可能是服务器的解析逻辑不够完善。括号中的配置选项可执行`man exports`命令来自行查阅。
 
 3、刷新服务器配置：
 
@@ -71,11 +73,11 @@ sudo apt-get install nfs-utils
 2、将远程目录挂载到本地，本地目录自行确定：
 
 ```
-sudo mount -t nfs -o nolock,soft xxx.xxx.xxx.xxx:/home/foo/git /home/foo/local_git
+sudo mount -t nfs -o nolock,soft xxx.xxx.xxx.xxx:/home/foo/git /home/foo/remote_git
 ```
 
 其中，xxx.xxx.xxx.xxx指的是服务器的IP，`-o nolock,soft`则是防止服务端不可用时客户端卡住
-的情况（待验证）。为方便起见，可将这条命令加入开机启动设置（例如/etc/rc.local）。
+的情况。为方便起见，可将这条命令加入开机启动设置（例如`/etc/rc.local`）。
 
 如果挂载出现权限错误，即类似：
 
@@ -86,12 +88,13 @@ mount.nfs: access denied by server while mounting xxx.xxx.xxx.xxx:/home/foo/git
 可先尝试修改远程目录权限，赋予读、写和执行权限，即：
 
 ```
-chmod -R 777 /home/foo/git
+chmod +x /home/foo/git      # 优先尝试这条命令
+chmod -R 755 /home/foo/git  # 实在不行再考虑这条
 ```
 
 再刷新服务器配置。
 
-若还是报权限错误，可在上述服务器配置文件加入insecure选项（前述内容已添加该选项），再刷新服务器配置。
+若还是报权限错误，可在上述服务器配置文件加入`insecure`选项，再刷新服务器配置。
 
 
 配置完毕。更详细的说明可参考文章开头的网址。
