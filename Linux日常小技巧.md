@@ -7,6 +7,13 @@
 
 * 按`Ctrl`+`H`可切换`Nautilus`（`Ubuntu`的默认文件管理器）对于隐藏文件（夹）的显示状态。
 
+* 查询`CPU`和`内存`的参数：
+    ````
+    $ sudo dmidecode --type=processor --type=cache
+    $ sudo dmidecode --type=memory
+    $ # dmidecode还能查询主板、BIOS等参数，详情可自行查阅其命令手册
+    ````
+
 * 休眠、待机（又叫挂起）命令：
     * 休眠（最省电、运行数据保存到硬盘、所有设备停止工作）：`echo "disk" | sudo tee /sys/power/state`
     * 待机（唤醒速度快、运行数据仍留在内存、内存仍保持运行）：`echo "mem" | sudo tee /sys/power/state`
