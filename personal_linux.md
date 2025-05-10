@@ -118,7 +118,7 @@ $ sudo apt install libopencv-dev libfreeimage-dev
 ````
 $ sudo apt install gimp krita
 
-$ sudo apt install kicad blender
+$ sudo apt install kicad blender freecad slic3r
 ````
 
 ### 6.3 `摄像头调试`工具
