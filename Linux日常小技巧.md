@@ -5,6 +5,40 @@
 
 注：如无特殊说明，文中所用命令均运行于`Ubuntu`。
 
+* `man`命令几点注意：
+    * 由于`Shell`命令、系统调用和库函数**可能会重名**，所以如果直接`man`的话，
+    可能找不到想要的信息，这时就要**加上类别号**。例如输入：
+        ````
+        $ man 1 printf
+        ````
+        会输出`printf`命令的信息。如果输入：
+        ````
+        $ man 3 printf
+        ````
+        则会打印出`printf`库函数的信息。
+        `man`手册的信息共分为以下`8`类：
+        ````
+        1 General commands
+        2 System calls
+        3 Library functions, covering in particular the C standard library
+        4 Special files (usually devices, those found in /dev) and drivers
+        5 File formats and conventions
+        6 Games and screensavers
+        7 Miscellanea
+        8 System administration commands and daemons
+        ````
+    * 如果想将一个命令的信息输出为`PDF`文档，则可以按以下步骤操作（以`ls`命令为例）：
+        ````
+        man -t ls > ls.ps
+        ps2pdf ls.ps
+        ````
+
+* 分卷压缩、解压缩命令示例：
+    ````
+    $ tar -jcv ooxx.pdf | split -b 30M --numeric-suffixes=1 - ooxx.tar.bz2.part_
+    $ cat ooxx.tar.bz2.part_* | tar -jxv
+    ````
+
 * 按`Ctrl`+`H`可切换`Nautilus`（`Ubuntu`的默认文件管理器）对于隐藏文件（夹）的显示状态。
 
 * 查询`CPU`和`内存`的参数：
