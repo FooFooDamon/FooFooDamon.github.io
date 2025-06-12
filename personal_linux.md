@@ -144,6 +144,8 @@ $ sudo apt install openocd # 一款开源的嵌入式片上调试工具
 ## 8、其他
 
 ````
+$ sudo apt install zhcon # 解决字符界面的中文乱码问题
+
 $ sudo apt install dos2unix
 $ sudo apt install parallel
 
