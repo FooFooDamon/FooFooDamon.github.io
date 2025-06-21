@@ -49,7 +49,7 @@
     ````
 
 * 休眠、待机（又叫挂起）命令：
-    * 休眠（最省电、运行数据保存到硬盘、所有设备停止工作）：`echo "disk" | sudo tee /sys/power/state`
+    * 休眠（最省电、运行数据保存到硬碟、所有设备停止工作）：`echo "disk" | sudo tee /sys/power/state`
     * 待机（唤醒速度快、运行数据仍留在内存、内存仍保持运行）：`echo "mem" | sudo tee /sys/power/state`
 
 * 同步主机时间：
@@ -87,21 +87,30 @@
     * 服务侧执行：`iperf3 -s`
     * 客户端执行：`iperf3 -c 192.168.111.111 -i 1 -w 64k -t 60`
 
-* 检测`储存卡`或`U盘`是否是`扩容`卡盘：
+* 检测`储存卡`或`U盘`是否是`扩容`卡/盘：
     * 安装检测程序：`sudo apt install f3`
     * 检测：`sudo f3probe --time-ops /dev/sdX`，其中，`X`为a、b、c、……，下同
     * 还原真实容量：`sudo f3fix --last-sec=NNNNNNNN /dev/sdX`，其中，`NNNNNNNN`为最后一块扇区号，
     上一条命令的检测结果会显示该值甚至整条还原命令。
 
-* 检测及修复磁盘（包括储存卡）坏块操作举例：
+* 检测及修复磁碟（包括储存卡）坏块操作举例：
     ````
     $ sudo fdisk -l
-    $ sudo badblocks -v /dev/sda10 > badsectors.txt
-    $ sudo fsck -l badsectors.txt /dev/sda10
+    $ sudo badblocks -sv /dev/sda10 > badsectors.txt
+    $ sudo fsck -l badsectors.txt /dev/sda10 # 注：EXT2/3/4还可使用e2fsck；NTFS则需要进入Windows使用chkdsk命令，例如：chkdsk /f D:
     ````
     摘自：https://www.lxlinux.net/12104.html
 
-* 磁盘分区操作：
+* 磁碟挂载的若干注意事项：
+    * 可先使用`blkid`命令来列举感兴趣的磁碟信息，其中`LABEL="XXX"`可直接用作后续`mount`命令的参数。
+    * 最简单的`mount`命令只需指定`块设备`路径（或其标签）和`目标目录`路径，
+    但有时需要使用`-t`选项显式指定文件系统类型（例如`NTFS`要使用`ntfs3`而非`ntfs`，
+    因为后者使用的是`ntfs-3g`驱动，已是陈旧落后产物），或`-o`选项传递具体文件系统所需的参数
+    （例如`ro`、`noatime`等，各个参数之间使用英文逗号隔开）。
+    * 若挂载失败，可使用`dmesg`命令来查看详细报错原因。
+    * 使用`umount`命令来卸载时可加上`-l`选项来防止意外卡死。
+
+* 磁碟分区操作：
     * 列举：`sudo fdisk -l /dev/sdX`
     * 交互式操作：`sudo fdisk /dev/sdX`
         * 获取帮助：输入`m`。
@@ -110,7 +119,7 @@
         * 保存并退出会话：输入`w`。
         * 其余：略。
 
-* 格式化磁盘：`sudo mkfs.yyyy /dev/sdXn`，其中，`yyyy`为`ntfs`、`ext4`等，
+* 格式化磁碟：`sudo mkfs.yyyy /dev/sdXn`，其中，`yyyy`为`ntfs`、`ext4`等，
 `X`为a、b、c等，`n`为1、2、3等。
 
 * 温度监测：
@@ -133,7 +142,7 @@
     $ echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' | sudo tee /etc/apt/apt.conf.d/10apt-keep-downloads
     ````
 
-* 挂载磁盘镜像（通常命名带`.img`后缀）：
+* 挂载磁碟镜像（通常命名带`.img`后缀）：
     ````
     $ sudo apt install kpartx
     $
