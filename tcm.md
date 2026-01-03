@@ -4448,26 +4448,3 @@
 
 <!-- </font> -->
 
-```
-<html lang="zh_CN">
-<head>
-    <meta charset="UTF-8">
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
-    <style>
-        .fixed-display {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            z-index: 1000;
-        }
-    </style>
-</head>
-<body>
-    <a class="fixed-display" target="_self" href="#目录">返回目录</a>
-</body>
-</html>
-```
-
