@@ -159,6 +159,10 @@
     $ sudo kpartx -dv demo.img # 再删除分区映射信息
     ````
 
+* `内存文件系统`的使用示例：
+    * 挂载：`sudo mount -t tmpfs -o size=2G tmpfs /mnt`
+    * 卸载：`sudo umount /mnt && echo 3 | sudo tee /proc/sys/vm/drop_caches`
+
 * 将网页保存成`PDF`文档：
     * 安装所需程序：`sudo apt install wkhtmltopdf`
     * 转换在线网页：
