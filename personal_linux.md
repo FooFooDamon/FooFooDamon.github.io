@@ -60,6 +60,8 @@ $ sudo apt install subversion # SVN
 
 * `VIM`：详见[这篇文章](https://foofoodamon.github.io/懒人VIM技巧.html)。
 
+* 为`less`命令（可看作轻量版`VIM`）安装语法高亮组件：`sudo apt install source-highlight`
+
 * `gedit`：`sudo apt install gedit`
 
 ### 4.4 安装`源码对比程序`
