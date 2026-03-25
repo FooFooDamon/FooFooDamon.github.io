@@ -137,6 +137,50 @@
     * 本地主机运行`ssh`命令时需要加上`-X`选项，即：`ssh -X xxx@xxx.xxx.xxx.xxx`
     * 测试，在远程主机运行：`xclock`
 
+* `screen`命令的若干常用技巧：
+    * 消除鼠标滑轮在滚动时产生的转义字符（`^[[A`和`^[[B`）：在`~/.screenrc`（文件不存在就先创建）写入一行：
+        ````
+        # 禁用了终端的初始化和退出模式，从而支持鼠标模式
+        termcapinfo xterm*|xs*|rxvt* ti@:te@
+        ````
+    * 常用操作：
+        * 创建会话：
+            ````
+            $ # 注1：所用的命令行选项含义详见后文。
+            $ # 注2：实测screen命令调用的是外部time命令，要调用内置time命令需要用sh或bash再包裹一层。
+            $ screen -d -m -U -S test -t test -h 100000 -L -Logfile /tmp/test.log bash -c "time ./test.sh"
+            ````
+        * 离开会话：使用组合键`Ctrl+a+d`（其中`d`表示`detach`）
+        * 列举所有会话：`screen -ls`
+        * 重新进入会话：`screen -r test`（`r`表示`reattach`）
+        * 终止会话：使用组合键`Ctrl+a+k`（其中`k`表示`kill`）
+    * 常用的命令行选项摘抄如下：
+        ````
+        -d -m   Start screen in detached mode. This creates a new session but doesn't attach to it.
+                This is useful for system startup scripts.
+
+        -h num
+                Specifies the history scrollback buffer to be num lines high.
+
+        -L      tells screen to turn on automatic output logging for the windows.
+
+        -Logfile file
+                By default logfile name is screenlog.0. You can set new logfile name with the -Logfile option.
+
+        -S sessionname
+                When creating a new session, this option can be used to specify a meaningful name for the session.
+                This name identifies the session for screen -list and screen -r actions.
+                It substitutes the default [tty.host] suffix. This name should not be longer then 80 symbols.
+
+        -t name
+                sets the title (a.k.a.) for the default shell or specified program.
+                See also the shelltitle .screenrc command.
+
+        -U      Run screen in UTF-8 mode. This option tells screen that your terminal sends
+                and understands UTF-8 encoded characters.
+                It also sets the default encoding for new windows to `utf8'.
+        ````
+
 * 使用`apt`安装软件时保留安装包：
     ````
     $ echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' | sudo tee /etc/apt/apt.conf.d/10apt-keep-downloads
