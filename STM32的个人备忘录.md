@@ -23,7 +23,7 @@
 * 创建`业务入口`代码：在`User`目录下创建`biz_entry.h`和`biz_entry.c`，并分别编写`void do_biz(void)`的声明和函数体，
 然后在`Core/Src/main.c`文件主函数的死循环里进行调用。
 
-* 创建`版本头文件`：在`User`目录下创建`versions.h`，内容详见[懒编程秘笈](#https://github.com/FooFooDamon/lazy_coding_skills)
+* 创建`版本头文件`：在`User`目录下创建`versions.h`，内容详见[懒编程秘笈](https://github.com/FooFooDamon/lazy_coding_skills)
 的`vim/templates/h.tpl.list/versions.tpl`。
 
 * 创建`纯内存烧录`的`链接脚本`：
@@ -33,13 +33,13 @@
     **注意**：仅当需要纯内存烧录时才执行此步骤，当用于生产环境时，还是要恢复成`STM32*_FLASH.ld`。
 
 * 创建`makefile.init`：
-    * 在工程根目录下创建，内容详见[懒编程秘笈](#https://github.com/FooFooDamon/lazy_coding_skills)
+    * 在工程根目录下创建，内容详见[懒编程秘笈](https://github.com/FooFooDamon/lazy_coding_skills)
     的`vim/templates/mk.tpl.list/stm32_init.tpl`。
     * 对工程右击，依次选择`Properties` -> `C/C++ Build` -> `Settings` -> `Tool Settings` -> `MCU GCC Compiler` -> `Include paths`，
     找到`Include files (-include)`并新建一项`"generated.h"`（注意此处的文件名需要用英文双引号括起），
     最后点击`Apply and Close`按钮。
 
-* 创建`扩展Makefile`：在工程根目录下创建，名为`Makefile`，内容详见[懒编程秘笈](#https://github.com/FooFooDamon/lazy_coding_skills)
+* 创建`扩展Makefile`：在工程根目录下创建，名为`Makefile`，内容详见[懒编程秘笈](https://github.com/FooFooDamon/lazy_coding_skills)
 的`vim/templates/mk.tpl.list/stm32cubeide.tpl`。
 
 ## 串口编程的陷阱
