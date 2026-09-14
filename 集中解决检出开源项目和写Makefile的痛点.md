@@ -276,3 +276,7 @@ checkout的参数是一个`标签`（`tag`）。
 国内开发者可以考虑从`陈皓`的<a href="references/跟我一起写Makefile.pdf" target="_blank">《跟我一起写Makefile》</a>
 入门。本人就从这份教程中获益良多，感谢这位前辈！
 
+## 5、后续更新
+
+* `2026-09-14`：`makefile`目录更新成`makefiles`，`__ver__.mk`文件更新成`__revision__.mk`。
+
