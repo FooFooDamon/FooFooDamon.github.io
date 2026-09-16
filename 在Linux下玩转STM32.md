@@ -270,7 +270,7 @@
     ````
     #include "stm32f1xx.h"
 
-    void led_blinks(uint32_t interval_ms);
+    void flip_led(uint32_t duration_ms);
     ````
 
 * 右击`User`目录，依次选择`New`、`Source File`，并在弹出的对话框输入源文件名称`biz.c`，
@@ -286,7 +286,7 @@
     #include "stm32f1xx_hal_gpio.h"
     #endif
 
-    void led_blinks(uint32_t interval_ms)
+    void flip_led(uint32_t duration_ms)
     {
     #ifdef USE_FULL_LL_DRIVER
         LL_mDelay(interval_ms);
@@ -302,7 +302,7 @@
 
 * 将[前面在`main.c`里添加的内容](#user_code)替换成以下语句即可：
     ````
-    led_blinks(1000);
+    flip_led(1000);
     ````
 
 ### 4.3 增加顶层`Makefile`
@@ -327,7 +327,7 @@
 
 * 其他……
 
-该`Makefile`具体实现详见<a href="https://github.com/FooFooDamon/lazy_coding_skills" target="_blank">懒编程秘笈</a>项目的`makefile/stm32_cube_ide.mk`。
+该`Makefile`具体实现详见<a href="https://github.com/FooFooDamon/lazy_coding_skills" target="_blank">懒编程秘笈</a>项目的`makefiles/stm32_cube_ide.mk`。
 可将其复制或链接到你的STM32项目的根目录，并重命名为`Makefile`，其用法在此不再赘述，
 直接查看其内容即可了解，因其非常简单明了。
 
@@ -392,13 +392,13 @@
 
 * 前述源码文件的修改和链接脚本的切换，可以写进`Makefile`，
 详见<a href="https://github.com/FooFooDamon/lazy_coding_skills" target="_blank">懒编程秘笈</a>项目
-`makefile/stm32f1x_private.mk`文件的`flash_as_storage`和`ram_as_storage`目标，
+`makefiles/stm32f1x_extra.mk`文件的`flash_as_storage`和`ram_as_storage`目标，
 使用时也要将该文件复制或链接到项目根目录下，切换命令则是`make flash_as_storage`和`make ram_as_storage`。
 注意每次切换之后，都要重新`make`一次。至于烧录，则分别是`make burn_to_flash`和`make burn_to_ram`，
 对这两个命令的具体内容感兴趣的，可自行查看相关的`Makefile`，其实就是将前文`OpenOCD`烧录命令稍作修改，
 此处不再详述。
 
-* 验证方法：仍以前面的[黑佬窝](#proj_led_blinks)项目为例，先将`led_blinks(1000);`逻辑烧进闪存，
-再将`led_blinks(5000);`逻辑烧进内存，此时LED应以`5`秒的时间间隔闪烁，按下复位键或断电再上电，
+* 验证方法：仍以前面的[黑佬窝](#proj_led_blinks)项目为例，先将`flip_led(1000);`逻辑烧进闪存，
+再将`flip_led(5000);`逻辑烧进内存，此时LED应以`5`秒的时间间隔闪烁，按下复位键或断电再上电，
 如果LED重新以`1`秒的时间间隔闪烁，就说明烧录闪存和烧录内存都成功了。
 
