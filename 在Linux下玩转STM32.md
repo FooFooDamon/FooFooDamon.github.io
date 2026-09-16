@@ -289,10 +289,10 @@
     void flip_led(uint32_t duration_ms)
     {
     #ifdef USE_FULL_LL_DRIVER
-        LL_mDelay(interval_ms);
+        LL_mDelay(duration_ms);
         LL_GPIO_TogglePin(GPIOC, LL_GPIO_PIN_13);
     #else
-        HAL_Delay(interval_ms);
+        HAL_Delay(duration_ms);
         HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
     #endif
     }
